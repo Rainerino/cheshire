@@ -11,6 +11,8 @@ import { DesktopBasic } from '../models/DesktopBasic'
 import { RoomBasic } from '../models/RoomBasic'
 import { Room } from '../models/Room'
 import PointLightWShadow from '../common/PointLightWShadow' // <--- CORRECTED IMPORT
+import Curtain from '../models/Curtain'
+
 
 function Loader() {
   const { progress } = useProgress()
@@ -29,9 +31,12 @@ function LandingCanvas() {
           <Desktop />
           {/* <Environment preset="sunset" background /> */}
           <Room />
+          <Curtain
+            position={new THREE.Vector3(-2.8, 1.9, -0.31)}
+            rotation={new THREE.Euler(0, -Math.PI / 2, 0)} />
           <PointLightWShadow
-            position={new THREE.Vector3().fromArray([0, 3.5, 0])}
-            rotation={new THREE.Euler().fromArray([-Math.PI / 2, 0, 0])}
+            position={new THREE.Vector3(0, 3.5, 0)}
+            rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
             intensity={20} />
         </Suspense>
       </group>
