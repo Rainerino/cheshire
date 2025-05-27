@@ -21,9 +21,12 @@ function Loader() {
 }
 
 const CAMERA_POSITION: number[][] = [
-  [1, 1.21, 0.175],
-  [0.12, 0.97, 0.175]
+  [0.8, 1.49, 0.175],
+  [0.12, 1.25, 0.175]
 ]
+
+const CAMERA_LOOK_AT: number[] = [0, 1.23, 0.175]
+
 function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
   console.log('monitor click event', e)
   console.log(camera.position)
@@ -61,7 +64,7 @@ function LandingCanvas() {
     return (
       <group>
         <OrbitControls
-          target={[0, 0.95, 0.175]}
+          target={CAMERA_LOOK_AT}
           enableDamping={true}
           enablePan={false}
           enableZoom={true}
@@ -75,12 +78,14 @@ function LandingCanvas() {
         <PerspectiveCamera
           makeDefault
           // 0.12, 0.97, 0.175
-          position={[1, 1.21, 0.175]}
+          position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={75}
         /> 
         <ambientLight intensity={0.05} />
         <Suspense fallback={<Loader />}>
-          <Desktop monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
+          <Desktop
+            position={new THREE.Vector3(0, 0.28, 0)}
+            monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
           {/* <Environment preset="sunset" background /> */}
           <Room />
           <Curtain

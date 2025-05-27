@@ -29,6 +29,8 @@ const CAMERA_POSITION: number[][] = [
   [0.12, 0.97, 0.175]
 ]
 
+const CAMERA_LOOK_AT: number[] = [0, 1.23, 0.175]
+
 const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8);
 const STATION_ROTATION = new THREE.Euler(0, Math.PI / 2, 0);
 
@@ -48,7 +50,7 @@ function CovariantCanvas() {
     return (
       <group>
         <OrbitControls
-          target={[0, 0.95, 0.175]}
+          target={CAMERA_LOOK_AT}
           enableDamping={true}
           // enablePan={false}
           // enableZoom={false}
@@ -66,8 +68,13 @@ function CovariantCanvas() {
           fov={75}
         /> 
         <ambientLight intensity={0.05} />
+        {/* <AccumulativeShadows temporal frames={100} scale={10}>
+          <RandomizedLight amount={8} position={[5, 5, 0]} />
+        </AccumulativeShadows> */}
         <Suspense fallback={<Loader />}>
-          <Desktop monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
+          <Desktop
+            position={new THREE.Vector3(0, 0.28, 0)}
+            monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
           {/* <Environment preset="sunset" background /> */}
           <PointLightWShadow
             position={new THREE.Vector3(0, 3.5, 0)}
