@@ -17,6 +17,7 @@
     "@react-three/postprocessing": "^3.0.4",
     "cannon-es": "^0.20.0",
     "gsap": "^3.13.0",
+    "r3f-perf": "^7.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "three-addons": "^1.2.0",

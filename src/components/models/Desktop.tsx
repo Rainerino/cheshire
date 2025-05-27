@@ -36,7 +36,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-export function Desktop(props: JSX.IntrinsicElements['group']) {
+export function Desktop({ monitor_click_event, ...props }: { monitor_click_event: any } & JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(desktop) as unknown as GLTFResult
   return (
     <group {...props} dispose={null}>
@@ -104,6 +104,11 @@ export function Desktop(props: JSX.IntrinsicElements['group']) {
           geometry={nodes.Node6001.geometry}
           material={materials['#204369FF.001']}
           rotation={[-0.783, 1.564, -0.783]}
+          onClick={(e) =>
+            {
+              monitor_click_event(e);
+          }
+          }
         />
       </group>
       <group position={[0, 0.582, 0]} rotation={[0, 1.57, 0]} scale={0.001}>
