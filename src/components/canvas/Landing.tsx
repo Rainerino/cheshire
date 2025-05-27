@@ -12,6 +12,7 @@ import { RoomBasic } from '../models/RoomBasic'
 import { Room } from '../models/Room'
 import PointLightWShadow from '../common/PointLightWShadow' // <--- CORRECTED IMPORT
 import Curtain from '../models/Curtain'
+import gsap from 'gsap'
 
 
 function Loader() {
@@ -19,33 +20,60 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>
 }
 
-function monitor_click_event(e: MouseEvent) {
+const CAMERA_POSITION: number[][] = [
+  [1, 1.21, 0.175],
+  [0.12, 0.97, 0.175]
+]
+function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
   console.log('monitor click event', e)
+  console.log(camera.position)
 
+  // Only react to click if it's one of the two specific positions
+  const isNearPosition = (posArr: number[], epsilon: number) =>
+    Math.abs(posArr[0] - camera.position.x) < epsilon &&
+    Math.abs(posArr[1] - camera.position.y) < epsilon &&
+    Math.abs(posArr[2] - camera.position.z) < epsilon;
+
+  const EPS = 0.01; // Adjust this value as needed for your precision
+  if (!isNearPosition(CAMERA_POSITION[0], EPS) && !isNearPosition(CAMERA_POSITION[1], EPS)) {
+    return
+  }
+
+  const targetPosition = isNearPosition(CAMERA_POSITION[1], EPS) ? CAMERA_POSITION[0] : CAMERA_POSITION[1];
+  gsap.to(camera.position, {
+    x: targetPosition[0],
+    y: targetPosition[1],
+    z: targetPosition[2],
+    duration: 1,
+  })
 }
 // import PointLightWShadow from '../common/PointLightWShadow'; // NOT NEEDED
 
 function LandingCanvas() {
+    const { camera } = useThree();
     return (
       <group>
         <OrbitControls
-          target={[0, 1, 0.25]}
+          target={[0, 0.95, 0.175]}
           enableDamping={true}
           enablePan={false}
           enableZoom={true}
           minPolarAngle={- Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
           maxDistance={2}
-          minDistance={0.3}
+          // minDistance={0.3}
           dampingFactor={0.3}
         >
         </OrbitControls>
         <PerspectiveCamera
           makeDefault
-          position={[1.24, 1.24, 0.25]} />
+          // 0.12, 0.97, 0.175
+          position={[1, 1.21, 0.175]}
+          fov={75}
+        /> 
         <ambientLight intensity={0.05} />
         <Suspense fallback={<Loader />}>
-          <Desktop monitor_click_event={monitor_click_event} />
+          <Desktop monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
           {/* <Environment preset="sunset" background /> */}
           <Room />
           <Curtain
@@ -59,5 +87,4 @@ function LandingCanvas() {
       </group>
     );
 }
-
 export default LandingCanvas;
