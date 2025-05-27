@@ -1,10 +1,10 @@
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 // @ts-ignore
-import desktop from '/models/room/Desktop.glb?url'
+import room from '/models/room/Env.glb?url'
 
 
-export function DesktopBasic() {
-    const gltf = useLoader(GLTFLoader, desktop)
+export function RoomBasic() {
+    const gltf = useLoader(GLTFLoader, room)
     return <primitive object={gltf.scene} />
   }

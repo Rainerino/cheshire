@@ -18,7 +18,6 @@ ReactDOMClient.createRoot(container).render(
     <App position={[1.2, 0, 0]} /> */}
     <Stats />
     <Grid infiniteGrid={true} />
-    <OrbitControls target={[0, 1, 0.25]} enableDamping={true} />
     <LandingCanvas />
   </Canvas>,
   )
