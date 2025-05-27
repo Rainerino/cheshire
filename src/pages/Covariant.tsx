@@ -1,0 +1,92 @@
+import { useRef, Suspense } from 'react'
+import { Canvas, useFrame} from '@react-three/fiber'
+import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center } from '@react-three/drei'
+import * as THREE from 'three'
+import type { ThreeElements } from '@react-three/fiber' 
+import { Desktop } from '../components/models/Desktop'
+import { useThree } from '@react-three/fiber'
+
+import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
+import { DesktopBasic } from '../components/models/DesktopBasic'
+import { RoomBasic } from '../components/models/RoomBasic'
+import { Room } from '../components/models/Room'
+import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
+import Curtain from '../components/models/Curtain'
+import gsap from 'gsap'
+import "./Covariant.css"
+import { RedcareBase } from '../components/models/RedcareBase'
+import { RedcareStation } from '../components/models/RedcareStation'
+import { RedcareTote } from '../components/models/RedcareTote'
+import ABB1300 from '../components/models/ABB1300'
+
+function Loader() {
+  const { progress } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
+
+const CAMERA_POSITION: number[][] = [
+  [1, 1.21, 0.175],
+  [0.12, 0.97, 0.175]
+]
+
+const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8);
+const STATION_ROTATION = new THREE.Euler(0, Math.PI / 2, 0);
+
+function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
+  console.log('monitor click event', e)
+}
+// import PointLightWShadow from '../common/PointLightWShadow'; // NOT NEEDED
+
+{/* <Html className="content" rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
+<div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+  <HeroPage />
+</div>
+</Html> */}
+
+function CovariantCanvas() {
+    const { camera } = useThree();
+    return (
+      <group>
+        <OrbitControls
+          target={[0, 0.95, 0.175]}
+          enableDamping={true}
+          // enablePan={false}
+          // enableZoom={false}
+          minPolarAngle={- Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+          // maxDistance={2}
+          // minDistance={0.3}
+          dampingFactor={0.3}
+        >
+        </OrbitControls>
+        <PerspectiveCamera
+          makeDefault
+          // 0.12, 0.97, 0.175
+          position={[1, 1.21, 0.175]}
+          fov={75}
+        /> 
+        <ambientLight intensity={0.05} />
+        <Suspense fallback={<Loader />}>
+          <Desktop monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
+          {/* <Environment preset="sunset" background /> */}
+          <PointLightWShadow
+            position={new THREE.Vector3(0, 3.5, 0)}
+            rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+            intensity={20} />
+          <RedcareBase
+            position={STATION_OFFSET}
+          rotation={STATION_ROTATION}/>
+          <RedcareStation
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION}/>
+          <RedcareTote
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION} />
+          <ABB1300
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION} />
+        </Suspense>
+      </group>
+    );
+}
+export default CovariantCanvas;

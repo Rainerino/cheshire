@@ -3,17 +3,17 @@ import { Canvas, useFrame} from '@react-three/fiber'
 import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center } from '@react-three/drei'
 import * as THREE from 'three'
 import type { ThreeElements } from '@react-three/fiber' 
-import { Desktop } from '../models/Desktop'
+import { Desktop } from '../components/models/Desktop'
 import { useThree } from '@react-three/fiber'
 
 import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
-import { DesktopBasic } from '../models/DesktopBasic'
-import { RoomBasic } from '../models/RoomBasic'
-import { Room } from '../models/Room'
-import PointLightWShadow from '../common/PointLightWShadow' // <--- CORRECTED IMPORT
-import Curtain from '../models/Curtain'
+import { DesktopBasic } from '../components/models/DesktopBasic'
+import { RoomBasic } from '../components/models/RoomBasic'
+import { Room } from '../components/models/Room'
+import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
+import Curtain from '../components/models/Curtain'
 import gsap from 'gsap'
-
+import "./Landing.css"
 
 function Loader() {
   const { progress } = useProgress()
@@ -44,10 +44,17 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
     x: targetPosition[0],
     y: targetPosition[1],
     z: targetPosition[2],
-    duration: 1,
+    duration: 1.5,
+    ease: "power3.inOut",
   })
 }
 // import PointLightWShadow from '../common/PointLightWShadow'; // NOT NEEDED
+
+{/* <Html className="content" rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
+<div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+  <HeroPage />
+</div>
+</Html> */}
 
 function LandingCanvas() {
     const { camera } = useThree();
