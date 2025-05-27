@@ -1,21 +1,37 @@
-import React, { useRef, useState, Suspense} from 'react'
+import React, { useRef, useState, Suspense, useEffect} from 'react'
 import ReactDOMClient from 'react-dom/client'
 import './index.css'
-import { Canvas} from '@react-three/fiber'
+import { Canvas, useThree} from '@react-three/fiber'
 import App from './App.tsx'
 import LandingCanvas from './components/canvas/Landing.tsx'
 import { Stats, OrbitControls, Grid} from '@react-three/drei'
+import * as THREE from 'three'
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element not found');
 
+function Background() {
+  const { scene } = useThree();
+
+  useEffect(() => {
+    scene.background = new THREE.Color(0x18181b);
+    // Optionally, revert to the default background on unmount
+    return () => {
+      scene.background = new THREE.Color('black'); // or null for default
+    };
+  }, [scene]);
+
+  return (
+    <>
+      {/* Your scene content here */}
+    </>
+  );
+}
+
+
 ReactDOMClient.createRoot(container).render(
-  <Canvas shadows>
-    {/* <ambientLight intensity={Math.PI / 2} />
-    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-    <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
-    {/* <App position={[-1.2, 0, 0]} />
-    <App position={[1.2, 0, 0]} /> */}
+  <Canvas shadows={true} >
+    <Background />
     <Stats />
     <Grid infiniteGrid={true} />
     <LandingCanvas />

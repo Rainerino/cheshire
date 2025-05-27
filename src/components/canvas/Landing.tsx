@@ -33,8 +33,6 @@ function LandingCanvas() {
             position={new THREE.Vector3().fromArray([0, 3.5, 0])}
             rotation={new THREE.Euler().fromArray([-Math.PI / 2, 0, 0])}
             intensity={20} />
-
-          {/* <directionalLight position={[0, 0, 5]} color="red" />   */}
         </Suspense>
       </group>
     );
