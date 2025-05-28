@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree, extend } from '@react-three/fiber'
 import { Image, ScrollControls, Scroll, useScroll, OrbitControls, Gltf, useCursor, PerspectiveCamera, RenderTexture, MeshPortalMaterial, Text } from '@react-three/drei'
 import { proxy, useSnapshot } from 'valtio'
@@ -8,6 +8,8 @@ import { suspend } from 'suspend-react'
 import { Desktop } from '../models/Desktop'
 import { Room } from '../models/Room'
 import { RedcareStation } from '../models/RedcareStation'
+import { FC } from 'react'
+import CameraControl from '../common/CameraControl'
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2
 
@@ -41,57 +43,79 @@ function Minimap() {
   )
 }
 
-
-
 function Item({ index, position, width, c = new THREE.Color(), children, ...props }) {
-  const ref = useRef()
+    const ref = useRef()
+    const ref_b = useRef()
   const scroll = useScroll()
-    const portal = useRef()
+    const portal = useRef<THREE.Material>(null)
+    const a_light = useRef()
   const { clicked, urls } = useSnapshot(state)
   const [hovered, hover] = useState(false)
   const click = () => (state.clicked = index === clicked ? null : index)
   const over = () => hover(true)
-  const out = () => hover(false)
+    const out = () => hover(false)
+    
+
     useFrame((state, delta) => {
       
-    // const y = scroll.curve(index / urls.length - 1.5 / urls.length, 4 / urls.length)
+    const y = scroll.curve(index / urls.length - 1.5 / urls.length, 4 / urls.length)
     // easing.damp3(ref.current.scale, [clicked === index ? 4.7 : scale[0], clicked === index ? 5 : 4 + y, 1], 0.15, delta)
     // ref.current.material.scale[0] = ref.current.scale.x
     // ref.current.material.scale[1] = ref.current.scale.y
     // if (clicked !== null && index < clicked) easing.damp(ref.current.position, 'x', position[0] - 2, 0.15, delta)
     // if (clicked !== null && index > clicked) easing.damp(ref.current.position, 'x', position[0] + 2, 0.15, delta)
     // if (clicked === null || clicked === index) easing.damp(ref.current.position, 'x', position[0], 0.15, delta)
-    // easing.damp(ref.current.material, 'grayscale', hovered || clicked === index ? 0 : Math.max(0, 1 - y), 0.15, delta)
-    // easing.dampC(ref.current.material.color, hovered || clicked === index ? 'white' : '#aaa', hovered ? 0.3 : 0.15, delta)
+        // easing.damp(ref.current.material, 'grayscale', hovered || clicked === index ? 0 : Math.max(0, 1 - y), 0.15, delta)
+
+    if (portal.current && ref.current && a_light.current) {
+        // portal.current.intensity = hovered || clicked === index ? 10 : 1;
+        // ref.current.blur = hovered ? 0.4 : 3
+        // ref.current.position.x = position[0] + 2
+        const targetScale = hovered ? 1.3 : 1;
+        console.log(clicked)
+        easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
+        easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
+        easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
+        easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
+        easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
+        easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
+
+        // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
+        easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 1, delta)
+        easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
+    }
+    // easing.dampC(portal.current.material.color, hovered || clicked === index ? 'white' : '#aaa', hovered ? 0.3 : 0.15, delta)
     })
     useCursor(hovered)
     //   return <Image ref={ref} {...props} position={position} scale={scale} onClick={click} onPointerOver={over} onPointerOut={out} />
     return <group {...props}>
-        <Text name={index} fontSize={0.5} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
-            /{index}
-        </Text>
-        <mesh name='{index}'
+
+        <mesh
+            ref={ref}
+            name='{index}'
             position={position}
             onDoubleClick={(e) => (e.stopPropagation())}
             onPointerOver={(e) => hover(true)}
             onPointerOut={() => hover(false)}>
                 <planeGeometry args={[width, width * GOLDEN_RATIO]} />
-                <MeshPortalMaterial ref={portal} side={THREE.DoubleSide}>
-                <color attach="background" args={['#f0f0f0']} />
-                <ambientLight intensity={1} />
-                {children}
+                <MeshPortalMaterial ref={portal} transparent blur={0.1} side={THREE.DoubleSide} >
+                    <color attach='background' args={['white']} />
+                    <ambientLight ref={a_light}  intensity={1} />
+                    {children}
                 {/* <Gltf src="https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf" position={[0, index/6, -3]} /> */}
             </MeshPortalMaterial>
+            <Text name={index} fontSize={0.5} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
+                /{index}
+            </Text>
         </mesh>
-        <mesh name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
+        <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
             <planeGeometry args={[width + 0.05, width * GOLDEN_RATIO + 0.05]} />
             <meshBasicMaterial color="black" />
         </mesh>
     </group>
 
 }
-import { FC } from 'react'
-import CameraControl from '../common/CameraControl'
+
 
 function Items({ w = 1}) {
     const gap = w * 0.3
