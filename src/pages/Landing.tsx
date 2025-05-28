@@ -51,20 +51,13 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
     ease: "power3.inOut",
   })
 }
-// import PointLightWShadow from '../common/PointLightWShadow'; // NOT NEEDED
-
-{/* <Html className="content" rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
-<div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
-  <HeroPage />
-</div>
-</Html> */}
 
 function LandingCanvas() {
     const { camera } = useThree();
     return (
       <group>
         <OrbitControls
-          target={CAMERA_LOOK_AT}
+          target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping={true}
           enablePan={false}
           enableZoom={true}

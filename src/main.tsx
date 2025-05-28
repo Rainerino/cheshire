@@ -4,7 +4,7 @@ import './index.css'
 import { Canvas, useThree} from '@react-three/fiber'
 import LandingCanvas from './pages/Landing.tsx'
 import CovariantCanvas from './pages/Covariant.tsx'
-import { Stats, OrbitControls, Grid} from '@react-three/drei'
+import { Stats, OrbitControls, Grid, Preload} from '@react-three/drei'
 import * as THREE from 'three'
 import { Perf } from "r3f-perf"
 import Background from './components/common/Background.tsx'
@@ -22,6 +22,7 @@ ReactDOMClient.createRoot(container).render(
       {debug && <Perf position="bottom-left" />}
       {debug && <Grid infiniteGrid={true} />}
       <CovariantCanvas />
+      <Preload all />
     </Canvas>
   </React.StrictMode>
 
