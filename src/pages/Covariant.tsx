@@ -19,8 +19,6 @@ import type { ThreeElements } from '@react-three/fiber'
 import gsap from 'gsap'
 
 import { Desktop } from '../components/models/Desktop'
-import { DesktopBasic } from '../components/models/DesktopBasic'
-import { RoomBasic } from '../components/models/RoomBasic'
 import { Room } from '../components/models/Room'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 import Curtain from '../components/models/Curtain'

@@ -19,12 +19,14 @@
     "@react-three/postprocessing": "^3.0.4",
     "cannon-es": "^0.20.0",
     "gsap": "^3.13.0",
+    "leva": "^0.10.0",
     "r3f-perf": "^7.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "three-addons": "^1.2.0",
     "three-stdlib": "^2.36.0",
     "urdf-loader": "^0.12.5",
+    "valtio": "^2.1.5",
     "wouter": "^3.7.0"
   },
   "devDependencies": {

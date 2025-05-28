@@ -1,20 +1,18 @@
-import { useRef, Suspense } from 'react'
-import { Canvas, useFrame} from '@react-three/fiber'
-import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center } from '@react-three/drei'
+import { useRef, Suspense, useState } from 'react'
+import { Canvas, useFrame, extend} from '@react-three/fiber'
+import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center} from '@react-three/drei'
 import * as THREE from 'three'
 import type { ThreeElements } from '@react-three/fiber' 
 import { Desktop } from '../components/models/Desktop'
 import { useThree } from '@react-three/fiber'
 
 import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
-import { DesktopBasic } from '../components/models/DesktopBasic'
-import { RoomBasic } from '../components/models/RoomBasic'
 import { Room } from '../components/models/Room'
 import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
 import Curtain from '../components/models/Curtain'
 import gsap from 'gsap'
 import "./Landing.css"
-
+// import { useFrame, useRef } from 'react-three-fiber';
 function Loader() {
   const { progress } = useProgress()
   return <Html center>{progress} % loaded</Html>
@@ -38,9 +36,9 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
     Math.abs(posArr[2] - camera.position.z) < epsilon;
 
   const EPS = 0.01; // Adjust this value as needed for your precision
-  if (!isNearPosition(CAMERA_POSITION[0], EPS) && !isNearPosition(CAMERA_POSITION[1], EPS)) {
-    return
-  }
+  // if (!isNearPosition(CAMERA_POSITION[0], EPS) && !isNearPosition(CAMERA_POSITION[1], EPS)) {
+  //   return
+  // }
 
   const targetPosition = isNearPosition(CAMERA_POSITION[1], EPS) ? CAMERA_POSITION[0] : CAMERA_POSITION[1];
   gsap.to(camera.position, {
@@ -50,22 +48,26 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
     duration: 1.5,
     ease: "power3.inOut",
   })
+
 }
 
 function LandingCanvas() {
-    const { camera } = useThree();
+  const { camera, scene } = useThree();
     return (
       <group>
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping={true}
+          dampingFactor= {0.03}
           enablePan={false}
-          enableZoom={true}
-          minPolarAngle={- Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
+          enableRotate = {true}
+          enableZoom={false}
+          minPolarAngle={-Math.PI / 18 + Math.PI / 2}
+          maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
           maxDistance={2}
+          minAzimuthAngle={-Math.PI / 10 + Math.PI / 2}
+          maxAzimuthAngle={ Math.PI / 10 + Math.PI / 2 }
           // minDistance={0.3}
-          dampingFactor={0.3}
         >
         </OrbitControls>
         <PerspectiveCamera
@@ -79,6 +81,7 @@ function LandingCanvas() {
           <Desktop
             position={new THREE.Vector3(0, 0.28, 0)}
             monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
+
           {/* <Environment preset="sunset" background /> */}
           <Room />
           <Curtain

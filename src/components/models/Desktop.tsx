@@ -8,6 +8,7 @@ import { useGLTF, Html } from '@react-three/drei'
 import { type GLTF } from 'three-stdlib'
 import desktop from '/models/room/Desktop.glb?url'
 
+
 type GLTFResult = GLTF & {
   nodes: {
     Node1: THREE.Mesh
