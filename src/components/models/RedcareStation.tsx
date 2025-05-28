@@ -11,26 +11,16 @@ import station from '/models/stations/redcare_one_piece.glb?url'
 
   
   const STATION_MATERIAL = new THREE.MeshPhysicalMaterial({
-    color: 0x0a0808,
-    metalness: 0.75,
-    roughness: 0.5,
+    color: 0x888888, // light gray metallic
+    metalness: 1.0, // fully metallic
+    roughness: 0.9, // high roughness for coarse look
     opacity: 1.0,
     transparent: false,
-    transmission: 0.99,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.25,
+    transmission: 0.0, // no transmission for metal
+    clearcoat: 0.1, // minimal clearcoat for a less shiny finish
+    clearcoatRoughness: 0.8, // rough clearcoat
   });
-  
-  const ROBOT_MATERIAL = new THREE.MeshPhysicalMaterial({
-    color: 0xff5733,
-    metalness: 0.75,
-    roughness: 0.5,
-    opacity: 0.3,
-    transparent: true,
-    transmission: 0.99,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.25,
-  });
+
 
 
 type GLTFResult = GLTF & {
@@ -46,8 +36,8 @@ export function RedcareStation(props: JSX.IntrinsicElements['group']) {
     <group {...props} dispose={null}>
       <mesh
         name="redcare_01"
-        castShadow
-        receiveShadow
+        castShadow={true}
+        receiveShadow ={true}
         geometry={nodes.redcare_01.geometry}
         material={STATION_MATERIAL}
       />

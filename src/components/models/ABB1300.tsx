@@ -4,6 +4,18 @@ import * as THREE from 'three';
 import URDFLoader from 'urdf-loader';
 import robot from '/models/robots/abb_irb1300/robot.urdf?url'
 
+const ROBOT_MATERIAL = new THREE.MeshPhysicalMaterial({
+color: 0xff5733,
+metalness: 0.75,
+roughness: 0.5,
+opacity: 0.3,
+transparent: true,
+transmission: 0.99,
+clearcoat: 1.0,
+clearcoatRoughness: 0.25,
+});
+
+
 function URDFRobot({ url }: { url: string }) {
     const groupRef = useRef<THREE.Group>(null);
     const { scene } = useThree();
@@ -19,6 +31,11 @@ function URDFRobot({ url }: { url: string }) {
                     robot.traverse((c) => {
                         c.castShadow = true;
                         c.receiveShadow = true;
+                        // Change material if it's a mesh
+                        if ((c as THREE.Mesh).isMesh) {
+                            const mesh = c as THREE.Mesh;
+                            mesh.material = ROBOT_MATERIAL
+                        }
                     });
                     // robot.joints[`joint_1`].setJointValue(THREE.MathUtils.degToRad(-30));
                     // for (let i = 2; i <= 6; i++) {
@@ -26,10 +43,9 @@ function URDFRobot({ url }: { url: string }) {
                     // }
 
                     robot.updateMatrixWorld(true);
-                
-                
+
                     robot.position.y += 0.8;
-                
+
                     groupRef.current.add(robot);
                 }
             },

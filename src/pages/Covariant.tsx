@@ -37,20 +37,21 @@ function Loader() {
 
 const CAMERA_POSITION: number[][] = [
   [-0.3, 4.33, 1.76],
-  [0.12, 1.25, 0.175]
+  [-2.63, 3.05, 3.65],
+  [-2.07, 5.07, 2.11]
 ]
-// _Vector3 {x: -0.3195355788383821, y: 4.337162435914561, z: 1.2508072134178676}
-const CAMERA_LOOK_AT: number[] = [-0.3, 0, 2.7]
+// _Vector3 {x: -2.069830475568031, y: 5.07567819499762, z: 2.1135408510197125}
+const CAMERA_LOOK_AT: number[][] = [
+  [-0.3, 0, 2.7],
+  [1, 0.5, 1],
+  [0, 0.5, 2.11],
+]
 
 const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8);
 const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0);
 
-// _Vector3 {x: -0.28194033633246585, y: 4.071042611766185, z: 1.7684700243287432}
-// Covariant.tsx: 68 _Vector3 { x: -0.001198597740649782, y: -0.9804993308335117, z: 0.1965187665300494 }
+const CURRENT_TARGET = 2
 
-// _Vector3 {x: -0.2617058030913809, y: -0.9651443213275512, z: 0.0025517910329686533}x: -0.2617058030913809y: -0.9651443213275512z: 0.0025517910329686533[[Prototype]]: Object
-// Covariant.tsx:69 _Vector3 {x: -0.9309810974777887, y: 4.0223803647815535, z: 2.4347546739731984}
-// {x: -1.2752672368179523, y: 3.209193407052544, z: 2.2971683008864168}
 function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
   console.log('monitor click event', e)
   console.log(camera.position)
@@ -97,7 +98,7 @@ function CovariantCanvas() {
     return (
       <group>
         <OrbitControls
-          target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
+          target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
           enableDamping={true}
           // enablePan={false}
           // enableRotate = {false}
@@ -110,10 +111,10 @@ function CovariantCanvas() {
         />
         <PerspectiveCamera
           makeDefault
-          position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
+          position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
           fov={30}
         /> 
-        <ambientLight intensity={0.05} />
+        <ambientLight intensity={0.1} />
         {/* <AccumulativeShadows temporal frames={100} scale={10}>
           <RandomizedLight amount={8} position={[5, 5, 0]} />
         </AccumulativeShadows> */}
@@ -123,9 +124,20 @@ function CovariantCanvas() {
             monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
           {/* <Environment preset="sunset" background /> */}
           <PointLightWShadow
-            position={new THREE.Vector3(0, 3.5, 0)}
+            position={new THREE.Vector3(-0.35, 2.4, 2.5)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-            intensity={20} />
+            intensity={2}
+            decay={1}
+            near={0.2}
+            far={10} />
+          {/* {x: 0.00785536018694799, y: 3.362279762715715, z: 1.7383673784236808} */}
+          <PointLightWShadow
+            position={new THREE.Vector3(0, 2.3, 1.7)}
+            rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+            intensity={0.5}
+            decay={1}
+            near={0.2}
+            far={10} />
           <RedcareBase
             position={STATION_OFFSET}
           rotation={STATION_ROTATION}/>

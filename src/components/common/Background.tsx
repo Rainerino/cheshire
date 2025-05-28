@@ -6,9 +6,9 @@ function Background() {
   const { scene } = useThree();
 
   useEffect(() => {
-    // scene.background = new THREE.Color(#f0f0f0);
+    scene.background = new THREE.Color(0x18181b);
     return () => {
-      scene.background = new THREE.Color('#f0f0f0');
+      // Clean up the background color when the component unmounts
     };
   }, [scene]);
 

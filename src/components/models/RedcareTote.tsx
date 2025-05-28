@@ -8,16 +8,14 @@ import React, { useRef, type JSX } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { type GLTF } from 'three-stdlib'
 import tote from '/models/stations/pick_tote.glb?url'
-
 const TOTE_MATERIAL = new THREE.MeshPhysicalMaterial({
-color: 0x0000ff,
-metalness: 0.25,
-// roughness: 0.1,
-opacity: 1.0,
-transparent: false,
-transmission: 0.99,
-clearcoat: 1.0,
-clearcoatRoughness: 0.25,
+  color: 0x0000ff,
+  metalness: 0.0,
+  roughness: 0.95,
+  opacity: 1.0,
+  transparent: false,
+  transmission: 0.0,
+  clearcoat: 0.0,
 });
 
 type GLTFResult = GLTF & {
