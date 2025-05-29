@@ -9,6 +9,7 @@ import { type GLTF } from 'three-stdlib'
 import model from '/models/sku/cap_bottle.glb?url'
 import { useFrame, useThree } from '@react-three/fiber'
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
+import { OBB } from 'three/addons/math/OBB.js';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,7 +27,7 @@ function PointCloudMesh({ ...props }) {
   const ref = useRef()
   const lastScroll = useRef(scroll.offset);
   
-  const sphereGeometry = new THREE.SphereGeometry(0.001, 6, 6);
+  const sphereGeometry = new THREE.SphereGeometry(0.002, 6, 6);
   const sphereMaterial = new THREE.MeshBasicMaterial({
   color: 0xffa0e6
   });
@@ -57,7 +58,9 @@ function PointCloudMesh({ ...props }) {
       const COUNT = Math.floor(scroll.offset * TOTAL_POINTS);
       const tempObject = new THREE.Object3D();
       const tempPosition = new THREE.Vector3();
-      sampler.setWeightAttribute("position.y")
+      ref.current.position.set(mesh.position.x, mesh.position.y, mesh.position.z)
+      ref.current.rotation.set(mesh.rotation.x, mesh.rotation.y, mesh.rotation.z)
+
       for (let i = 0; i < TOTAL_POINTS; i++) {
         if (i > COUNT) {
           continue;
@@ -69,13 +72,21 @@ function PointCloudMesh({ ...props }) {
         tempObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
         // tempObject.scale.setScalar(Math.random() * 0.5 + 0.5);;
         tempObject.updateMatrix();
+        tempObject.updateMatrixWorld();
 
-        const tempWorldPosition = new THREE.Vector3();
-        tempObject.getWorldPosition(tempWorldPosition);
-        tempWorldPosition.add(mesh.position);
-        tempWorldPosition.applyQuaternion(mesh.quaternion);
+        // const tempWorldPosition = new THREE.Vector3();
+        const tempWorldPosition = tempObject.localToWorld(tempObject.position);
+        // const meshWorldPosition = new THREE.Vector3();
+        // const meshWorldQuaternion = new THREE.Quaternion();
+        // // tempObject.localToWorld(meshWorldPosition);
+        // mesh.getWorldQuaternion(meshWorldQuaternion);
 
-        console.log(tempWorldPosition);
+        // If the points are on the surface
+        // tempWorldPosition.add(meshWorldPosition);
+        // console.log(tempWorldPosition)
+        // tempWorldPosition.applyQuaternion(meshWorldQuaternion);
+
+        // console.log(tempWorldPosition);
         // If the points are not on the surface
         // Use raycaster.
         const direction = from.clone().sub(tempWorldPosition).normalize();
@@ -93,7 +104,7 @@ function PointCloudMesh({ ...props }) {
         const material = new THREE.LineBasicMaterial( { vertexColors: true } );
         const line = new THREE.Line(geometry, material);
 
-        state.scene.add(line)
+        // state.scene.add(line)
 
         raycaster.set(from, direction);
         const intersects = raycaster.intersectObjects(state.scene.children);
@@ -118,6 +129,10 @@ function PhysicalMesh({ ...props }) {
   const scroll = useScroll()
   const ref = useRef()
   const { nodes, materials } = useGLTF(model) as GLTFResult
+  const mesh = new THREE.Mesh(
+    nodes.model.geometry,
+    materials.material_0,
+  )
   useFrame((state, delta) => {
     if (ref.current) {
       ref.current.material.opacity = 1 - scroll.offset / 1.5;
@@ -125,13 +140,30 @@ function PhysicalMesh({ ...props }) {
       ref.current.material.needsUpdate = true;
     }
   });
-  return <primitive ref={ref} object={
-    new THREE.Mesh(
-      nodes.model.geometry,
-      materials.material_0,
-    )
-  } {...props} dispose={null} />;
+  return <primitive ref={ref} object={mesh} {...props} dispose={null} />;
 }
+function BBoxMesh({ ...props }) { 
+  const { nodes, materials } = useGLTF(model) as GLTFResult
+  const mesh = useMemo(() => new THREE.Mesh(
+    nodes.model.geometry,
+    materials.material_0,
+  ), [nodes, materials]);
+  const ref = useRef<THREE.Mesh>(null);
+  const boxHelperRef = useRef<THREE.BoxHelper>(null);
+
+  useFrame(() => {
+    if (boxHelperRef.current) {
+      boxHelperRef.current.update();
+    }
+  });
+
+  return (
+    <>
+      <primitive ref={boxHelperRef} object={new THREE.BoxHelper(mesh, 0xffff00)} {...props} />
+    </>
+  );
+}
+
 
 export function CapBottle(props: JSX.IntrinsicElements['group']) {
   
@@ -139,7 +171,6 @@ export function CapBottle(props: JSX.IntrinsicElements['group']) {
   return (
     <group {...props} dispose={null}>
       <ScrollControls damping={0.1} pages={1}>
-        
         <PivotControls
           enabled={true}
           lineWidth={3}
@@ -149,11 +180,10 @@ export function CapBottle(props: JSX.IntrinsicElements['group']) {
           opacity={0.5}
           scale={0.1}>
           <PointCloudMesh />
-      <PhysicalMesh />
+          <PhysicalMesh />
+          <BBoxMesh />
         </PivotControls>
-
       </ScrollControls>
-
     </group>
   )
 }
