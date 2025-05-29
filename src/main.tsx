@@ -22,7 +22,6 @@ ReactDOMClient.createRoot(container).render(
       {debug && <Perf position="bottom-left" />}
       {debug && <Grid infiniteGrid={true} />}
       <LandingPage />
-      <Preload all />
     </Canvas>
   </React.StrictMode>
 

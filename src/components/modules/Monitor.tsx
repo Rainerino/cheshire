@@ -45,9 +45,10 @@ function Minimap() {
 
 function Item({ index, position, width, c = new THREE.Color(), children, ...props }) {
     const ref = useRef()
-    const ref_b = useRef()
+    // const ref_b = useRef()
     const a_light = useRef()
     const plane = useRef()
+    const bg = useRef()
   const scroll = useScroll()
     const portal = useRef<THREE.Material>(null)
     
@@ -81,13 +82,13 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
-        easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
-        easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
-        easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
+        // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
+        // easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
+        // easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
 
-        const targetPositionZ = y;
-        easing.damp(ref.current.position, "z", targetPositionZ, 0.15, delta)
-        easing.damp(ref_b.current.position, "z", targetPositionZ -0.001, 0.15, delta)
+        // const targetPositionZ = y;
+        // easing.damp(ref.current.position, "z", targetPositionZ, 0.15, delta)
+        // easing.damp(ref_b.current.position, "z", targetPositionZ -0.001, 0.15, delta)
         
         const new_plane = new THREE.PlaneGeometry(w * (1 +  y), h);
         plane.current.dispose();
@@ -96,6 +97,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 1, delta)
         // TODO: change the color of plane geometry.
+        // bg.current.material.color
         // easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
     }
     // easing.dampC(portal.current.material.color, hovered || clicked === index ? 'white' : '#aaa', hovered ? 0.3 : 0.15, delta)
@@ -108,12 +110,17 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
             ref={ref}
             name='{index}'
             position={position}
-            rotation={[0, Math.PI / 2, 0]}
+            rotation={new THREE.Euler(-0.14, Math.PI/2, 0, "YZX")}
             onDoubleClick={(e) => (e.stopPropagation())}
             onPointerOver={(e) => hover(true)}
             onPointerOut={() => hover(false)}>
             <planeGeometry ref={plane} args={[w, h]} />
-                <MeshPortalMaterial ref={portal} transparent blur={0.1} side={THREE.DoubleSide} >
+            <MeshPortalMaterial
+                // worldUnits={true}
+                ref={portal}
+                transparent blur={0.1}
+                // side={THREE.DoubleSide}
+                color='white'>
                     <color attach='background' args={['white']} />
                     <ambientLight ref={a_light}  intensity={1} />
                     {children}
@@ -123,10 +130,10 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
                 /{index}
             </Text>
         </mesh>
-        <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
+        {/* <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
             <planeGeometry args={[w + 0.05, h + 0.05]} />
             <meshBasicMaterial color="black" />
-        </mesh>
+        </mesh> */}
     </group>
 
 }
@@ -137,23 +144,30 @@ function Items({ w = 0.5}) {
     const { urls } = useSnapshot(state)
     const { width } = useThree((state) => state.viewport)
     const xW = w + gap
+    const page_w = 0.541
+    const page_h = 0.305
     return (
-        <ScrollControls vertical damping={0.1} pages={(width - xW + urls.length * xW) / width}>
-            <Minimap />
-            <mesh >
-                <meshStandardMaterial>
-                    <Scroll>
-                        <Item index={0} position={new THREE.Vector3(0, -xW, 0)} width={w}>
-                            <Desktop position={[0, -1, -3]} />
-                        </Item>/
-                        <Item index={1} position={new THREE.Vector3(0, 0, 0)} width={w}>
-                            <Room position={[0, -5, -30]} />
-                        </Item>/
-                        <Item index={2} position={new THREE.Vector3( 0, xW,0)} width={w}>
-                            <RedcareStation position={[0, -2, -6]} />
-                        </Item>/
-                    </Scroll>
-                    </meshStandardMaterial>
+        <ScrollControls
+            vertical={true}
+            damping={0.1} pages={(width - xW + urls.length * xW) / width}>
+            {/* <Minimap /> */}
+            <mesh>
+                <planeGeometry args={[page_w, page_h]}/>
+                <meshStandardMaterial color='white'>
+                    <RenderTexture attach="map">
+                        <Scroll>
+                            <Item index={0} position={new THREE.Vector3(-1.2, 1-xW, -0.5)} width={w}>
+                                <Desktop position={[1, -2, -3]} />
+                            </Item>/
+                            <Item index={1} position={new THREE.Vector3(-1.2, 1, -0.5)} width={w}>
+                                {/* <Room position={[0, -5, -30]} /> */}
+                            </Item>/
+                            <Item index={2} position={new THREE.Vector3( -1.2, 1+xW, -0.5)} width={w}>
+                                <RedcareStation position={[0, 0, 0]} />
+                            </Item>/
+                        </Scroll>
+                    </RenderTexture>
+                </meshStandardMaterial>
             </mesh>
         </ScrollControls>
     )
@@ -163,15 +177,10 @@ function Items({ w = 0.5}) {
 // Helper component to render Items to a texture using Drei's <RenderTexture>
 
 const MonitorDisplay: FC = (props) => {
-    const meshRef = useRef()
-    // const [hovered, hover] = useState(false)
-    // const [clicked, click] = useState(false)
-    // const [active, setActive] = useState(false);
-
     return (
         <group {...props}>
-            <color attach="background" args={['#ffffff']} />
-            {/* <ambientLight intensity={1} /> */}
+            <ambientLight intensity={10} />
+            {/* <CameraControl></CameraControl> */}
             <Items />
         </group>
     )
