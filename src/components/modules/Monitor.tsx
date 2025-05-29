@@ -46,9 +46,11 @@ function Minimap() {
 function Item({ index, position, width, c = new THREE.Color(), children, ...props }) {
     const ref = useRef()
     const ref_b = useRef()
+    const a_light = useRef()
+    const plane = useRef()
   const scroll = useScroll()
     const portal = useRef<THREE.Material>(null)
-    const a_light = useRef()
+    
   const { clicked, urls } = useSnapshot(state)
   const [hovered, hover] = useState(false)
   const click = () => (state.clicked = index === clicked ? null : index)
@@ -56,6 +58,8 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
     const out = () => hover(false)
     
 
+    const w = width * GOLDEN_RATIO;
+    const h = width;
     useFrame((state, delta) => {
       
     const y = scroll.curve(index / urls.length - 1.5 / urls.length, 4 / urls.length)
@@ -67,12 +71,13 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
     // if (clicked === null || clicked === index) easing.damp(ref.current.position, 'x', position[0], 0.15, delta)
         // easing.damp(ref.current.material, 'grayscale', hovered || clicked === index ? 0 : Math.max(0, 1 - y), 0.15, delta)
 
-    if (portal.current && ref.current && a_light.current) {
+    if (portal.current && ref.current && a_light.current && plane.current) {
         // portal.current.intensity = hovered || clicked === index ? 10 : 1;
         // ref.current.blur = hovered ? 0.4 : 3
         // ref.current.position.x = position[0] + 2
-        const targetScale = hovered ? 1.3 : 1;
-        console.log(clicked)
+        const targetScale = y / 5 + 1; // normal to 1
+        // width = width * y;
+        console.log(y)
         easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
@@ -80,16 +85,25 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
         easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
 
+        const targetPositionZ = y;
+        easing.damp(ref.current.position, "z", targetPositionZ, 0.15, delta)
+        easing.damp(ref_b.current.position, "z", targetPositionZ -0.001, 0.15, delta)
+        
+        const new_plane = new THREE.PlaneGeometry(w * (1 +  y), h);
+        plane.current.dispose();
+        plane.current = new_plane;
+        console.log(plane.current)
         // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 1, delta)
-        easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
+        // TODO: change the color of plane geometry.
+        // easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
     }
     // easing.dampC(portal.current.material.color, hovered || clicked === index ? 'white' : '#aaa', hovered ? 0.3 : 0.15, delta)
     })
     useCursor(hovered)
+
     //   return <Image ref={ref} {...props} position={position} scale={scale} onClick={click} onPointerOver={over} onPointerOut={out} />
     return <group {...props}>
-
         <mesh
             ref={ref}
             name='{index}'
@@ -97,19 +111,19 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
             onDoubleClick={(e) => (e.stopPropagation())}
             onPointerOver={(e) => hover(true)}
             onPointerOut={() => hover(false)}>
-                <planeGeometry args={[width, width * GOLDEN_RATIO]} />
+            <planeGeometry ref={plane} args={[w, h]} />
                 <MeshPortalMaterial ref={portal} transparent blur={0.1} side={THREE.DoubleSide} >
                     <color attach='background' args={['white']} />
                     <ambientLight ref={a_light}  intensity={1} />
                     {children}
-                {/* <Gltf src="https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf" position={[0, index/6, -3]} /> */}
-            </MeshPortalMaterial>
-            <Text name={index} fontSize={0.5} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
+                    {/* <Gltf src="https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf" position={[0, index/6, -3]} /> */}
+                </MeshPortalMaterial>
+            <Text name={index} fontSize={0.2} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
                 /{index}
             </Text>
         </mesh>
         <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
-            <planeGeometry args={[width + 0.05, width * GOLDEN_RATIO + 0.05]} />
+            <planeGeometry args={[w + 0.05, h + 0.05]} />
             <meshBasicMaterial color="black" />
         </mesh>
     </group>
@@ -118,24 +132,34 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
 
 
 function Items({ w = 1}) {
-    const gap = w * 0.3
+    const gap = w * 0.2
     const { urls } = useSnapshot(state)
     const { width } = useThree((state) => state.viewport)
     const xW = w + gap
     return (
-        <ScrollControls horizontal damping={0.1} pages={(width - xW + urls.length * xW) / width}>
+        <ScrollControls vertical damping={0.1} pages={(width - xW + urls.length * xW) / width}>
             <Minimap />
-            <Scroll>
-                <Item index={0} position={new THREE.Vector3(0, 0, 0)} width={w}>
-                    <Desktop position={[0, -1, -3]} />
-                </Item>/
-                <Item index={1} position={new THREE.Vector3(xW, 0, 0)} width={w}>
-                    <Room position={[0, -5, -30]} />
-                </Item>/
-                <Item index={2} position={new THREE.Vector3(2*xW, 0, 0)} width={w}>
-                    <RedcareStation position={[0, -2, -6]} />
-                </Item>/
-            </Scroll>
+            <mesh >
+                <planeGeometry args={[5 * GOLDEN_RATIO, 5]} />
+                <meshStandardMaterial>
+                    <RenderTexture attach="map">
+                    <Scroll>
+                        <Item index={0} position={new THREE.Vector3(0, -xW, 0)} width={w}>
+                            <Desktop position={[0, -1, -3]} />
+                        </Item>/
+                        <Item index={1} position={new THREE.Vector3(0, 0, 0)} width={w}>
+                            <Room position={[0, -5, -30]} />
+                        </Item>/
+                        <Item index={2} position={new THREE.Vector3( 0, xW,0)} width={w}>
+                            <RedcareStation position={[0, -2, -6]} />
+                        </Item>/
+                    </Scroll>
+                    </RenderTexture>
+                    </meshStandardMaterial>
+            </mesh>
+
+                        
+
         </ScrollControls>
     )
 }
