@@ -21,7 +21,7 @@ ReactDOMClient.createRoot(container).render(
       {debug && <Stats />}
       {debug && <Perf position="bottom-left" />}
       {debug && <Grid infiniteGrid={true} />}
-      <LandingPage />
+      <CovariantPage />
     </Canvas>
   </React.StrictMode>
 

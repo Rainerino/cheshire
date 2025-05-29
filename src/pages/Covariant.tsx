@@ -25,8 +25,9 @@ import Curtain from '../components/models/Curtain'
 import "./Covariant.css"
 import { RedcareBase } from '../components/models/RedcareBase'
 import { RedcareStation } from '../components/models/RedcareStation'
-import { RedcareTote } from '../components/models/RedcareTote'
+import  ToteScene  from './Tote'
 import { ABB1300 } from '../components/models/ABB1300'
+import CameraControl from '../components/common/CameraControl'
 
 function Loader() {
   const { progress } = useProgress()
@@ -47,6 +48,9 @@ const CAMERA_LOOK_AT: number[][] = [
 
 const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8);
 const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0);
+const TOTE_OFFSET = new THREE.Vector3(0.556, 0.867, 0.725).add(STATION_OFFSET);
+
+
 
 const CURRENT_TARGET = 2
 
@@ -55,54 +59,20 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
   console.log(camera.position)
 }
 
-function Frame({ ...props }) {
-  const portal = useRef()
-  const { camera } = useThree();
-  const [hovered, hover] = useState(false)
-  useFrame(() => {
-    // console.log(camera.position)
-    // camera.lookAt(new THREE.Vector3().fromArray(CAMERA_LOOK_AT))
-    // camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI/2)
-    // camera.rotation.z += Math.PI/2;
-    // camera.position.set(1, 1, 1)
-  });
-  useCursor(hovered)
-    return (
-      <group>
-        <mesh
-          position={[-0.15, 1.20, 0.17]}
-          rotation={[0, Math.PI/2, 0]}
-          onDoubleClick={(e) => (e.stopPropagation())}
-          onPointerOver={(e) => hover(true)}
-          onPointerOut={() => hover(false)}>
-          {/* <color attach="background" args={['#f0f0f0']} /> */}
-          <planeGeometry args={[0.53, 0.3]} />
-          <MeshPortalMaterial
-            ref={portal}
-            // blur = {1024}
-            side={THREE.DoubleSide}>
-            <color attach="background" args={["#0fffff"]} />
-            <ambientLight intensity={1} />
-            {/* <RedcareStation /> */}
-            <Gltf src="/models/room/Desktop.glb" scale={1} position={[0, -0.8, -4]} /> 
-          </MeshPortalMaterial>
-        </mesh>
-      </group>
-    )
-}
+
 function CovariantPage() {
     const { camera } = useThree();
     return (
       <group>
-        <OrbitControls
+        {/* <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
           enableDamping={true}
           enablePan={false}
           enableRotate = {false}
           enableZoom={false}
-          // minPolarAngle={- Math.PI / 2}
-          // maxPolarAngle={Math.PI / 2}
-          maxDistance={100}
+          minPolarAngle={- Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+          maxDistance={10}
           // minDistance={0.3}
           dampingFactor={0.3}
         />
@@ -110,16 +80,13 @@ function CovariantPage() {
           makeDefault
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
           fov={30}
-        /> 
+        />  */}
+        <CameraControl />
         {/* <ambientLight intensity={0.1} /> */}
         {/* <AccumulativeShadows temporal frames={100} scale={10}>
           <RandomizedLight amount={8} position={[5, 5, 0]} />
         </AccumulativeShadows> */}
         <Suspense fallback={<Loader />}>
-          <Desktop
-            position={new THREE.Vector3(0, 0.28, 0)}
-            monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
-          {/* <Environment preset="sunset" background /> */}
           <PointLightWShadow
             position={new THREE.Vector3(-0.35, 2.4, 2.5)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
@@ -141,13 +108,13 @@ function CovariantPage() {
           <RedcareStation
             position={STATION_OFFSET}
             rotation={STATION_ROTATION}/>
-          <RedcareTote
-            position={STATION_OFFSET}
+          <ToteScene
+            // position={STATION_OFFSET.add(TOTE_OFFSET)}
+            position={TOTE_OFFSET}
             rotation={STATION_ROTATION} />
           <ABB1300
             position={STATION_OFFSET}
             rotation={STATION_ROTATION} />
-          <Frame />
         </Suspense>
       </group>
     );

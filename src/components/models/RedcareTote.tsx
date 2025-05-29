@@ -35,6 +35,7 @@ export function RedcareTote(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.tote_mesh_0.geometry}
         material={TOTE_MATERIAL}
+        position={[0.556, -0.867, 0.725]}
       />
     </group>
   )
