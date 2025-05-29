@@ -58,15 +58,18 @@ function ToteScene(props) {
             <RandomizedLight amount={8} position={[5, 5, 0]} />
         </AccumulativeShadows> */}
         <PointLightWShadow
-            position={new THREE.Vector3(-0.35, 2.4, 2.5)}
+            position={new THREE.Vector3(0, 2.4, 0)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
             intensity={2}
             decay={1}
             near={0.2}
             far={10}
         />
+        <CameraControl />
         <RedcareTote />
-        <CapBottle position={randomPosition()} />
+        <CapBottle
+            position={randomPosition()}
+            rotation={[Math.PI / 2, 0, 0]}/>
         {/* <Coffee position={randomPosition()} />
         <InkBox position={randomPosition()} />
         <Mustard position={randomPosition()} /> */}

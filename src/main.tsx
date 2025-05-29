@@ -4,6 +4,7 @@ import './index.css'
 import { Canvas, useThree} from '@react-three/fiber'
 import LandingPage from './pages/Landing.tsx'
 import CovariantPage from './pages/Covariant.tsx'
+import ToteScene from './pages/Tote.tsx'
 import { Stats, OrbitControls, Grid, Preload} from '@react-three/drei'
 import * as THREE from 'three'
 import { Perf } from "r3f-perf"
@@ -21,7 +22,7 @@ ReactDOMClient.createRoot(container).render(
       {debug && <Stats />}
       {debug && <Perf position="bottom-left" />}
       {debug && <Grid infiniteGrid={true} />}
-      <CovariantPage />
+      <ToteScene />
     </Canvas>
   </React.StrictMode>
 
