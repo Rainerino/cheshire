@@ -141,9 +141,7 @@ function Items({ w = 0.5}) {
         <ScrollControls vertical damping={0.1} pages={(width - xW + urls.length * xW) / width}>
             <Minimap />
             <mesh >
-                <planeGeometry args={[1 * GOLDEN_RATIO, 1]} />
                 <meshStandardMaterial>
-                    <RenderTexture attach="map">
                     <Scroll>
                         <Item index={0} position={new THREE.Vector3(0, -xW, 0)} width={w}>
                             <Desktop position={[0, -1, -3]} />
@@ -155,7 +153,6 @@ function Items({ w = 0.5}) {
                             <RedcareStation position={[0, -2, -6]} />
                         </Item>/
                     </Scroll>
-                    </RenderTexture>
                     </meshStandardMaterial>
             </mesh>
         </ScrollControls>

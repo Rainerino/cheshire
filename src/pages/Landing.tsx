@@ -10,7 +10,7 @@ import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei
 import { Room } from '../components/models/Room'
 import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
 import Curtain from '../components/models/Curtain'
-import MonitorDisplay from '../components/modules/Monitor.tsx'
+
 import gsap from 'gsap'
 import "./Landing.css"
 import CameraControl from '../components/common/CameraControl.tsx'
@@ -82,10 +82,6 @@ function LandingPage() {
         <CameraControl></CameraControl>
         <ambientLight intensity={0.05} />
         <Suspense fallback={<Loader />}>
-          <MonitorDisplay
-            position={new THREE.Vector3(-0.47, 1.23, 0.175)}
-            rotation={new THREE.Euler(0, Math.PI / 2, 0)}
-          />
           <Desktop
             position={new THREE.Vector3(0, 0.28, 0)}
             monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
