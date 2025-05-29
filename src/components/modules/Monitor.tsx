@@ -10,6 +10,11 @@ import { Room } from '../models/Room'
 import { RedcareStation } from '../models/RedcareStation'
 import { FC } from 'react'
 import CameraControl from '../common/CameraControl'
+import { RedcareTote } from '../models/RedcareTote'
+import { RedcareBase } from '../models/RedcareBase'
+import ABB1300 from '../models/ABB1300'
+import CovariantPage from '../../pages/Covariant'
+
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2
 
@@ -71,12 +76,12 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
     // if (clicked !== null && index > clicked) easing.damp(ref.current.position, 'x', position[0] + 2, 0.15, delta)
     // if (clicked === null || clicked === index) easing.damp(ref.current.position, 'x', position[0], 0.15, delta)
         // easing.damp(ref.current.material, 'grayscale', hovered || clicked === index ? 0 : Math.max(0, 1 - y), 0.15, delta)
-
+    // console.log(y)
     if (portal.current && ref.current && a_light.current && plane.current) {
         // portal.current.intensity = hovered || clicked === index ? 10 : 1;
         // ref.current.blur = hovered ? 0.4 : 3
         // ref.current.position.x = position[0] + 2
-        const targetScale = y / 5 + 1; // normal to 1
+        const targetScale = (1-y) / 3 + 0.8; // normal to 1
         // width = width * y;
 
         easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
@@ -86,16 +91,16 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         // easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
         // easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
 
-        // const targetPositionZ = y;
-        // easing.damp(ref.current.position, "z", targetPositionZ, 0.15, delta)
+        const targetPositionZ = y;
+        // easing.damp(ref.current.position, "x", -1 - targetPositionZ/2, 0.15, delta)
         // easing.damp(ref_b.current.position, "z", targetPositionZ -0.001, 0.15, delta)
         
-        const new_plane = new THREE.PlaneGeometry(w * (1 +  y), h);
+        const new_plane = new THREE.PlaneGeometry(w * (1 +  y * 2), h);
         plane.current.dispose();
         plane.current = new_plane;
 
         // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
-        easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 1, delta)
+        easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 0.5, delta)
         // TODO: change the color of plane geometry.
         // bg.current.material.color
         // easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
@@ -118,7 +123,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
             <MeshPortalMaterial
                 // worldUnits={true}
                 ref={portal}
-                transparent blur={0.1}
+                transparent blur={0.2}
                 // side={THREE.DoubleSide}
                 color='white'>
                     <color attach='background' args={['white']} />
@@ -139,31 +144,32 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
 }
 
 
-function Items({ w = 0.5}) {
+function Items({ w = 0.8}) {
     const gap = w * 0.2
     const { urls } = useSnapshot(state)
-    const { width } = useThree((state) => state.viewport)
+    const { height } = useThree((state) => state.viewport)
     const xW = w + gap
     const page_w = 0.541
     const page_h = 0.305
+    const page_center = new THREE.Vector3(-1, 0, 0)
     return (
         <ScrollControls
             vertical={true}
-            damping={0.1} pages={(width - xW + urls.length * xW) / width}>
+            damping={0.1} pages={2}>
             {/* <Minimap /> */}
             <mesh>
                 <planeGeometry args={[page_w, page_h]}/>
                 <meshStandardMaterial color='white'>
                     <RenderTexture attach="map">
                         <Scroll>
-                            <Item index={0} position={new THREE.Vector3(-1.2, 1-xW, -0.5)} width={w}>
+                            <Item index={0} position={new THREE.Vector3(page_center.x, page_center.y-xW, page_center.z)} width={w}>
                                 <Desktop position={[1, -2, -3]} />
                             </Item>/
-                            <Item index={1} position={new THREE.Vector3(-1.2, 1, -0.5)} width={w}>
-                                {/* <Room position={[0, -5, -30]} /> */}
+                            <Item index={1} position={new THREE.Vector3(page_center.x, page_center.y, page_center.z)} width={w}>
+                                <CovariantPage position={[0, -1, 0]} />
                             </Item>/
-                            <Item index={2} position={new THREE.Vector3( -1.2, 1+xW, -0.5)} width={w}>
-                                <RedcareStation position={[0, 0, 0]} />
+                            <Item index={2} position={new THREE.Vector3(page_center.x, page_center.y+xW, page_center.z)} width={w}>
+                                <RedcareBase position={[0.5, 0, -1.5]} />
                             </Item>/
                         </Scroll>
                     </RenderTexture>
@@ -179,7 +185,7 @@ function Items({ w = 0.5}) {
 const MonitorDisplay: FC = (props) => {
     return (
         <group {...props}>
-            <ambientLight intensity={10} />
+            <ambientLight intensity={1} />
             {/* <CameraControl></CameraControl> */}
             <Items />
         </group>

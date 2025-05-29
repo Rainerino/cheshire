@@ -60,12 +60,11 @@ function Frame({ ...props }) {
   const { camera } = useThree();
   const [hovered, hover] = useState(false)
   useFrame(() => {
-    console.log(camera.position)
+    // console.log(camera.position)
     // camera.lookAt(new THREE.Vector3().fromArray(CAMERA_LOOK_AT))
     // camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI/2)
     // camera.rotation.z += Math.PI/2;
     // camera.position.set(1, 1, 1)
-
   });
   useCursor(hovered)
     return (
@@ -98,9 +97,9 @@ function CovariantPage() {
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
           enableDamping={true}
-          // enablePan={false}
-          // enableRotate = {false}
-          // enableZoom={false}
+          enablePan={false}
+          enableRotate = {false}
+          enableZoom={false}
           minPolarAngle={- Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
           maxDistance={10}
