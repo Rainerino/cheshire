@@ -63,7 +63,7 @@ function LandingPage() {
           enableDamping={true}
           dampingFactor= {0.03}
           enablePan={false}
-          enableRotate = {true}
+          // enableRotate = {false}
           enableZoom={false}
           // minPolarAngle={-Math.PI / 18 + Math.PI / 2}
           // maxPolarAngle={Math.PI/ 18 + Math.PI / 2}

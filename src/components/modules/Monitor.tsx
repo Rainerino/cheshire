@@ -22,7 +22,7 @@ const material = new THREE.LineBasicMaterial({ color: 'white' })
 const new_geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, -0.5, 0), new THREE.Vector3(0, 0.5, 0)])
 const state = proxy({
   clicked: null,
-  urls: [1, 2, 3].map((u) => `/images/${u}.jpg`)})
+  urls: [1, 2, 3, 4, 5, 6].map((u) => `/images/${u}.jpg`)})
 
 function Minimap() {
   const ref = useRef()
@@ -68,7 +68,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
     const h = width;
     useFrame((state, delta) => {
       
-    const y = scroll.curve(index / urls.length - 1.5 / urls.length, 4 / urls.length)
+    const y = scroll.curve((index)/ urls.length - 1.5 / urls.length, 4 / urls.length)
     // easing.damp3(ref.current.scale, [clicked === index ? 4.7 : scale[0], clicked === index ? 5 : 4 + y, 1], 0.15, delta)
     // ref.current.material.scale[0] = ref.current.scale.x
     // ref.current.material.scale[1] = ref.current.scale.y
@@ -131,9 +131,9 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
                     {children}
                     {/* <Gltf src="https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf" position={[0, index/6, -3]} /> */}
                 </MeshPortalMaterial>
-            <Text name={index} fontSize={0.2} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
+            {/* <Text name={index} fontSize={0.2} anchorX="right" position={[0.4, -0.659, 0.01]} material-toneMapped={false}>
                 /{index}
-            </Text>
+            </Text> */}
         </mesh>
         {/* <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
             <planeGeometry args={[w + 0.05, h + 0.05]} />
@@ -144,31 +144,39 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
 }
 
 
-function Items({ w = 0.8}) {
+function Items({ w = 1}) {
     const gap = w * 0.2
     const { urls } = useSnapshot(state)
     const { height } = useThree((state) => state.viewport)
     const xW = w + gap
-    const page_w = 0.541
+    const page_w = 0.541 // The whole page, DO NOT CHANGE
     const page_h = 0.305
-    const page_center = new THREE.Vector3(-1, 0, 0)
+    const page_center = new THREE.Vector3(-1, -0.4, -0.2)
     return (
         <ScrollControls
-            vertical={true}
-            damping={0.1} pages={2}>
+            damping={0.1} pages={(height - xW + urls.length * xW) / height}>
             {/* <Minimap /> */}
             <mesh>
                 <planeGeometry args={[page_w, page_h]}/>
                 <meshStandardMaterial color='white'>
                     <RenderTexture attach="map">
                         <Scroll>
-                            <Item index={0} position={new THREE.Vector3(page_center.x, page_center.y-xW, page_center.z)} width={w}>
-                                <Desktop position={[1, -2, -3]} />
+                            <Item index={0} position={new THREE.Vector3(page_center.x, page_center.y + xW, page_center.z)} width={w}>
+                                <CovariantPage position={[0, 0, 0]} />
                             </Item>/
                             <Item index={1} position={new THREE.Vector3(page_center.x, page_center.y, page_center.z)} width={w}>
-                                <CovariantPage position={[0, -1, 0]} />
+                                <Desktop position={[1, -2, -3]} />
                             </Item>/
-                            <Item index={2} position={new THREE.Vector3(page_center.x, page_center.y+xW, page_center.z)} width={w}>
+                            <Item index={2} position={new THREE.Vector3(page_center.x, page_center.y-xW, page_center.z)} width={w}>
+                                <RedcareBase position={[0.5, 0, -1.5]} />
+                            </Item>/
+                            <Item index={3} position={new THREE.Vector3(page_center.x, page_center.y - 2 *xW, page_center.z)} width={w}>
+                                <RedcareBase position={[0.5, 0, -1.5]} />
+                            </Item>/
+                            <Item index={4} position={new THREE.Vector3(page_center.x, page_center.y - 3 * xW, page_center.z)} width={w}>
+                                <RedcareBase position={[0.5, 0, -1.5]} />
+                            </Item>/
+                            <Item index={5} position={new THREE.Vector3(page_center.x, page_center.y - 4 * xW, page_center.z)} width={w}>
                                 <RedcareBase position={[0.5, 0, -1.5]} />
                             </Item>/
                         </Scroll>

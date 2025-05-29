@@ -100,9 +100,9 @@ function CovariantPage() {
           enablePan={false}
           enableRotate = {false}
           enableZoom={false}
-          minPolarAngle={- Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
-          maxDistance={10}
+          // minPolarAngle={- Math.PI / 2}
+          // maxPolarAngle={Math.PI / 2}
+          maxDistance={100}
           // minDistance={0.3}
           dampingFactor={0.3}
         />
@@ -111,7 +111,7 @@ function CovariantPage() {
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
           fov={30}
         /> 
-        <ambientLight intensity={0.1} />
+        {/* <ambientLight intensity={0.1} /> */}
         {/* <AccumulativeShadows temporal frames={100} scale={10}>
           <RandomizedLight amount={8} position={[5, 5, 0]} />
         </AccumulativeShadows> */}
