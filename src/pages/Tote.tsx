@@ -12,7 +12,8 @@ import {
   AccumulativeShadows, 
   RandomizedLight, 
   Environment,
-  useCursor,
+    useCursor,
+    useGLTF,
   CubeCamera,
 } from '@react-three/drei'
 import * as THREE from 'three'
@@ -32,10 +33,10 @@ import { CapBottle } from '../components/sku/CapBottle'
 import { Coffee } from '../components/sku/Coffee'
 import { InkBox } from '../components/sku/InkBox'
 import { Mustard } from '../components/sku/Mustard'
+import { BaseSKU } from '../components/sku/SKU'
 
+import cap_bottle from '/models/sku/cap_bottle.glb?url'
 import CameraControl from '../components/common/CameraControl'
-
-import point_cloud_from_mesh from '../lib/point_cloud'
 
 function ToteScene(props) {
     const { camera } = useThree();
@@ -49,6 +50,13 @@ function ToteScene(props) {
             Math.random() * POSITION_LIMITS.width - POSITION_LIMITS.width / 2,   // x
             Math.random() * POSITION_LIMITS.height,                              // y
             Math.random() * POSITION_LIMITS.length - POSITION_LIMITS.length / 2, // z
+        ];
+    }
+    function randomRotation() {
+        return [
+            Math.random() * 2 * Math.PI, // x
+            Math.random() * 2 * Math.PI, // y
+            Math.random() * 2 * Math.PI  // z
         ];
     }
     return <group {...props}>
@@ -69,7 +77,23 @@ function ToteScene(props) {
         <RedcareTote />
         <CapBottle
             position={randomPosition()}
-            rotation={[Math.PI / 2, 0, 0]}/>
+            rotation={randomRotation()}
+        />
+        {/* <BaseSKU
+            position={randomPosition()}
+            rotation={randomRotation()}
+            mesh_path='/models/sku/cap_bottle.glb'
+        /> */}
+        {/* <BaseSKU
+            position={randomPosition()}
+            rotation={randomRotation()}
+            mesh_path='/models/sku/coffee.glb'
+        />
+        <BaseSKU
+            position={randomPosition()}
+            rotation={randomRotation()}
+            mesh_path='/models/sku/lotion.glb'
+        /> */}
         {/* <Coffee position={randomPosition()} />
         <InkBox position={randomPosition()} />
         <Mustard position={randomPosition()} /> */}
@@ -77,3 +101,4 @@ function ToteScene(props) {
 
 }
 export default ToteScene;
+

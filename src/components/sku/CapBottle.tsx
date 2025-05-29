@@ -148,7 +148,6 @@ function BBoxMesh({ ...props }) {
     nodes.model.geometry,
     materials.material_0,
   ), [nodes, materials]);
-  const ref = useRef<THREE.Mesh>(null);
   const boxHelperRef = useRef<THREE.BoxHelper>(null);
 
   useFrame(() => {
