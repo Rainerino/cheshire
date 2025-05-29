@@ -77,7 +77,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         // ref.current.position.x = position[0] + 2
         const targetScale = y / 5 + 1; // normal to 1
         // width = width * y;
-        console.log(y)
+
         easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
         easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
@@ -92,7 +92,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
         const new_plane = new THREE.PlaneGeometry(w * (1 +  y), h);
         plane.current.dispose();
         plane.current = new_plane;
-        console.log(plane.current)
+
         // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 1, delta)
         // TODO: change the color of plane geometry.
@@ -108,6 +108,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
             ref={ref}
             name='{index}'
             position={position}
+            rotation={[0, Math.PI / 2, 0]}
             onDoubleClick={(e) => (e.stopPropagation())}
             onPointerOver={(e) => hover(true)}
             onPointerOut={() => hover(false)}>
@@ -131,7 +132,7 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
 }
 
 
-function Items({ w = 1}) {
+function Items({ w = 0.5}) {
     const gap = w * 0.2
     const { urls } = useSnapshot(state)
     const { width } = useThree((state) => state.viewport)
@@ -140,7 +141,7 @@ function Items({ w = 1}) {
         <ScrollControls vertical damping={0.1} pages={(width - xW + urls.length * xW) / width}>
             <Minimap />
             <mesh >
-                <planeGeometry args={[5 * GOLDEN_RATIO, 5]} />
+                <planeGeometry args={[1 * GOLDEN_RATIO, 1]} />
                 <meshStandardMaterial>
                     <RenderTexture attach="map">
                     <Scroll>
@@ -157,9 +158,6 @@ function Items({ w = 1}) {
                     </RenderTexture>
                     </meshStandardMaterial>
             </mesh>
-
-                        
-
         </ScrollControls>
     )
 }
@@ -167,21 +165,19 @@ function Items({ w = 1}) {
 
 // Helper component to render Items to a texture using Drei's <RenderTexture>
 
-const App: FC = () => {
+const MonitorDisplay: FC = (props) => {
     const meshRef = useRef()
     // const [hovered, hover] = useState(false)
     // const [clicked, click] = useState(false)
     // const [active, setActive] = useState(false);
 
     return (
-        <group>
+        <group {...props}>
             <color attach="background" args={['#ffffff']} />
-            <ambientLight intensity={1} />
-
+            {/* <ambientLight intensity={1} /> */}
             <Items />
-            <OrbitControls enableZoom={false} />
         </group>
     )
 }
 
-export default App
+export default MonitorDisplay

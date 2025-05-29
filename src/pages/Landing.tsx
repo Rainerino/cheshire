@@ -10,8 +10,11 @@ import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei
 import { Room } from '../components/models/Room'
 import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
 import Curtain from '../components/models/Curtain'
+import MonitorDisplay from '../components/modules/Monitor.tsx'
 import gsap from 'gsap'
 import "./Landing.css"
+import CameraControl from '../components/common/CameraControl.tsx'
+
 // import { useFrame, useRef } from 'react-three-fiber';
 function Loader() {
   const { progress } = useProgress()
@@ -51,22 +54,22 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
 
 }
 
-function LandingCanvas() {
+function LandingPage() {
   const { camera, scene } = useThree();
     return (
       <group>
-        <OrbitControls
+        {/* <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping={true}
           dampingFactor= {0.03}
           enablePan={false}
           enableRotate = {true}
           enableZoom={false}
-          minPolarAngle={-Math.PI / 18 + Math.PI / 2}
-          maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
-          maxDistance={2}
-          minAzimuthAngle={-Math.PI / 10 + Math.PI / 2}
-          maxAzimuthAngle={ Math.PI / 10 + Math.PI / 2 }
+          // minPolarAngle={-Math.PI / 18 + Math.PI / 2}
+          // maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
+          // maxDistance={2}
+          // minAzimuthAngle={-Math.PI / 10 + Math.PI / 2}
+          // maxAzimuthAngle={ Math.PI / 10 + Math.PI / 2 }
           // minDistance={0.3}
         >
         </OrbitControls>
@@ -75,14 +78,17 @@ function LandingCanvas() {
           // 0.12, 0.97, 0.175
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={75}
-        /> 
+        />  */}
+        <CameraControl></CameraControl>
         <ambientLight intensity={0.05} />
         <Suspense fallback={<Loader />}>
+          <MonitorDisplay
+            position={new THREE.Vector3(-0.47, 1.23, 0.175)}
+            rotation={new THREE.Euler(0, Math.PI / 2, 0)}
+          />
           <Desktop
             position={new THREE.Vector3(0, 0.28, 0)}
             monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
-
-          {/* <Environment preset="sunset" background /> */}
           <Room />
           <Curtain
             position={new THREE.Vector3(-2.8, 1.9, -0.31)}
@@ -95,4 +101,4 @@ function LandingCanvas() {
       </group>
     );
 }
-export default LandingCanvas;
+export default LandingPage;

@@ -2,13 +2,13 @@ import React, { useRef, useState, Suspense, useEffect} from 'react'
 import ReactDOMClient from 'react-dom/client'
 import './index.css'
 import { Canvas, useThree} from '@react-three/fiber'
-import LandingCanvas from './pages/Landing.tsx'
-import CovariantCanvas from './pages/Covariant.tsx'
+import LandingPage from './pages/Landing.tsx'
+import CovariantPage from './pages/Covariant.tsx'
 import { Stats, OrbitControls, Grid, Preload} from '@react-three/drei'
 import * as THREE from 'three'
 import { Perf } from "r3f-perf"
 import Background from './components/common/Background.tsx'
-import App from './components/modules/Monitor.tsx'
+import MonitorDisplay from './components/modules/Monitor.tsx'
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element not found');
@@ -21,7 +21,7 @@ ReactDOMClient.createRoot(container).render(
       {debug && <Stats />}
       {debug && <Perf position="bottom-left" />}
       {debug && <Grid infiniteGrid={true} />}
-      <App />
+      <LandingPage />
       <Preload all />
     </Canvas>
   </React.StrictMode>

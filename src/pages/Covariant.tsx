@@ -91,7 +91,7 @@ function Frame({ ...props }) {
       </group>
     )
 }
-function CovariantCanvas() {
+function CovariantPage() {
     const { camera } = useThree();
     return (
       <group>
@@ -153,4 +153,4 @@ function CovariantCanvas() {
       </group>
     );
 }
-export default CovariantCanvas;
+export default CovariantPage;
