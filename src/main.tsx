@@ -14,16 +14,10 @@ import MonitorDisplay from './components/modules/Monitor.tsx'
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element not found');
 // Background component moved to its own file: ./components/Background.tsx
-const debug = true;
+
 ReactDOMClient.createRoot(container).render(
   <React.StrictMode>
-    <Canvas shadows={true}  >
-      <Background />
-      {debug && <Stats />}
-      {debug && <Perf position="bottom-left" />}
-      {debug && <Grid infiniteGrid={true} />}
-      <ToteScene />
-    </Canvas>
+    <CovariantPage />
   </React.StrictMode>
 
   )

@@ -73,7 +73,7 @@ function ToteScene(props) {
             near={0.2}
             far={10}
         />
-        <CameraControl />
+        {/* <CameraControl /> */}
         <RedcareTote />
         <CapBottle
             position={randomPosition()}
