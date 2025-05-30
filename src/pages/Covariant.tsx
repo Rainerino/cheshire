@@ -1,4 +1,4 @@
-import { useRef, Suspense, useState} from 'react'
+import { useRef, Suspense, useState, useEffect} from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { 
   OrbitControls, 
@@ -42,11 +42,13 @@ function Loader() {
 
 const CAMERA_POSITION: number[][] = [
   [-0.3, 4.33, 1.76],
+  [-0.3, 2.3, 2.3],
   [-2.63, 3.05, 3.65],
   [-2.07, 5.07, 2.11]
 ]
 // _Vector3 {x: -2.069830475568031, y: 5.07567819499762, z: 2.1135408510197125}
 const CAMERA_LOOK_AT: number[][] = [
+  [-0.3, 0, 2.7],
   [-0.3, 0, 2.7],
   [1, 0.5, 1],
   [0, 0.5, 2.11],
@@ -61,25 +63,35 @@ function CameraMovement({ scroll, ...props }) {
     const camera = state.camera;
     // Clamp scroll.current between 0 and 1
     const t = Math.max(0, Math.min(1, scroll.current));
-    // Interpolate between camera positions
+    // Interpolate between camera positions (0, 1, 2, 3, 4)
     const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0]);
     const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1]);
     const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2]);
+    const posD = new THREE.Vector3().fromArray(CAMERA_POSITION[3]);
 
     const tgtA = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[0]);
     const tgtB = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[1]);
     const tgtC = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[2]);
+    const tgtD = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[3]);
+
     let targetPosition = new THREE.Vector3();
     let targetLookAt = new THREE.Vector3();
 
-    if (t < 0.5) {
+    if (t < 1 / 3) {
       // Interpolate between 0 and 1
-      targetPosition.lerpVectors(posA, posB, t * 2);
-      targetLookAt.lerpVectors(tgtA,tgtB,t * 2);
-    } else {
+      const localT = t * 3;
+      targetPosition.lerpVectors(posA, posB, localT);
+      targetLookAt.lerpVectors(tgtA, tgtB, localT);
+    } else if (t < 2 / 3) {
       // Interpolate between 1 and 2
-      targetPosition.lerpVectors(posB, posC, (t - 0.5) * 2);
-      targetLookAt.lerpVectors(tgtB,tgtC,(t - 0.5) * 2);
+      const localT = (t - 1 / 3) * 3;
+      targetPosition.lerpVectors(posB, posC, localT);
+      targetLookAt.lerpVectors(tgtB, tgtC, localT);
+    } else {
+      // Interpolate between 2 and 3
+      const localT = (t - 2 / 3) * 3;
+      targetPosition.lerpVectors(posC, posD, localT);
+      targetLookAt.lerpVectors(tgtC, tgtD, localT);
     }
 
     // Smoothly interpolate camera position
@@ -87,8 +99,7 @@ function CameraMovement({ scroll, ...props }) {
     // Smoothly interpolate camera lookAt
     const currentLookAt = new THREE.Vector3();
     camera.getWorldDirection(currentLookAt);
-    // currentLookAt.add(camera.position);
-    currentLookAt.lerp(targetLookAt, 0.9);
+    currentLookAt.lerp(targetLookAt, 1);
     camera.lookAt(currentLookAt);
   })
 }
@@ -96,13 +107,20 @@ function CameraMovement({ scroll, ...props }) {
 const CURRENT_TARGET = 0
 
 function CovariantPage() {
+
   const overlay = useRef()
   const caption = useRef()
   const scroll = useRef(0)
   const debug = true;
+
   return (
     <div style={{ width: '100%', height: '100%'}}>
-        <Canvas shadows={true}  >
+      <Canvas
+        shadows={true}
+        // frameloop="demand"
+        // eventSource={document.getElementById('root')}
+        eventPrefix="offset"
+      >
             <Background />
             {debug && <Stats />}
             {debug && <Perf position="bottom-left" />}
@@ -148,7 +166,7 @@ function CovariantPage() {
                 far={10} />
               <RedcareBase
                 position={STATION_OFFSET}
-              rotation={STATION_ROTATION}/>
+               rotation={STATION_ROTATION}/>
               <RedcareStation
                 position={STATION_OFFSET}
                 rotation={STATION_ROTATION}/>
