@@ -56,7 +56,42 @@ const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8);
 const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0);
 const TOTE_OFFSET = new THREE.Vector3(0.556, 0.867, 0.725).add(STATION_OFFSET);
 
+function CameraMovement({ scroll, ...props }) {
+  useFrame((state, delta) => {
+    const camera = state.camera;
+    // Clamp scroll.current between 0 and 1
+    const t = Math.max(0, Math.min(1, scroll.current));
+    // Interpolate between camera positions
+    const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0]);
+    const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1]);
+    const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2]);
 
+    const tgtA = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[0]);
+    const tgtB = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[1]);
+    const tgtC = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[2]);
+    let targetPosition = new THREE.Vector3();
+    let targetLookAt = new THREE.Vector3();
+
+    if (t < 0.5) {
+      // Interpolate between 0 and 1
+      targetPosition.lerpVectors(posA, posB, t * 2);
+      targetLookAt.lerpVectors(tgtA,tgtB,t * 2);
+    } else {
+      // Interpolate between 1 and 2
+      targetPosition.lerpVectors(posB, posC, (t - 0.5) * 2);
+      targetLookAt.lerpVectors(tgtB,tgtC,(t - 0.5) * 2);
+    }
+
+    // Smoothly interpolate camera position
+    camera.position.lerp(targetPosition, 0.1);
+    // Smoothly interpolate camera lookAt
+    const currentLookAt = new THREE.Vector3();
+    camera.getWorldDirection(currentLookAt);
+    // currentLookAt.add(camera.position);
+    currentLookAt.lerp(targetLookAt, 0.9);
+    camera.lookAt(currentLookAt);
+  })
+}
 
 const CURRENT_TARGET = 0
 
@@ -72,8 +107,8 @@ function CovariantPage() {
             {debug && <Stats />}
             {debug && <Perf position="bottom-left" />}
             {debug && <Grid infiniteGrid={true} />}
-            
-            <OrbitControls
+            <CameraMovement scroll={scroll} />
+            {/* <OrbitControls
               target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
               enableDamping={true}
               enablePan={false}
@@ -84,7 +119,7 @@ function CovariantPage() {
               maxDistance={10}
               // minDistance={0.3}
               dampingFactor={0.3}
-            />
+            /> */}
             <PerspectiveCamera
               makeDefault
               position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
