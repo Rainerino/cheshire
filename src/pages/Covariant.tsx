@@ -111,76 +111,67 @@ function CovariantPage() {
   const overlay = useRef()
   const caption = useRef()
   const scroll = useRef(0)
-  const debug = true;
+
 
   return (
-    <div style={{ width: '100%', height: '100%'}}>
-      <Canvas
-        shadows={true}
-        // frameloop="demand"
-        // eventSource={document.getElementById('root')}
-        eventPrefix="offset"
-      >
-            <Background />
-            {debug && <Stats />}
-            {debug && <Perf position="bottom-left" />}
-            {debug && <Grid infiniteGrid={true} />}
-            <CameraMovement scroll={scroll} />
-            {/* <OrbitControls
-              target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
-              enableDamping={true}
-              enablePan={false}
-              enableRotate = {false}
-              enableZoom={false}
-              minPolarAngle={- Math.PI / 2}
-              maxPolarAngle={Math.PI / 2}
-              maxDistance={10}
-              // minDistance={0.3}
-              dampingFactor={0.3}
-            /> */}
-            <PerspectiveCamera
-              makeDefault
-              position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
-              fov={30}
-            /> 
-            {/* <CameraControl /> */}
-            {/* <ambientLight intensity={0.1} /> */}
-            {/* <AccumulativeShadows temporal frames={100} scale={10}>
-              <RandomizedLight amount={8} position={[5, 5, 0]} />
-            </AccumulativeShadows> */}
-            <Suspense fallback={<Loader />}>
-              <PointLightWShadow
-                position={new THREE.Vector3(-0.35, 2.4, 2.5)}
-                rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-                intensity={2}
-                decay={1}
-                near={0.2}
-                far={10} />
-              {/* {x: 0.00785536018694799, y: 3.362279762715715, z: 1.7383673784236808} */}
-              <PointLightWShadow
-                position={new THREE.Vector3(0, 2.3, 1.7)}
-                rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-                intensity={0.5}
-                decay={1}
-                near={0.2}
-                far={10} />
-              <RedcareBase
-                position={STATION_OFFSET}
-               rotation={STATION_ROTATION}/>
-              <RedcareStation
-                position={STATION_OFFSET}
-                rotation={STATION_ROTATION}/>
-              <ToteScene
-                // position={STATION_OFFSET.add(TOTE_OFFSET)}
-                position={TOTE_OFFSET}
-                rotation={STATION_ROTATION} />
-              <ABB1300
-                position={STATION_OFFSET}
-                rotation={STATION_ROTATION} />
-            </Suspense>
-        </Canvas>
-        <Overlay ref={overlay} caption={caption} scroll={scroll} />
-      </div>
+    <group>
+      <CameraMovement scroll={scroll} />
+      {/* <OrbitControls
+        target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT[CURRENT_TARGET])}
+        enableDamping={true}
+        enablePan={false}
+        enableRotate = {false}
+        enableZoom={false}
+        minPolarAngle={- Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+        maxDistance={10}
+        // minDistance={0.3}
+        dampingFactor={0.3}
+      /> */}
+      <PerspectiveCamera
+        makeDefault
+        position={new THREE.Vector3().fromArray(CAMERA_POSITION[CURRENT_TARGET])}
+        fov={30}
+      /> 
+      {/* <CameraControl /> */}
+      {/* <ambientLight intensity={0.1} /> */}
+      {/* <AccumulativeShadows temporal frames={100} scale={10}>
+        <RandomizedLight amount={8} position={[5, 5, 0]} />
+      </AccumulativeShadows> */}
+      <Suspense fallback={<Loader />}>
+        <PointLightWShadow
+          position={new THREE.Vector3(-0.35, 2.4, 2.5)}
+          rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+          intensity={2}
+          decay={1}
+          near={0.2}
+          far={10} />
+        {/* {x: 0.00785536018694799, y: 3.362279762715715, z: 1.7383673784236808} */}
+        <PointLightWShadow
+          position={new THREE.Vector3(0, 2.3, 1.7)}
+          rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+          intensity={0.5}
+          decay={1}
+          near={0.2}
+          far={10} />
+        <RedcareBase
+          position={STATION_OFFSET}
+        rotation={STATION_ROTATION}/>
+        <RedcareStation
+          position={STATION_OFFSET}
+          rotation={STATION_ROTATION}/>
+        <ToteScene
+          // position={STATION_OFFSET.add(TOTE_OFFSET)}
+          position={TOTE_OFFSET}
+          rotation={STATION_ROTATION} />
+        <ABB1300
+          position={STATION_OFFSET}
+          rotation={STATION_ROTATION} />
+      </Suspense>
+        {/* <Overlay ref={overlay} caption={caption} scroll={scroll} /> */}
+        
+    </group>
+            
     );
 }
 export default CovariantPage;

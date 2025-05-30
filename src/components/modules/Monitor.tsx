@@ -14,6 +14,7 @@ import { RedcareTote } from '../models/RedcareTote'
 import { RedcareBase } from '../models/RedcareBase'
 import ABB1300 from '../models/ABB1300'
 import CovariantPage from '../../pages/Covariant'
+import { useRoute } from 'wouter'
 
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2
@@ -54,62 +55,57 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
     const a_light = useRef()
     const plane = useRef()
     const bg = useRef()
-  const scroll = useScroll()
+    const scroll = useScroll()
     const portal = useRef<THREE.Material>(null)
     
-  const { clicked, urls } = useSnapshot(state)
-  const [hovered, hover] = useState(false)
-  const click = () => (state.clicked = index === clicked ? null : index)
-  const over = () => hover(true)
-    const out = () => hover(false)
-    
+    const { clicked, urls } = useSnapshot(state)
+    const [hovered, hover] = useState(false)
 
     const w = width * GOLDEN_RATIO;
     const h = width;
     useFrame((state, delta) => {
       
     const y = scroll.curve((index)/ urls.length - 1.5 / urls.length, 4 / urls.length)
-    // easing.damp3(ref.current.scale, [clicked === index ? 4.7 : scale[0], clicked === index ? 5 : 4 + y, 1], 0.15, delta)
-    // ref.current.material.scale[0] = ref.current.scale.x
-    // ref.current.material.scale[1] = ref.current.scale.y
-    // if (clicked !== null && index < clicked) easing.damp(ref.current.position, 'x', position[0] - 2, 0.15, delta)
-    // if (clicked !== null && index > clicked) easing.damp(ref.current.position, 'x', position[0] + 2, 0.15, delta)
-    // if (clicked === null || clicked === index) easing.damp(ref.current.position, 'x', position[0], 0.15, delta)
-        // easing.damp(ref.current.material, 'grayscale', hovered || clicked === index ? 0 : Math.max(0, 1 - y), 0.15, delta)
-    // console.log(y)
     if (portal.current && ref.current && a_light.current && plane.current) {
-        // portal.current.intensity = hovered || clicked === index ? 10 : 1;
-        // ref.current.blur = hovered ? 0.4 : 3
-        // ref.current.position.x = position[0] + 2
         const targetScale = (1-y) / 3 + 0.8; // normal to 1
-        // width = width * y;
+        // easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
+        // easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
+        // easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
 
-        easing.damp(ref.current.scale, "x", targetScale, 0.15, delta)
-        easing.damp(ref.current.scale, "y", targetScale, 0.15, delta)
-        easing.damp(ref.current.scale, "z", targetScale, 0.15, delta)
-        // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
-        // easing.damp(ref_b.current.scale, "y", targetScale, 0.15, delta)
-        // easing.damp(ref_b.current.scale, "z", targetScale, 0.15, delta)
-
-        const targetPositionZ = y;
-        // easing.damp(ref.current.position, "x", -1 - targetPositionZ/2, 0.15, delta)
-        // easing.damp(ref_b.current.position, "z", targetPositionZ -0.001, 0.15, delta)
-        
-        const new_plane = new THREE.PlaneGeometry(w * (1 +  y * 2), h);
-        plane.current.dispose();
-        plane.current = new_plane;
-
-        // easing.damp(ref_b.current.scale, "x", targetScale, 0.15, delta)
         easing.damp(a_light.current, "intensity", hovered ? 5 : 0, 0.5, delta)
-        // TODO: change the color of plane geometry.
-        // bg.current.material.color
-        // easing.damp(portal.current, "blur", hovered ? 0.4 : 2, 0.25, delta)
-    }
-    // easing.dampC(portal.current.material.color, hovered || clicked === index ? 'white' : '#aaa', hovered ? 0.3 : 0.15, delta)
+        }
     })
     useCursor(hovered)
+    const [, setLocation] = useRoute()
 
-    //   return <Image ref={ref} {...props} position={position} scale={scale} onClick={click} onPointerOver={over} onPointerOut={out} />
+    const handleClick = () => {
+        setLocation(`/page/${index}`)
+    }
+
+    return (
+        <group {...props}>
+            <mesh
+                ref={ref}
+                name={`${index}`}
+                position={position}
+                rotation={new THREE.Euler(-0.14, Math.PI / 2, 0, "YZX")}
+                onDoubleClick={(e) => e.stopPropagation()}
+                onPointerOver={() => hover(true)}
+                onPointerOut={() => hover(false)}
+                onClick={handleClick}
+            >
+                <planeGeometry ref={plane} args={[w, h]} />
+                <MeshPortalMaterial
+                    ref={portal}
+                    transparent blur={0.2}
+                    color='white'>
+                    <color attach='background' args={['white']} />
+                    <ambientLight ref={a_light} intensity={1} />
+                    {children}
+                </MeshPortalMaterial>
+            </mesh>
+        </group>
+    )
     return <group {...props}>
         <mesh
             ref={ref}
@@ -135,12 +131,28 @@ function Item({ index, position, width, c = new THREE.Color(), children, ...prop
                 /{index}
             </Text> */}
         </mesh>
-        {/* <mesh ref={ref_b} name='{index}_b' position={[position.x, position.y, position.z-0.001]}>
-            <planeGeometry args={[w + 0.05, h + 0.05]} />
-            <meshBasicMaterial color="black" />
-        </mesh> */}
     </group>
 
+}
+
+function Soda(props) {
+  const ref = useRef()
+  const [hovered, spread] = useHover()
+  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/soda-bottle/model.gltf')
+  useFrame((state, delta) => (ref.current.rotation.y += delta))
+  return (
+    <group ref={ref} {...props} {...spread} dispose={null}>
+      <mesh geometry={nodes.Mesh_sodaBottle.geometry}>
+        <meshStandardMaterial color={hovered ? 'red' : 'green'} roughness={0.33} metalness={0.8} envMapIntensity={2} />
+      </mesh>
+      <mesh geometry={nodes.Mesh_sodaBottle_1.geometry} material={materials.red} material-envMapIntensity={0} />
+    </group>
+  )
+}
+
+function Duck(props) {
+  const { scene } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf')
+  return <primitive object={scene} {...props} />
 }
 
 
@@ -162,7 +174,8 @@ function Items({ w = 1}) {
                     <RenderTexture attach="map">
                         <Scroll>
                             <Item index={0} position={new THREE.Vector3(page_center.x, page_center.y + xW, page_center.z)} width={w}>
-                                <CovariantPage position={[0, 0, 0]} />
+                                {/* <CovariantPage position={[0, 0, 0]} /> */}
+                                <Desktop position={[1, -2, -3]} />
                             </Item>/
                             <Item index={1} position={new THREE.Vector3(page_center.x, page_center.y, page_center.z)} width={w}>
                                 <Desktop position={[1, -2, -3]} />

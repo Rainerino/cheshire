@@ -10,14 +10,32 @@ import * as THREE from 'three'
 import { Perf } from "r3f-perf"
 import Background from './components/common/Background.tsx'
 import MonitorDisplay from './components/modules/Monitor.tsx'
+import { Route, Link, useLocation } from "wouter"
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element not found');
 // Background component moved to its own file: ./components/Background.tsx
+const debug = true;
 
 ReactDOMClient.createRoot(container).render(
   <React.StrictMode>
-    <CovariantPage />
+    <>
+      <div style={{ width: '100%', height: '100%'}}>
+        <Canvas
+          shadows={true}
+          // frameloop="demand"
+          // eventSource={document.getElementById('root')}
+          eventPrefix="offset"
+        >
+          <LandingPage />
+          <Background />
+          {debug && <Stats />}
+          {debug && <Perf position="bottom-left" />}
+          {debug && <Grid infiniteGrid={true} />}
+        </Canvas>
+      </div>
+    </>
+
   </React.StrictMode>
 
   )
