@@ -5,7 +5,7 @@ import { ContactShadows, useGLTF, Environment, Float, Html, OrbitControls, Persp
 import { MathUtils } from 'three'
 import CameraControl from '../components/common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
-
+import ProjectScreen from '../components/modules/ProjectScreen'
 
 export function Soda(props) {
     const ref = useRef()
@@ -46,31 +46,31 @@ export default function App(props) {
       <group {...props}>
         <CameraControl />
           <Route path="/">
-              <mesh>
+              <mesh rotation={[-Math.PI / 2, 0, 0]}>
                   <planeGeometry args={[5, 5]} />
-                  {/* <meshStandardMaterial color="#00ff00" /> */}
-              </mesh>
-            <Html style={{ userSelect: 'none' }} castShadow receiveShadow  transform>
+                  <Html style={{ userSelect: 'none' }} castShadow receiveShadow  transform>
                 {/* <iframe title="embed" width={700} height={500} src="https://threejs.org/" frameBorder={0} /> */}
-                <div style={{ width: '700', height: '500'}}>
-                    <ul>
-                          <li>{`The current page is: ${location}`}</li>
-                          {/* <a onClick={() => navigate("/somewhere")}>Click to update</a> */}
-                          <li>
-                          <Link href="/somewhere" className="active">Click to update</Link>
-                          </li>
-                          <li>
-                          <Link href="/somewhere1" className="active">Click to update</Link>
-                          </li>
-                          <li>
-                          <Link href="/somewhere2" className="active">Click to update</Link>
-                          </li>
-                    <li>Milk</li>
-                    </ul>
-                </div>
-            </Html>
+                    <div style={{ width: '700', height: '500'}}>
+                        <ul>
+                            <li>{`The current page is: ${location}`}</li>
+                            {/* <a onClick={() => navigate("/somewhere")}>Click to update</a> */}
+                            <li>
+                            <Link href="/somewhere" className="active">Click to update</Link>
+                            </li>
+                            <li>
+                            <Link href="/somewhere1" className="active">Click to update</Link>
+                            </li>
+                            <li>
+                            <Link href="/somewhere2" className="active">Click to update</Link>
+                            </li>
+                        <li>Milk</li>
+                        </ul>
+                    </div>
+                </Html>
+              </mesh>
+
           </Route>
-          <Route path="/somewhere" component={() => <Duck />} />
+          <Route path="/somewhere" component={() => <ProjectScreen />} />
           <Route path="/somewhere1" component={() => <Apple />} />
           <Route path="/somewhere2">
               
