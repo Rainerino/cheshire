@@ -69,13 +69,7 @@ function Display({position, info, ...props}) {
                     {project_infos.get(screen_state.key).title}
                 </Text>
             </Decal>
-        </CurvedPlane>?
-        <mesh>
-            <planeGeometry args={[1, 1]}>
-            
-                </planeGeometry>
-                <meshStandardMaterial color="black" />
-        </mesh>
+        </CurvedPlane>
     </group>
     )
 

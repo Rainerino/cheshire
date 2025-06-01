@@ -6,6 +6,8 @@ import { MathUtils } from 'three'
 import CameraControl from '../components/common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
 import ProjectScreen from '../components/modules/ProjectScreen'
+import ProjectNavPage from './ProjectNav'
+
 
 export function Soda(props) {
     const ref = useRef()
@@ -39,7 +41,7 @@ export function Apple(props) {
     return <primitive object={scene} {...props} />
   }
 
-export default function App(props) {
+export default function HomePage(props) {
     const [location, navigate] = useLocation();
   return (
       // <Canvas camera={{ position: [] }}>
@@ -71,7 +73,7 @@ export default function App(props) {
 
           </Route>
           <Route path="/somewhere" component={() => <ProjectScreen />} />
-          <Route path="/somewhere1" component={() => <Apple />} />
+          <Route path="/somewhere1" component={() => <ProjectNavPage />} />
           <Route path="/somewhere2">
               
                 <PivotControls lineWidth={3} depthTest={false} displayValues={false} scale={2}>

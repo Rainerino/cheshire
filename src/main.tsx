@@ -11,7 +11,7 @@ import { Perf } from "r3f-perf"
 import Background from './components/common/Background.tsx'
 import MonitorDisplay from './components/modules/Monitor.tsx'
 import { Route, Link, useLocation, useRoute } from "wouter"
-import App from "./pages/Home.tsx";
+import HomePage from "./pages/Home.tsx";
 
 
 
@@ -29,7 +29,7 @@ function Root() {
       <Canvas
         shadows={true}
       >
-        <App />
+        <HomePage />
         <Background />
         {debug && <Stats />}
         {debug && <Perf position="bottom-left" />}
