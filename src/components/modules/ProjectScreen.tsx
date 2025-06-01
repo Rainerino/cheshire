@@ -26,18 +26,17 @@ project_infos.set("next", new ProjectInfo(new THREE.Color(0x2185d0), 'Next', "/i
 
 
 
-function Display({position, info, ...props}) {
+function Display({position, rotation, w, h, ...props}) {
     const ref = useRef()
     const scroll = useScroll()
     const [hovered, hover] = useState(false)
     const over = () => hover(true)
     const out = () => hover(false)
-    const og_position_y = position[1]
     const snap = useSnapshot(screen_state)
     const texture = useTexture(project_infos.get(snap.key).path)
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1, 1);
+    // texture.wrapS = THREE.RepeatWrapping;
+    // texture.wrapT = THREE.RepeatWrapping;
+    // texture.repeat.set(1, 1);
     useFrame((state, delta) => {
         if (ref.current) {
             if (scroll.offset < 1/4) {
@@ -55,20 +54,23 @@ function Display({position, info, ...props}) {
     return (
         <group {...props}>
             <CurvedPlane
-                width={1}
-                height={1}
-                radius={4.6}
+                position={position}
+                rotation={rotation}
+                width={w}
+                height={h}
+                radius={2}
                 dispose={null} castShadow receiveShadow >
-                <meshStandardMaterial color="white" />
-            <Decal debug ref={ref}
-                position={[0, 0, 4.6]}
-                rotation={[0, 0, 0]}
-                // scale={[1, 1, 1]}
-                map={texture}>
-                <Text fontSize={0.1} color="black" position={[-0.3, 0.3, 4.61]}>
-                    {project_infos.get(screen_state.key).title}
-                </Text>
-            </Decal>
+                {/* <meshStandardMaterial color="white" /> */}
+                <Decal debug ref={ref}
+                    // position-z={4.6
+                        position={[0, 0, 2]}
+                        rotation={[0, Math.PI, 0]}
+                    // texture={texture}
+                    // scale={[1, 1, 1]}
+                    scale={[w, h, 1]}
+                        map={texture}>
+
+                </Decal>
         </CurvedPlane>
     </group>
     )
@@ -78,12 +80,16 @@ function Display({position, info, ...props}) {
 
 
 
-export default function ProjectScreen(props) {
-    return <group>
+export default function ProjectScreen({position, rotation, w=1, h=1, ...props}) {
+    return <group {...props}>
         <ScrollControls damping={0.1} pages={1} >
             <Scroll>
                 <group>
-                    <Display position={[0, 0, 0]}></Display>
+                    <Display
+                        position={position}
+                        rotation={rotation}
+                        w={w} h={h}
+                    ></Display>
                     {/* <ProjectItem position={[0, 0, 0]} info={project_infos.get("covariant")} />
                     <ProjectItem position={[0, -1, 0]} info={project_infos.get("motion_metrics")} />
                     <ProjectItem position={[0, -2, 0]} info={project_infos.get("duoyi")} />

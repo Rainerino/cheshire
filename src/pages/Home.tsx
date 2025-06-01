@@ -46,9 +46,10 @@ export default function HomePage(props) {
   return (
       // <Canvas camera={{ position: [] }}>
       <group {...props}>
-        <CameraControl />
+        {/* <CameraControl /> */}
           <Route path="/">
-              <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        {/* <mesh rotation={[-Math.PI / 2, 0, 0]}> */}
+        <mesh rotation={[0, 0, 0]}>
                   <planeGeometry args={[5, 5]} />
                   <Html style={{ userSelect: 'none' }} castShadow receiveShadow  transform>
                 {/* <iframe title="embed" width={700} height={500} src="https://threejs.org/" frameBorder={0} /> */}

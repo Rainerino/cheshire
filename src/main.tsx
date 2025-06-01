@@ -33,7 +33,7 @@ function Root() {
         <Background />
         {debug && <Stats />}
         {debug && <Perf position="bottom-left" />}
-        {debug && <Grid infiniteGrid={true} />}
+        {/* {debug && <Grid infiniteGrid={true} />} */}
       </Canvas>
       <a style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }} href="#" onClick={() => setLocation('/')}>
         {params ? 'Home' : 'Back'}
