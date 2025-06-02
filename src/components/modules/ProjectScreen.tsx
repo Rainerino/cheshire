@@ -7,8 +7,7 @@ import CameraControl from '../common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
 import { proxy, useSnapshot } from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
-import { Autofocus, Scanline, Noise, EffectComposer, Selection, Select, DepthOfField } from '@react-three/postprocessing'
-import { BlendFunction } from 'postprocessing'
+
 import { useControls, folder, button } from "leva";
 
 const screen_state = proxy({ key: "covariant" })
@@ -56,41 +55,25 @@ function Display({position, rotation, w, h, ...props}) {
     });
     return (
         <group {...props}>
-            <EffectComposer multisampling={8} autoClear={false}>
-                {/* <Scanline
-                blendFunction={BlendFunction.OVERLAY} // blend mode
-                density={1} // scanline density
-                scrollSpeed={0.1} // scroll speed
-                />
-                <Noise opacity={0.02} /> */}
-                <Autofocus
-                    mouse
-                    smoothTime={0.5}
-                    focusRange={0.00025}
-                    bokehScale={10}
-                    resolutionScale={1}
-                    resolutionX={1024}
-                    resolutionY={1024}/>
-                </EffectComposer>
-                    <CurvedPlane
-                    position={position}
-                    rotation={rotation}
-                    width={w}
-                    height={h}
-                    radius={2}
-                    dispose={null} castShadow receiveShadow >
-                        {/* <meshStandardMaterial color="white" /> */}
-                    <Decal ref={ref}
-                        // position-z={4.6
-                            position={[0, 0, 2]}
-                            rotation={[0, Math.PI, 0]}
-                        // texture={texture}
-                        // scale={[1, 1, 1]}
-                        scale={[w, h, 1]}
-                        map={texture}>
+            <CurvedPlane
+            position={position}
+            rotation={rotation}
+            width={w}
+            height={h}
+            radius={2}
+            dispose={null} castShadow receiveShadow >
+                {/* <meshStandardMaterial color="white" /> */}
+            <Decal ref={ref}
+                // position-z={4.6
+                    position={[0, 0, 2]}
+                    rotation={[0, Math.PI, 0]}
+                // texture={texture}
+                // scale={[1, 1, 1]}
+                scale={[w, h, 1]}
+                map={texture}>
 
-                    </Decal>
-                    </CurvedPlane>
+            </Decal>
+            </CurvedPlane>
     </group>
     )
 
