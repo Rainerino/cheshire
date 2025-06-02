@@ -55,8 +55,6 @@ function useHover() {
   return [hovered, { onPointerOver: (e) => hover(true), onPointerOut: () => hover(false) }]
 }
 
-
-
 function LandingPage() {
     return (
       <group>
@@ -72,7 +70,10 @@ function LandingPage() {
         </Route>
         <Route path="/">
           <HomePage position={[0.1, 0.87, 0.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI /5]} scale={[1, 1, 1]} />
-          <Environment preset="night" />
+          <Environment files="/textures/night.hdr"
+            background
+            backgroundBlurriness={0.1}
+            backgroundIntensity={0.1} />
           <OrbitControls
             target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
             enableDamping={true}

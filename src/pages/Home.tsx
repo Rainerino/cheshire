@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, useGLTF, Environment, Float, Html, OrbitControls, PerspectiveCamera, PivotControls } from '@react-three/drei'
+import { useTexture, ContactShadows, useGLTF, Environment, Float, Html, OrbitControls, PerspectiveCamera, PivotControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 import CameraControl from '../components/common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
@@ -12,14 +12,16 @@ import ProjectNavPage from './ProjectNav'
 
 
 export default function HomePage(props) {
-    const [location, navigate] = useLocation();
+  const [location, navigate] = useLocation();
+  const texture = useTexture('/textures/paper.jpg')
   return (
       // < camera={{ position: [] }}>
       <group {...props}>
         {/* <mesh rotation={[-Math.PI / 2, 0, 0]}> */}
         <mesh receiveShadow>
           <planeGeometry args={[0.3 * 0.618, 0.3]} />
-          <meshStandardMaterial color="white" side={THREE.DoubleSide} />
+          
+        <meshStandardMaterial color="white" side={THREE.DoubleSide} map={texture} />
           <Html
               style={{ userSelect: 'none' }}
               transform
