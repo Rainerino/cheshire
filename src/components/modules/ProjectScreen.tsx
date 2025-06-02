@@ -7,6 +7,9 @@ import CameraControl from '../common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
 import { proxy, useSnapshot } from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
+import { Scanline, Noise, EffectComposer, Selection, Select, DepthOfField } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+
 
 const screen_state = proxy({ key: "covariant" })
 class ProjectInfo {
@@ -53,25 +56,39 @@ function Display({position, rotation, w, h, ...props}) {
     });
     return (
         <group {...props}>
-            <CurvedPlane
-                position={position}
-                rotation={rotation}
-                width={w}
-                height={h}
-                radius={2}
-                dispose={null} castShadow receiveShadow >
-                {/* <meshStandardMaterial color="white" /> */}
-                <Decal debug ref={ref}
-                    // position-z={4.6
-                        position={[0, 0, 2]}
-                        rotation={[0, Math.PI, 0]}
-                    // texture={texture}
-                    // scale={[1, 1, 1]}
-                    scale={[w, h, 1]}
-                        map={texture}>
+            <EffectComposer multisampling={8} autoClear={false}>
+                {/* <Scanline
+                blendFunction={BlendFunction.OVERLAY} // blend mode
+                density={1.25} // scanline density
+                /> */}
+                {/* <Noise opacity={0.02} /> */}
+                {/* <DepthOfField
+                    focusDistance={0} // where to focus
+                    focalLength={0.02} // focal length
+                    bokehScale={2} // bokeh size
+                /> */}
+            </EffectComposer>
+                <Select enabled={false}>
+                    <CurvedPlane
+                    position={position}
+                    rotation={rotation}
+                    width={w}
+                    height={h}
+                    radius={2}
+                    dispose={null} castShadow receiveShadow >
+                        {/* <meshStandardMaterial color="white" /> */}
+                        <Decal debug ref={ref}
+                            // position-z={4.6
+                                position={[0, 0, 2]}
+                                rotation={[0, Math.PI, 0]}
+                            // texture={texture}
+                            // scale={[1, 1, 1]}
+                            scale={[w, h, 1]}
+                                map={texture}>
 
-                </Decal>
-        </CurvedPlane>
+                        </Decal>
+                    </CurvedPlane>
+                </Select>
     </group>
     )
 
@@ -82,6 +99,7 @@ function Display({position, rotation, w, h, ...props}) {
 
 export default function ProjectScreen({position, rotation, w=1, h=1, ...props}) {
     return <group {...props}>
+        {/* <CameraControl></CameraControl> */}
         <ScrollControls damping={0.1} pages={1} >
             <Scroll>
                 <group>

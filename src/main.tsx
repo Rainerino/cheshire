@@ -12,7 +12,7 @@ import Background from './components/common/Background.tsx'
 import MonitorDisplay from './components/modules/Monitor.tsx'
 import { Route, Link, useLocation, useRoute } from "wouter"
 import HomePage from "./pages/Home.tsx";
-
+import { Selection, Select, EffectComposer, Outline } from '@react-three/postprocessing'
 
 
 const container = document.getElementById('root');
@@ -28,9 +28,12 @@ function Root() {
     <div style={{ width: '100%', height: '100%'}}>
       <Canvas
         shadows={true}
-      >
-        <HomePage />
-        <Background />
+        >
+          <Selection>
+            <HomePage />
+            <Background />
+          </Selection>
+
         {debug && <Stats />}
         {debug && <Perf position="bottom-left" />}
         {/* {debug && <Grid infiniteGrid={true} />} */}
