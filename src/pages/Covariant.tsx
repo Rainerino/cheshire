@@ -14,7 +14,8 @@ import {
   useCursor,
   CubeCamera,
   Grid,
-  Stats
+  Stats,
+  useScroll
 } from '@react-three/drei'
 import * as THREE from 'three'
 import type { ThreeElements } from '@react-three/fiber'
@@ -35,11 +36,6 @@ import Overlay from '../components/modules/CovariantOverlay'
 import { Perf } from "r3f-perf"
 import Background from '../components/common/Background.tsx'
 
-function Loader() {
-  const { progress } = useProgress()
-  return <Html center>{progress} % loaded</Html>
-}
-
 const CAMERA_POSITION: number[][] = [
   [-0.3, 4.33, 1.76],
   [-0.3, 2.3, 2.3],
@@ -59,10 +55,15 @@ const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0);
 const TOTE_OFFSET = new THREE.Vector3(0.556, 0.867, 0.725).add(STATION_OFFSET);
 
 function CameraMovement({ scroll, ...props }) {
+  const { camera } = useThree();
+  const ref_scroll = useScroll()
+
   useFrame((state, delta) => {
-    const camera = state.camera;
+    // if (!ref_scroll) return;
+    // Get the current scroll position (between 0 and 1
     // Clamp scroll.current between 0 and 1
-    const t = Math.max(0, Math.min(1, scroll.current));
+    // const t = Math.max(0, Math.min(1, ref_scroll.current));
+    const t = 0;
     // Interpolate between camera positions (0, 1, 2, 3, 4)
     const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0]);
     const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1]);
@@ -74,8 +75,8 @@ function CameraMovement({ scroll, ...props }) {
     const tgtC = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[2]);
     const tgtD = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[3]);
 
-    let targetPosition = new THREE.Vector3();
-    let targetLookAt = new THREE.Vector3();
+    const targetPosition = new THREE.Vector3();
+    const targetLookAt = new THREE.Vector3();
 
     if (t < 1 / 3) {
       // Interpolate between 0 and 1
@@ -101,6 +102,9 @@ function CameraMovement({ scroll, ...props }) {
     camera.getWorldDirection(currentLookAt);
     currentLookAt.lerp(targetLookAt, 1);
     camera.lookAt(currentLookAt);
+    // camera.updateProjectionMatrix();
+    console.log(t)
+    // console.log(camera.position)
   })
 }
 
@@ -108,10 +112,7 @@ const CURRENT_TARGET = 0
 
 function CovariantPage() {
 
-  const overlay = useRef()
-  const caption = useRef()
-  const scroll = useRef(0)
-
+  const scroll = useRef({ current: 0 });
 
   return (
     <group>
@@ -138,7 +139,6 @@ function CovariantPage() {
       {/* <AccumulativeShadows temporal frames={100} scale={10}>
         <RandomizedLight amount={8} position={[5, 5, 0]} />
       </AccumulativeShadows> */}
-      <Suspense fallback={<Loader />}>
         <PointLightWShadow
           position={new THREE.Vector3(-0.35, 2.4, 2.5)}
           rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
@@ -146,7 +146,6 @@ function CovariantPage() {
           decay={1}
           near={0.2}
           far={10} />
-        {/* {x: 0.00785536018694799, y: 3.362279762715715, z: 1.7383673784236808} */}
         <PointLightWShadow
           position={new THREE.Vector3(0, 2.3, 1.7)}
           rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
@@ -167,9 +166,6 @@ function CovariantPage() {
         <ABB1300
           position={STATION_OFFSET}
           rotation={STATION_ROTATION} />
-      </Suspense>
-        {/* <Overlay ref={overlay} caption={caption} scroll={scroll} /> */}
-        
     </group>
             
     );

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { useLocation, Link } from "wouter"
 import { useTexture, Html } from '@react-three/drei'
 
-export default function HomePage(props) {
+export default function HomeNavPage(props) {
   const [location] = useLocation()
   const texture = useTexture('/textures/paper.jpg')
 
@@ -12,6 +12,7 @@ export default function HomePage(props) {
         <planeGeometry args={[0.3 * 0.618, 0.3]} />
         <meshStandardMaterial color="white" side={THREE.DoubleSide} map={texture} />
         <Html
+          center
           style={{ userSelect: 'none' }}
           transform
           scale={0.03}

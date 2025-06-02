@@ -1,13 +1,5 @@
 import { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { 
-  OrbitControls, 
-  useGLTF, 
-  Environment, 
-  PerspectiveCamera, 
-  PivotControls, 
-  SpotLight 
-} from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight } from '@react-three/drei'
 import * as THREE from 'three'
 import { Route } from "wouter"
 
@@ -20,14 +12,12 @@ import { TypeWriter } from '../components/models/TypeWriter'
 import { WoodenDesk } from '../components/models/WoodenDesk'
 import { Room } from '../components/models/Room'
 import Curtain from '../components/models/Curtain'
-import MonitorDisplay from '../components/modules/Monitor.tsx'
-import PointLightWShadow from '../components/common/PointLightWShadow'
-import CameraControl from '../components/common/CameraControl.tsx'
-import HomePage from './Home'
+import HomeNavPage from './HomeNav'
 import ProjectScreen from '../components/modules/ProjectScreen'
 import ProjectNavPage from './ProjectNav'
 
 import "./Landing.css"
+import CovariantPage from './Covariant'
 
 const CAMERA_POSITION = [
   [1.8, 1.9, 0],
@@ -41,11 +31,10 @@ function useHover() {
   return [hovered, { onPointerOver: () => setHovered(true), onPointerOut: () => setHovered(false) }]
 }
 
-export function Soda(props) {
-  const ref = useRef()
+function Soda(props: any) {
+  const ref = useRef<THREE.Group>(null)
   const [hovered, eventHandlers] = useHover()
-  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/soda-bottle/model.gltf')
-  useFrame((_, delta) => { if (ref.current) ref.current.rotation.y += delta })
+  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/soda-bottle/model.gltf') as any
   return (
     <group ref={ref} {...props} {...eventHandlers} dispose={null}>
       <ambientLight intensity={10} />
@@ -69,11 +58,13 @@ export function Soda(props) {
 function LandingPage() {
   return (
     <group>
-      <Route path="/about"
-        component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
-      <Route path="/project"
-        component={() => <ProjectNavPage />} />
-      <Route path="/credit">
+      <Route path="/about"  component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
+      <Route path="/project" component={() => <ProjectNavPage />} />
+      <Route path="/projects/covariant" component={() => <CovariantPage />} />
+      {/* <Route path="/duoyi" component={DuoyiPage} />
+      <Route path="/motion_metrics" component={MotionMetricsPage} />
+      <Route path="/next" component={NextPage} /> */}
+      <Route path="/credit" >
         <PerspectiveCamera fov={75} />
         <ambientLight intensity={1} />
         <OrbitControls makeDefaults />
@@ -82,7 +73,7 @@ function LandingPage() {
         </PivotControls>
       </Route>
       <Route path="/">
-        <HomePage 
+        <HomeNavPage 
           position={[0.1, 0.87, 0.5]} 
           rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 5]} 
           scale={[1, 1, 1]} 
@@ -109,15 +100,12 @@ function LandingPage() {
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={45}
         />
-        {/* <CameraControl /> */}
         <ambientLight intensity={0.1} />
         <Room />
-        {/* <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI / 2, 0]} /> */}
         <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
         <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI / 2 + Math.PI / 4, 0]} />
         <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI / 2, 0]} />
-        {/* <PaperHolder position={[-0.1, 0.87, 0.91]} rotation={[0, Math.PI / 2, 0]} /> */}
         <Curtain
           position={new THREE.Vector3(-2.8, 1.9, -0.31)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
@@ -140,7 +128,7 @@ function LandingPage() {
 }
 
 function preloadGLTFFiles() {
-  const gltfFiles = [
+  [
     '/models/room/Desktop.glb?url',
     '/models/room/Chair.glb?url',
     '/models/room/DeskLamp.glb?url',
@@ -149,10 +137,7 @@ function preloadGLTFFiles() {
     '/models/room/TypeWriter.glb?url',
     '/models/room/WoodenDesk.glb?url',
     '/models/room/Room.glb?url',
-  ]
-  gltfFiles.forEach((path) => {
-    useGLTF.preload(path)
-  })
+  ].forEach(useGLTF.preload)
 }
 
 preloadGLTFFiles()

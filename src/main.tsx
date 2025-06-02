@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense,  useRef} from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { Canvas } from '@react-three/fiber'
@@ -7,6 +7,8 @@ import { Perf } from "r3f-perf"
 import { useLocation, useRoute } from "wouter"
 import { Loader } from '@react-three/drei'
 import LandingPage from './pages/Landing'
+import CovariantPage from './pages/Covariant'
+import Overlay from './components/modules/CovariantOverlay'
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element not found');
@@ -16,12 +18,15 @@ const debug = true;
 function Root() {
   const [, params] = useRoute('/')
   const [, setLocation] = useLocation()
+  const overlay = useRef()
+  const caption = useRef()
+  const scroll = useRef(0)
   return (
     <React.StrictMode>
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows>
           <Suspense fallback={null}>
-            <LandingPage />
+            <CovariantPage />
           </Suspense>
           {debug && <Stats />}
           {debug && <Perf position="bottom-left" />}
@@ -34,6 +39,7 @@ function Root() {
         >
           {params ? 'Home' : 'Back'}
         </a>
+        {/* <Overlay ref={overlay} caption={caption} scroll={scroll} /> */}
       </div>
     </React.StrictMode>
   )
