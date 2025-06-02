@@ -1,5 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, PerspectiveCamera, SpotLight, EffectComposer, Autofocus, Select } from '@react-three/drei'
+import { OrbitControls, PerspectiveCamera, SpotLight, Select } from '@react-three/drei'
+import { Autofocus, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { OldTV } from '../components/models/TV'
 import { CouchTable } from '../components/models/CouchTable'

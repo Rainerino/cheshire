@@ -69,8 +69,10 @@ export function Soda(props) {
 function LandingPage() {
   return (
     <group>
-      <Route path="/about" component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
-      <Route path="/project" component={() => <ProjectNavPage />} />
+      <Route path="/about"
+        component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
+      <Route path="/project"
+        component={() => <ProjectNavPage />} />
       <Route path="/credit">
         <PerspectiveCamera fov={75} />
         <ambientLight intensity={1} />
@@ -110,7 +112,7 @@ function LandingPage() {
         {/* <CameraControl /> */}
         <ambientLight intensity={0.1} />
         <Room />
-        <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI / 2, 0]} />
+        {/* <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI / 2, 0]} /> */}
         <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
         <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI / 2 + Math.PI / 4, 0]} />
