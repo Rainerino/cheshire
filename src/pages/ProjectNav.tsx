@@ -27,9 +27,9 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>
 }
 
-const CAMERA_POSITION: number[] = [0, 2, 4]
+const CAMERA_POSITION: number[] = [0, 1.7, 6]
 
-const CAMERA_LOOK_AT: number[] = [0, -1, -6]
+const CAMERA_LOOK_AT: number[] = [0, -0.3, -6]
 
 
 function ProjectNavPage() {
@@ -56,7 +56,7 @@ function ProjectNavPage() {
           makeDefault
           // 0.12, 0.97, 0.175
           position={new THREE.Vector3().fromArray(CAMERA_POSITION)}
-          fov={20}
+          fov={15}
         /> 
             {/* <CameraControl></CameraControl> */}
             <ambientLight intensity={0.1} />

@@ -54,28 +54,6 @@ function Display({position, rotation, w, h, ...props}) {
         }
         
     });
-    const autofocusRef = useRef();
-    const { update, ...autofocusConfig } = useControls({
-        target: { value: [-1, 1, 0.6], optional: true, disabled: true },
-        mouse: false,
-        debug: { value: 0.02, min: 0, max: 0.15, optional: true },
-        smoothTime: { value: 0.5, min: 0, max: 1 },
-        manual: false,
-        "update (manual only)": button((get) => {
-          autofocusRef.current.update();
-        }),
-        DepthOfField: folder(
-          // https://pmndrs.github.io/postprocessing/public/docs/class/src/effects/DepthOfFieldEffect.js~DepthOfFieldEffect.html#instance-constructor-constructor
-            {
-            focusDistance: { min: 0, max: 1, value: 0.01 },
-            focusRange: { min: 0, max: 0.0005, value: 0.00025 },
-            bokehScale: { min: 0, max: 50, value: 10 },
-            width: { value: 1024, min: 256, max: 2048, step: 256, optional: true, disabled: false },
-            height: { value: 1024, min: 256, max: 2048, step: 256, optional: true, disabled: false }
-          },
-          { collapsed: true }
-        )
-      });
     return (
         <group {...props}>
             <EffectComposer multisampling={8} autoClear={false}>
@@ -85,17 +63,15 @@ function Display({position, rotation, w, h, ...props}) {
                 scrollSpeed={0.1} // scroll speed
                 />
                 <Noise opacity={0.02} /> */}
-                {/* <Autofocus ref={autofocusRef} {...autofocusConfig} /> */}
                 <Autofocus
                     mouse
-                    smoothTime={0.3}
+                    smoothTime={0.5}
                     focusRange={0.00025}
-                    bokehScale={2}
+                    bokehScale={10}
                     resolutionScale={1}
                     resolutionX={1024}
                     resolutionY={1024}/>
-            </EffectComposer>
-                <Select enabled={hovered}>
+                </EffectComposer>
                     <CurvedPlane
                     position={position}
                     rotation={rotation}
@@ -104,18 +80,17 @@ function Display({position, rotation, w, h, ...props}) {
                     radius={2}
                     dispose={null} castShadow receiveShadow >
                         {/* <meshStandardMaterial color="white" /> */}
-                        <Decal ref={ref}
-                            // position-z={4.6
-                                position={[0, 0, 2]}
-                                rotation={[0, Math.PI, 0]}
-                            // texture={texture}
-                            // scale={[1, 1, 1]}
-                            scale={[w, h, 1]}
-                            map={texture}>
+                    <Decal ref={ref}
+                        // position-z={4.6
+                            position={[0, 0, 2]}
+                            rotation={[0, Math.PI, 0]}
+                        // texture={texture}
+                        // scale={[1, 1, 1]}
+                        scale={[w, h, 1]}
+                        map={texture}>
 
-                        </Decal>
+                    </Decal>
                     </CurvedPlane>
-                </Select>
     </group>
     )
 
