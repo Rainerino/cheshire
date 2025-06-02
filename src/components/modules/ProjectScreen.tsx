@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Decal, Text, Image as ImageImpl, useScroll, Scroll, ContactShadows, useGLTF, Environment, Float, Html, OrbitControls, PerspectiveCamera, PivotControls, ScrollControls, useTexture, RenderTexture } from '@react-three/drei'
+import { useCursor, Decal, Text, Image as ImageImpl, useScroll, Scroll, ContactShadows, useGLTF, Environment, Float, Html, OrbitControls, PerspectiveCamera, PivotControls, ScrollControls, useTexture, RenderTexture } from '@react-three/drei'
 import { MathUtils } from 'three'
 import CameraControl from '../common/CameraControl'
 import { useLocation, Route, Link } from "wouter"
 import { proxy, useSnapshot } from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
-
+import gsap from 'gsap'
 import { useControls, folder, button } from "leva";
 
 const screen_state = proxy({ key: "covariant" })
@@ -36,9 +36,7 @@ function Display({position, rotation, w, h, ...props}) {
     const out = () => hover(false)
     const snap = useSnapshot(screen_state)
     const texture = useTexture(project_infos.get(snap.key).path)
-    // texture.wrapS = THREE.RepeatWrapping;
-    // texture.wrapT = THREE.RepeatWrapping;
-    // texture.repeat.set(1, 1);
+    useCursor(hovered)
     useFrame((state, delta) => {
         if (ref.current) {
             if (scroll.offset < 1/4) {
@@ -50,28 +48,47 @@ function Display({position, rotation, w, h, ...props}) {
             } else {
                 screen_state.key = "next"
             }
+            ref.current.material.toneMapped = false
+            
+            // Only flash when it's not hovering over it
+            if (!hovered) {
+                const randomValue = Math.random()/2 + 1.5;
+                ref.current.material.color.r = randomValue;
+                ref.current.material.color.g = randomValue;
+                ref.current.material.color.b = randomValue;
+                // console.log(ref.current.material.color)
+            } else {
+                // Animate color channels to 1 using gsap
+                gsap.to(ref.current.material.color, {
+                    r: 1,
+                    g: 1,
+                    b: 1,
+                    duration: 0.5,
+                    overwrite: true
+                });
+            }
         }
         
     });
     return (
         <group {...props}>
             <CurvedPlane
-            position={position}
-            rotation={rotation}
-            width={w}
-            height={h}
-            radius={2}
-            dispose={null} castShadow receiveShadow >
+                position={position}
+                rotation={rotation}
+                width={w}
+                height={h}
+                radius={2}
+                onPointerOver={(e) => hover(true)}
+                onPointerOut={() => hover(false)}
+                dispose={null}
+                castShadow receiveShadow >
                 {/* <meshStandardMaterial color="white" /> */}
             <Decal ref={ref}
-                // position-z={4.6
-                    position={[0, 0, 2]}
-                    rotation={[0, Math.PI, 0]}
-                // texture={texture}
-                // scale={[1, 1, 1]}
+                position={[0, 0, 2]}
+                rotation={[0, Math.PI, 0]}
                 scale={[w, h, 1]}
                 map={texture}>
-
+                    {/* <meshStandardMaterial color="white" /> */}
             </Decal>
             </CurvedPlane>
     </group>

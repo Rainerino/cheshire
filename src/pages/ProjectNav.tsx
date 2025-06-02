@@ -22,14 +22,42 @@ import "./Landing.css"
 import CameraControl from '../components/common/CameraControl.tsx'
 import ProjectScreen from '../components/modules/ProjectScreen'
 
-const CAMERA_POSITION: number[] = [0, 1.7, 6]
-
+const CAMERA_START_POSITION: number[] = [0, 2.3, 8]
+const CAMERA_FINISH_POSITION: number[] = [0, 1.7, 6]
 const CAMERA_LOOK_AT: number[] = [0, -0.3, -6]
 
+// Do a Dolly zoom first
+
+const EPS = 0.01
+const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) => {
+    return (
+        Math.abs(pos.x - target[0]) < EPS &&
+        Math.abs(pos.y - target[1]) < EPS &&
+        Math.abs(pos.z - target[2]) < EPS
+    )
+}
 
 function ProjectNavPage() {
-    const { camera, scene } = useThree();
-    const depthBuffer = useDepthBuffer()
+    const { camera } = useThree()
+    
+    // const { ref } = useRef()
+    useFrame((state, delta) => {
+        // Check whether we are in the first position
+        if (isCameraAtPosition(camera.position, CAMERA_START_POSITION)) {
+            
+            // Do a dolly zoom onto the TV
+            gsap.to(camera.position, {
+                x: CAMERA_FINISH_POSITION[0],
+                y: CAMERA_FINISH_POSITION[1],
+                z: CAMERA_FINISH_POSITION[2],
+                duration: 1.5,
+                ease: "power2.out",
+            })
+            // Do a dolly zoom onto the TV
+            
+        }
+        
+    })
     return (
       <group>
         <OrbitControls
@@ -39,18 +67,12 @@ function ProjectNavPage() {
           enablePan={false}
           enableRotate = {false}
           enableZoom={false}
-          // minPolarAngle={-Math.PI / 18 + Math.PI / 2}
-          // maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
-          // maxDistance={2}
-          // minAzimuthAngle={-Math.PI / 10 + Math.PI / 2}
-          // maxAzimuthAngle={ Math.PI / 10 + Math.PI / 2 }
-          // minDistance={0.3}
         >
         </OrbitControls>
         <PerspectiveCamera
           makeDefault
           // 0.12, 0.97, 0.175
-          position={new THREE.Vector3().fromArray(CAMERA_POSITION)}
+          position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
           fov={15}
         /> 
         {/* <CameraControl></CameraControl> */}
@@ -76,8 +98,8 @@ function ProjectNavPage() {
             />
             <Noise opacity={0.02} /> */}
             <Autofocus
-                mouse
-                smoothTime={0.3}
+                mouse={true}
+                smoothTime={0.15}
                 focusRange={0.00025}
                 bokehScale={8}
                 resolutionScale={0.5}
