@@ -78,7 +78,8 @@ function ProjectNavPage() {
                 <Select enabled={false}>
                     <SpotLight
                     castShadow
-                    shadow-bias={-0.001}
+                    shadow-bias={-0.0001}
+                    shadow-mapSize={[2048, 2048]}
                     position={[0, 5, -5]}
                     distance={70}
                     penumbra={0.4}
@@ -87,7 +88,7 @@ function ProjectNavPage() {
                     angle={0.45}
                     attenuation={20}
                     anglePower={5}
-                    intensity={500}
+                    intensity={300}
                     opacity={0.2}
                     />
                     {/* <AccumulativeShadows
