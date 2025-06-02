@@ -1,6 +1,6 @@
-import { useRef, Suspense, useState } from 'react'
+import { useRef, Suspense, useState, useEffect } from 'react'
 import { Canvas, useFrame, extend} from '@react-three/fiber'
-import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center} from '@react-three/drei'
+import { useDepthBuffer, OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLight, PerspectiveCamera, Environment, Center} from '@react-three/drei'
 import * as THREE from 'three'
 import type { ThreeElements } from '@react-three/fiber' 
 import { Desktop } from '../components/models/Desktop'
@@ -64,7 +64,12 @@ function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
 
 
 function LandingPage() {
-  const { camera, scene } = useThree();
+  const { camera, scene, gl } = useThree();
+  const depthBuffer = useDepthBuffer()
+  useEffect(() => {
+    gl.physicallyCorrectLights = true;
+    gl.shadowMap.type = THREE.PCFSoftShadowMap
+  }, [gl]);
     return (
       <group>
         <Environment preset="night" />
@@ -72,9 +77,9 @@ function LandingPage() {
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping={true}
           dampingFactor= {0.03}
-          enablePan={false}
+          // enablePan={false}
           // enableRotate = {false}
-          enableZoom={false}
+          // enableZoom={false}
           // minPolarAngle={-Math.PI / 18 + Math.PI / 2}
           // maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
           // maxDistance={2}
@@ -90,12 +95,12 @@ function LandingPage() {
           fov={45}
         /> 
         {/* <CameraControl></CameraControl> */}
-        <ambientLight intensity={0.05} />
+        <ambientLight intensity={0.01} />
         <Suspense fallback={<Loader />}>
           <Room />
           <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI/2, 0]} />
           <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI/2, 0]}/>
-          <LamyPen position={[0.19, 0.89, 0.29]} rotation={[0, Math.PI * 4/3, 0]}/>
+          <LamyPen position={[0.19, 0.881, 0.29]} rotation={[0, Math.PI * 4/3, 0]}/>
           <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI/2 + Math.PI/4, 0]}/>
           <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI/2, 0]}/>
           {/* <PaperHolder position={[-0.1, 0.87, 0.91]} rotation={[0, Math.PI/2, 0]}/> */}
@@ -103,16 +108,23 @@ function LandingPage() {
             position={new THREE.Vector3(-2.8, 1.9, -0.31)}
             rotation={new THREE.Euler(0, -Math.PI / 2, 0)} />
           {/* <PointLightWShadow
-            position={new THREE.Vector3(0, 3.5, 0)}
+            position={new THREE.Vector3(0, 2.5, 0)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-            intensity={10} /> */}
-          {/* <SpotLight castShadow
+            /> */}
+          {/* <fog attach="fog" args={['#202020', 5, 20]} /> */}
+          <SpotLight
+            // depthBuffer={depthBuffer}
+            castShadow
+            debug
+            volumetric
+            penumbra={0.1}
+            intensity={10}
+            angle={0.3}
+            distance={0}
             shadow-bias={-0.00001}
-            shadow-mapSize={[2048, 2048]}
-            position={[0, 4, 0]} /> */}
-          {/* <PointLightWShadow
-            position={new THREE.Vector3(2.8, 1.9, -0.31)}
-            rotation={new THREE.Euler(Math.PI / 2, 0, 0)} /> */}
+            shadow-mapSize={[512, 512]}
+            position={[0, 3, 0]} />
+
         </Suspense>
       </group>
     );

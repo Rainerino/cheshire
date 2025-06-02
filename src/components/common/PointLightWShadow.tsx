@@ -6,6 +6,7 @@ interface PointLightWShadowProps {
     position: THREE.Vector3,
     rotation: THREE.Euler | [number, number, number],
     intensity?: number,
+    distance?: number,
     decay?: number,
     near?: number,
     far?: number,
@@ -15,11 +16,12 @@ interface PointLightWShadowProps {
 const PointLightWShadow: React.FC<PointLightWShadowProps> = ({
     position,
     rotation,
-    intensity = 20,
+    intensity = 10,
+    distance = 100,
     decay = 2,
     near = 0.1,
-    far = 10,
-    bias = -0.01,
+    far = 100,
+    bias = -0.001,
 }) => {
     return (
       <>
@@ -28,7 +30,8 @@ const PointLightWShadow: React.FC<PointLightWShadowProps> = ({
             rotation={rotation}
             intensity={intensity}
             castShadow={true}
-            decay={decay}
+          decay={decay}
+          distance={distance}
             shadow-mapSize={[1024, 1024]}
             shadow-camera-far={far}
             shadow-camera-near={near}
