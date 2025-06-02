@@ -13,7 +13,7 @@ import { WoodenDesk } from '../components/models/WoodenDesk'
 
 import { useThree } from '@react-three/fiber'
 
-import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
+import { Html, PivotControls, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
 import { Room } from '../components/models/Room'
 import PointLightWShadow from '../components/common/PointLightWShadow' // <--- CORRECTED IMPORT
 import Curtain from '../components/models/Curtain'
@@ -23,63 +23,67 @@ import "./Landing.css"
 import CameraControl from '../components/common/CameraControl.tsx'
 import HomePage from './Home'
 import { useLocation, Route, Link } from "wouter"
+import ProjectScreen from '../components/modules/ProjectScreen'
+import ProjectNavPage from './ProjectNav'
 
 
 const CAMERA_POSITION: number[][] = [
-  [2, 1.9, 0],
+  [1.8, 1.9, 0],
   [0.12, 1.25, 0.175]
 ]
 
 const CAMERA_LOOK_AT: number[] = [0, 1.1, 0]
 
-function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
-  console.log('monitor click event', e)
-  console.log(camera.position)
+export function Soda(props) {
+  const ref = useRef()
+  const [hovered, spread] = useHover()
+  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/soda-bottle/model.gltf')
+  useFrame((state, delta) => (ref.current.rotation.y += delta))
+  return (
+      <group ref={ref} {...props} {...spread} dispose={null}>
+      <ambientLight intensity={10} />
+      <mesh geometry={nodes.Mesh_sodaBottle.geometry}>
+        <meshStandardMaterial color={hovered ? 'red' : 'green'} roughness={0.33} metalness={0.8} envMapIntensity={2} />
+      </mesh>
+      <mesh geometry={nodes.Mesh_sodaBottle_1.geometry} material={materials.red} material-envMapIntensity={0} />
+    </group>
+  )
+}
 
-  // Only react to click if it's one of the two specific positions
-  const isNearPosition = (posArr: number[], epsilon: number) =>
-    Math.abs(posArr[0] - camera.position.x) < epsilon &&
-    Math.abs(posArr[1] - camera.position.y) < epsilon &&
-    Math.abs(posArr[2] - camera.position.z) < epsilon;
-
-  const EPS = 0.01; // Adjust this value as needed for your precision
-  // if (!isNearPosition(CAMERA_POSITION[0], EPS) && !isNearPosition(CAMERA_POSITION[1], EPS)) {
-  //   return
-  // }
-
-  const targetPosition = isNearPosition(CAMERA_POSITION[1], EPS) ? CAMERA_POSITION[0] : CAMERA_POSITION[1];
-  gsap.to(camera.position, {
-    x: targetPosition[0],
-    y: targetPosition[1],
-    z: targetPosition[2],
-    duration: 1.5,
-    ease: "power3.inOut",
-  })
-
+function useHover() {
+  const [hovered, hover] = useState(false)
+  return [hovered, { onPointerOver: (e) => hover(true), onPointerOut: () => hover(false) }]
 }
 
 
 
 function LandingPage() {
-  const { camera, scene} = useThree();
     return (
       <group>
+        <Route path="/about" component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
+        <Route path="/project" component={() => <ProjectNavPage />} />
+        <Route path="/credit">
+          <PerspectiveCamera fov={75} />
+            <ambientLight intensity={1} />
+            <OrbitControls makeDefaults />
+            <PivotControls lineWidth={3} depthTest={false} scale={2}>
+            <Soda scale={6} position={[0, -1.6, 0]} />
+            </PivotControls>
+        </Route>
         <Route path="/">
+          <HomePage position={[0.1, 0.88, 0.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={[1, 1, 1]} />
           <Environment preset="night" />
-          <HomePage position={[0.1, 0.88, 0.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={[0.1, 0.1, 0.1]} />
           <OrbitControls
             target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
             enableDamping={true}
-            dampingFactor= {0.03}
-            // enablePan={false}
+            dampingFactor= {0.01}
+            enablePan={false}
             // enableRotate = {false}
-            // enableZoom={false}
-            // minPolarAngle={-Math.PI / 18 + Math.PI / 2}
-            // maxPolarAngle={Math.PI/ 18 + Math.PI / 2}
-            // maxDistance={2}
-            // minAzimuthAngle={-Math.PI / 10 + Math.PI / 2}
-            // maxAzimuthAngle={ Math.PI / 10 + Math.PI / 2 }
-            // minDistance={0.3}
+            enableZoom={false}
+            minPolarAngle={-Math.PI / 5 + Math.PI / 2 }
+            maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
+            minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
+            maxAzimuthAngle={ Math.PI / 6 + Math.PI / 2 }
           >
           </OrbitControls>
           <PerspectiveCamera
