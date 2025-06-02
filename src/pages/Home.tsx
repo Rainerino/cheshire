@@ -56,15 +56,15 @@ export default function HomePage(props) {
                     <div style={{ width: '700', height: '500'}}>
                         <ul>
                             <li>{`The current page is: ${location}`}</li>
-                            {/* <a onClick={() => navigate("/somewhere")}>Click to update</a> */}
+                            {/* <a onClick={() => navigate("/About")}>Click to update</a> */}
                             <li>
-                            <Link href="/somewhere" className="active">Click to update</Link>
+                            <Link href="/About" className="active">Click to update</Link>
                             </li>
                             <li>
-                            <Link href="/somewhere1" className="active">Click to update</Link>
+                            <Link href="/Projects" className="active">Click to update</Link>
                             </li>
                             <li>
-                            <Link href="/somewhere2" className="active">Click to update</Link>
+                            <Link href="/Credit" className="active">Click to update</Link>
                             </li>
                         <li>Milk</li>
                         </ul>
@@ -73,9 +73,9 @@ export default function HomePage(props) {
               </mesh>
 
           </Route>
-          <Route path="/somewhere" component={() => <ProjectScreen />} />
-          <Route path="/somewhere1" component={() => <ProjectNavPage />} />
-          <Route path="/somewhere2">
+          <Route path="/About" component={() => <ProjectScreen />} />
+          <Route path="/Projects" component={() => <ProjectNavPage />} />
+          <Route path="/Credit">
               
                 <PivotControls lineWidth={3} depthTest={false} displayValues={false} scale={2}>
               <Soda scale={6} position={[0, -1.6, 0]} />

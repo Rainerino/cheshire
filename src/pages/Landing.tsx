@@ -4,6 +4,13 @@ import { OrbitControls, useGLTF, useTexture, AccumulativeShadows, RandomizedLigh
 import * as THREE from 'three'
 import type { ThreeElements } from '@react-three/fiber' 
 import { Desktop } from '../components/models/Desktop'
+import { Chair } from '../components/models/Chair'
+import { DeskLamp } from '../components/models/DeskLamp'
+import { LamyPen } from '../components/models/LamyPen'
+import { PaperHolder } from '../components/models/PaperHolder'
+import { TypeWriter } from '../components/models/TypeWriter'
+import { WoodenDesk } from '../components/models/WoodenDesk'
+
 import { useThree } from '@react-three/fiber'
 
 import { Html, useProgress, SpotLight, SpotLightShadow } from '@react-three/drei'
@@ -22,11 +29,11 @@ function Loader() {
 }
 
 const CAMERA_POSITION: number[][] = [
-  [0.8, 1.49, 0.175],
+  [2, 1.3, 0],
   [0.12, 1.25, 0.175]
 ]
 
-const CAMERA_LOOK_AT: number[] = [0, 1.23, 0.175]
+const CAMERA_LOOK_AT: number[] = [0, 1.23, 0]
 
 function monitor_click_event(e: MouseEvent, camera: THREE.Camera) {
   console.log('monitor click event', e)
@@ -60,6 +67,7 @@ function LandingPage() {
   const { camera, scene } = useThree();
     return (
       <group>
+        <Environment preset="night" />
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping={true}
@@ -78,27 +86,33 @@ function LandingPage() {
         <PerspectiveCamera
           makeDefault
           // 0.12, 0.97, 0.175
-          position={new THREE.Vector3().fromArray(CAMERA_POSITION[1])}
-          fov={75}
+          position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
+          fov={45}
         /> 
         {/* <CameraControl></CameraControl> */}
         <ambientLight intensity={0.05} />
         <Suspense fallback={<Loader />}>
-          <MonitorDisplay
-            position={new THREE.Vector3(-0.175, 1.201, 0.170)}
-            rotation={new THREE.Euler(-0.14, Math.PI/2, 0, "YZX")}
-          />
-          <Desktop
-            position={new THREE.Vector3(0, 0.28, 0)}
-            monitor_click_event={(e: MouseEvent) => monitor_click_event(e, camera)} />
           <Room />
+          <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI/2, 0]} />
+          <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI/2, 0]}/>
+          <LamyPen position={[0.19, 0.89, 0.29]} rotation={[0, Math.PI * 4/3, 0]}/>
+          <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI/2 + Math.PI/4, 0]}/>
+          <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI/2, 0]}/>
+          {/* <PaperHolder position={[-0.1, 0.87, 0.91]} rotation={[0, Math.PI/2, 0]}/> */}
           <Curtain
             position={new THREE.Vector3(-2.8, 1.9, -0.31)}
             rotation={new THREE.Euler(0, -Math.PI / 2, 0)} />
-          <PointLightWShadow
+          {/* <PointLightWShadow
             position={new THREE.Vector3(0, 3.5, 0)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-            intensity={20} />
+            intensity={10} /> */}
+          {/* <SpotLight castShadow
+            shadow-bias={-0.00001}
+            shadow-mapSize={[2048, 2048]}
+            position={[0, 4, 0]} /> */}
+          {/* <PointLightWShadow
+            position={new THREE.Vector3(2.8, 1.9, -0.31)}
+            rotation={new THREE.Euler(Math.PI / 2, 0, 0)} /> */}
         </Suspense>
       </group>
     );

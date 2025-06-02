@@ -30,7 +30,7 @@ function Root() {
         shadows={true}
         >
           <Selection>
-            <HomePage />
+            <LandingPage />
             <Background />
           </Selection>
 
