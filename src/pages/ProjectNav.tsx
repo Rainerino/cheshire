@@ -22,12 +22,6 @@ import "./Landing.css"
 import CameraControl from '../components/common/CameraControl.tsx'
 import ProjectScreen from '../components/modules/ProjectScreen'
 
-// import { useFrame, useRef } from 'react-three-fiber';
-function Loader() {
-  const { progress } = useProgress()
-  return <Html center>{progress} % loaded</Html>
-}
-
 const CAMERA_POSITION: number[] = [0, 1.7, 6]
 
 const CAMERA_LOOK_AT: number[] = [0, -0.3, -6]
@@ -90,7 +84,6 @@ function ProjectNavPage() {
                 resolutionX={2048}
                 resolutionY={2048}/>
         </EffectComposer>
-        <Suspense fallback={<Loader />}>
         <fog attach="fog" args={['#202020', 5, 20]} />
             <Select enabled={false}>
                 <SpotLight
@@ -129,7 +122,6 @@ function ProjectNavPage() {
                     w={0.51} h={0.4}
                 />
           {/* <Chandelier /> */}
-        </Suspense>
       </group>
     );
 }

@@ -106,3 +106,4 @@ export default function ProjectScreen({position, rotation, w=1, h=1, ...props}) 
 project_infos.forEach((value) => {
     useTexture.preload(value.path);
 })
+

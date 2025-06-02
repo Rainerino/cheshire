@@ -30,60 +30,44 @@ export function Soda(props) {
     return [hovered, { onPointerOver: (e) => hover(true), onPointerOut: () => hover(false) }]
   }
 
-  
-export function Duck(props) {
-    const { scene } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/duck/model.gltf')
-    return <primitive object={scene} {...props} />
-}
-export function Apple(props) {
-    const { scene } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/apple-half/model.gltf')
-    useFrame((state, delta) => (scene.rotation.y += delta))
-    return <primitive object={scene} {...props} />
-  }
 
 export default function HomePage(props) {
     const [location, navigate] = useLocation();
   return (
-      // <Canvas camera={{ position: [] }}>
+      // < camera={{ position: [] }}>
       <group {...props}>
         {/* <CameraControl /> */}
-          <Route path="/">
         {/* <mesh rotation={[-Math.PI / 2, 0, 0]}> */}
         <mesh rotation={[0, 0, 0]}>
-                  <planeGeometry args={[5, 5]} />
-                  <Html style={{ userSelect: 'none' }} castShadow receiveShadow  transform>
+          <planeGeometry args={[5, 5]} />
+          <Html style={{ userSelect: 'none' }}
+              transform>
                 {/* <iframe title="embed" width={700} height={500} src="https://threejs.org/" frameBorder={0} /> */}
                     <div style={{ width: '700', height: '500'}}>
                         <ul>
                             <li>{`The current page is: ${location}`}</li>
-                            {/* <a onClick={() => navigate("/About")}>Click to update</a> */}
+                            {/* <a onClick={() => navigate("/about")}>Click to update</a> */}
                             <li>
-                            <Link href="/About" className="active">Click to update</Link>
+                            <Link href="/about" className="active">Click to update</Link>
                             </li>
                             <li>
-                            <Link href="/Projects" className="active">Click to update</Link>
+                            <Link href="/project" className="active">Click to update</Link>
                             </li>
                             <li>
-                            <Link href="/Credit" className="active">Click to update</Link>
+                            <Link href="/credit" className="active">Click to update</Link>
                             </li>
                         <li>Milk</li>
                         </ul>
                     </div>
                 </Html>
               </mesh>
-
-          </Route>
-          <Route path="/About" component={() => <ProjectScreen />} />
-          <Route path="/Projects" component={() => <ProjectNavPage />} />
-          <Route path="/Credit">
-              
-                <PivotControls lineWidth={3} depthTest={false} displayValues={false} scale={2}>
+          <Route path="/about" component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
+          <Route path="/project" component={() => <ProjectNavPage />} />
+          <Route path="/credit">
+              <PivotControls lineWidth={3} depthTest={false} scale={2}>
               <Soda scale={6} position={[0, -1.6, 0]} />
               </PivotControls>
           </Route>
-      <ContactShadows position={[0, -9, 0]} opacity={0.7} scale={40} blur={1} />
       </group>
-
-    // </Canvas>
   )
 }

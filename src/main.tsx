@@ -5,7 +5,7 @@ import { Canvas, useThree} from '@react-three/fiber'
 import LandingPage from './pages/Landing.tsx'
 import CovariantPage from './pages/Covariant.tsx'
 import ToteScene from './pages/Tote.tsx'
-import { Stats, OrbitControls, Grid, Preload} from '@react-three/drei'
+import { Stats, OrbitControls, Grid, Preload, Loader} from '@react-three/drei'
 import * as THREE from 'three'
 import { Perf } from "r3f-perf"
 import Background from './components/common/Background.tsx'
@@ -29,15 +29,17 @@ function Root() {
       <Canvas
           shadows={true}
         >
-          <Selection>
+          <Suspense fallback={null}>
             <LandingPage />
-            <Background />
-          </Selection>
-
+          </Suspense>
+          
+          {/* <Background /> */}
+          
         {debug && <Stats />}
         {debug && <Perf position="bottom-left" />}
         {/* {debug && <Grid infiniteGrid={true} />} */}
-      </Canvas>
+        </Canvas>
+        {/* <Loader /> */}
       <a style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }} href="#" onClick={() => setLocation('/')}>
         {params ? 'Home' : 'Back'}
       </a>
