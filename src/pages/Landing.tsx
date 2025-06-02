@@ -71,7 +71,7 @@ function LandingPage() {
             </PivotControls>
         </Route>
         <Route path="/">
-          <HomePage position={[0.1, 0.88, 0.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={[1, 1, 1]} />
+          <HomePage position={[0.1, 0.87, 0.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI /5]} scale={[1, 1, 1]} />
           <Environment preset="night" />
           <OrbitControls
             target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
@@ -97,7 +97,7 @@ function LandingPage() {
             <Room />
             <Chair position={[0.8, 0, -0.4]} rotation={[0, -Math.PI/2, 0]} />
             <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI/2, 0]}/>
-            <LamyPen position={[0.2, 0.881 + 0.1, 0.5]} rotation={[0, Math.PI * 4/3, 0]}/>
+            <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4/3, 0]}/>
             <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI/2 + Math.PI/4, 0]}/>
             <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI/2, 0]}/>
             {/* <PaperHolder position={[-0.1, 0.87, 0.91]} rotation={[0, Math.PI/2, 0]}/> */}
