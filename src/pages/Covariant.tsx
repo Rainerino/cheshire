@@ -13,6 +13,7 @@ import ToteScene from './Tote'
 import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 import "./Covariant.css"
+import CameraControl from '../components/common/CameraControl'
 
 const CAMERA_POSITION = [
   [-0.3, 4.33, 1.76],
@@ -37,8 +38,8 @@ function CameraMovement() {
 
   useFrame(() => {
     if (!scroll) return
-    const t = Math.max(0, Math.min(1, scroll.offset))
-
+    // const t = Math.max(0, Math.min(1, scroll.offset))
+    const t = 0;
     const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0])
     const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1])
     const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2])
@@ -80,45 +81,46 @@ function CovariantPage() {
   return (
     <group>
       <ScrollControls pages={3}>
-        <CameraMovement />
-        <PerspectiveCamera
-          makeDefault
-          position={CAMERA_POSITION[CURRENT_TARGET]}
-          fov={30}
-        />
-        <PointLightWShadow
-          position={new THREE.Vector3(-0.35, 2.4, 2.5)}
-          rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-          intensity={2}
-          decay={1}
-          near={0.2}
-          far={10}
-        />
-        <PointLightWShadow
-          position={new THREE.Vector3(0, 2.3, 1.7)}
-          rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-          intensity={0.5}
-          decay={1}
-          near={0.2}
-          far={10}
-        />
-        <RedcareBase
-          position={STATION_OFFSET}
-          rotation={STATION_ROTATION}
-        />
-        <RedcareStation
-          position={STATION_OFFSET}
-          rotation={STATION_ROTATION}
-        />
-        <ToteScene
-          position={TOTE_OFFSET}
-          rotation={STATION_ROTATION}
-        />
-        <ABB1300
-          position={STATION_OFFSET}
-          rotation={STATION_ROTATION}
-        />
-      </ScrollControls>
+          {/* <CameraControl /> */}
+          <CameraMovement />
+          <PerspectiveCamera
+            makeDefault
+            position={CAMERA_POSITION[CURRENT_TARGET]}
+            fov={30}
+          />
+          <PointLightWShadow
+            position={new THREE.Vector3(-0.35, 2.4, 2.5)}
+            rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+            intensity={2}
+            decay={1}
+            near={0.2}
+            far={10}
+          />
+          <PointLightWShadow
+            position={new THREE.Vector3(0, 2.3, 1.7)}
+            rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
+            intensity={0.5}
+            decay={1}
+            near={0.2}
+            far={10}
+          />
+          <RedcareBase
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION}
+          />
+          <RedcareStation
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION}
+          />
+          <ToteScene
+            position={TOTE_OFFSET}
+            rotation={STATION_ROTATION}
+          />
+          <ABB1300
+            position={STATION_OFFSET}
+            rotation={STATION_ROTATION}
+          />
+        </ScrollControls>
     </group>
   )
 }

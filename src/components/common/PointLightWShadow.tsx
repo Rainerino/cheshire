@@ -36,9 +36,9 @@ const PointLightWShadow: React.FC<PointLightWShadowProps> = ({
             shadow-camera-far={far}
             shadow-camera-near={near}
             shadow-bias={bias}>
-          <orthographicCamera attach='shadow-camera'>
+          {/* <orthographicCamera attach='shadow-camera'>
             <Helper type={THREE.CameraHelper} />
-          </orthographicCamera>
+          </orthographicCamera> */}
           </pointLight>
       </>
     )
