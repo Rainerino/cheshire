@@ -9,7 +9,6 @@ import { type GLTF } from 'three-stdlib'
 import model from '/models/sku/cap_bottle.glb?url'
 import { useFrame, useThree } from '@react-three/fiber'
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
-import { OBB } from 'three/addons/math/OBB.js';
 
 type GLTFResult = GLTF & {
   nodes: {

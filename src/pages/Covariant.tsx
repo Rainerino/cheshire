@@ -38,8 +38,8 @@ function CameraMovement() {
 
   useFrame(() => {
     if (!scroll) return
-    // const t = Math.max(0, Math.min(1, scroll.offset))
-    const t = 0;
+    const t = Math.max(0, Math.min(1, scroll.offset))
+
     const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0])
     const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1])
     const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2])
@@ -116,10 +116,10 @@ function CovariantPage() {
             position={TOTE_OFFSET}
             rotation={STATION_ROTATION}
           />
-          <ABB1300
+          {/* <ABB1300
             position={STATION_OFFSET}
             rotation={STATION_ROTATION}
-          />
+          /> */}
         </ScrollControls>
     </group>
   )

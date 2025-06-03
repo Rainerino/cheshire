@@ -111,7 +111,7 @@ function LandingPage() {
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={45}
         />
-        <ambientLight intensity={0.1} />
+        <ambientLight intensity={0.5} />
         <Room />
         <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
@@ -141,14 +141,14 @@ function LandingPage() {
 
 function preloadGLTFFiles() {
   [
-    '/models/room/Desktop.glb?url',
-    '/models/room/Chair.glb?url',
     '/models/room/DeskLamp.glb?url',
     '/models/room/LamyPen.glb?url',
-    '/models/room/PaperHolder.glb?url',
     '/models/room/TypeWriter.glb?url',
     '/models/room/WoodenDesk.glb?url',
     '/models/room/Room.glb?url',
+    '/models/stations/pick_tote.glb?url',
+    '/models/stations/redcare_one_piece.glb?url',
+    '/models/stations/robot_base.glb?url',
   ].forEach(useGLTF.preload)
 }
 
