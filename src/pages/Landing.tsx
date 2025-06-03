@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload } from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 import { Route, Router } from "wouter"
 
@@ -22,6 +22,8 @@ import CameraControl from '../components/common/CameraControl'
 import MotionMetricsPage from './MotionMetrics'
 import DuoYiPage from './DuoYi'
 import NextPage from './Next'
+import { Desktop2 } from '../components/models/Desktop2'
+
 
 const CAMERA_POSITION = [
   [1.8, 1.9, 0],
@@ -87,18 +89,34 @@ function LandingPage() {
           rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 5]} 
           scale={[1, 1, 1]} 
         />
-        {/* <Environment 
+        <Environment 
           files="/textures/night.hdr"
           background
           backgroundBlurriness={0.1}
           backgroundIntensity={0.1} 
-        /> */}
-        <Environment preset='night' />
+        />
+        {/* <Environment preset='night' /> */}
         {/* <CameraControl /> */}
+        <mesh
+          position={[2, 1.2, 1.7]}
+          rotation={[0, Math.PI / 6 + Math.PI, 0]}>
+          <planeGeometry args={[1, 1.3]} />
+          <MeshReflectorMaterial
+          // blur={[300, 100]}
+            resolution={2048}
+            mixStrength={10}
+            mixContrast={1}
+            mirror={1}
+            minDepthThreshold={0.4}
+            maxDepthThreshold={1.4}
+          // color="#050505"
+          // metalness={0.5}
+        />
+        </mesh>
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
-          dampingFactor={0.01}
+          dampingFactor={0.05}
           enablePan={false}
           enableZoom={false}
           minPolarAngle={-Math.PI / 5 + Math.PI / 2}
@@ -109,14 +127,15 @@ function LandingPage() {
         <PerspectiveCamera
           makeDefault
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
-          fov={45}
+          fov={30}
         />
         <ambientLight intensity={0.1} />
-        <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI , 0]}/>
-        <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
+        <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
+        <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
+        {/* <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
         <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI / 2 + Math.PI / 4, 0]} />
-        <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI / 2, 0]} />
+        <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI / 2, 0]} /> */}
         <Curtain
           position={new THREE.Vector3(-2.3, 1.6, -0.55)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
@@ -134,18 +153,18 @@ function LandingPage() {
           position={[0, 2.5, 0]} 
         />
       </Route>
-      {/* <Preload all /> */}
+      <Preload all />
     </group>
   )
 }
 
 function preloadGLTFFiles() {
   [
-    '/models/room/DeskLamp.glb?url',
-    '/models/room/LamyPen.glb?url',
-    '/models/room/TypeWriter.glb?url',
-    '/models/room/WoodenDesk.glb?url',
-    '/models/room/Room.glb?url',
+    // '/models/room/DeskLamp.glb?url',
+    // '/models/room/LamyPen.glb?url',
+    // '/models/room/TypeWriter.glb?url',
+    '/models/room/Desktop.glb?url',
+    '/models/room/Room2.glb?url',
     '/models/stations/pick_tote.glb?url',
     '/models/stations/redcare_one_piece.glb?url',
     '/models/stations/robot_base.glb?url',
