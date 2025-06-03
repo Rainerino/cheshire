@@ -2,11 +2,14 @@ import * as THREE from 'three'
 import { useLocation, Link } from "wouter"
 import { useTexture, Html, useCursor } from '@react-three/drei'
 import { useState } from 'react'
+import { useThree } from '@react-three/fiber'
 
 export default function HomeNavPage(props) {
   const [location] = useLocation()
   const texture = useTexture('/textures/paper.jpg')
   const [hovered, setHovered] = useState(false)
+  const { invalidate } = useThree()
+  invalidate()
   useCursor(hovered)
   return (
     <group {...props}>
@@ -32,7 +35,7 @@ export default function HomeNavPage(props) {
                 <Link href="/about" >About</Link>
               </li>
               <li>
-                <Link href="/project" >Project</Link>
+                <Link href="/projects/home" >Project</Link>
               </li>
               <li>
                 <Link href="/credit" >Credit</Link>

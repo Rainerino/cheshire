@@ -23,7 +23,7 @@ const project_infos = new Map([
     ["covariant",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Covariant',
-            "/images/Covariant.jpg", '/projects/covariant')],
+            "/images/Covariant.jpg", '/covariant')],
     ["motion_metrics",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Motion Metrics',

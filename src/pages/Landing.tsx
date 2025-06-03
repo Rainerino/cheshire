@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload } from '@react-three/drei'
 import * as THREE from 'three'
-import { Route } from "wouter"
+import { Route, Router } from "wouter"
 
 import { Desktop } from '../components/models/Desktop'
 import { Chair } from '../components/models/Chair'
@@ -59,9 +59,13 @@ function Soda(props: any) {
 function LandingPage() {
   return (
     <group>
+      <Router base="/projects">
+        <Route path="/home" component={() => <ProjectNavPage />} />
+        <Route path="/covariant" component={() => <CovariantPage />} />
+      </Router>
+
+
       <Route path="/about"  component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
-      <Route path="/project" component={() => <ProjectNavPage />} />
-      <Route path="/projects/covariant" component={() => <CovariantPage />} />
       {/* <Route path="/duoyi" component={DuoyiPage} />
       <Route path="/motion_metrics" component={MotionMetricsPage} />
       <Route path="/next" component={NextPage} /> */}
