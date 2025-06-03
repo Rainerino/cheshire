@@ -23,6 +23,7 @@ import MotionMetricsPage from './MotionMetrics'
 import DuoYiPage from './DuoYi'
 import NextPage from './Next'
 import { Desktop2 } from '../components/models/Desktop2'
+import Mirror from '../components/modules/Mirror'
 
 
 const CAMERA_POSITION = [
@@ -97,30 +98,19 @@ function LandingPage() {
         />
         {/* <Environment preset='night' /> */}
         {/* <CameraControl /> */}
-        <mesh
-          position={[2, 1.2, 1.7]}
-          rotation={[0, Math.PI / 6 + Math.PI, 0]}>
-          <planeGeometry args={[1, 1.3]} />
-          <MeshReflectorMaterial
-          // blur={[300, 100]}
-            resolution={2048}
-            mixStrength={10}
-            mixContrast={1}
-            mirror={1}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={1.4}
-          // color="#050505"
-          // metalness={0.5}
+        <Mirror
+            position={[2, 1.2, 1.7]}
+            rotation={[0, Math.PI / 6 + Math.PI, 0]}
         />
-        </mesh>
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
           dampingFactor={0.05}
           enablePan={false}
           enableZoom={false}
-          minPolarAngle={-Math.PI / 5 + Math.PI / 2}
-          maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
+          // enableRotate={false}
+          // minPolarAngle={-Math.PI / 5 + Math.PI / 2}
+          // maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
           // minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
           // maxAzimuthAngle={Math.PI / 6 + Math.PI / 2}
         />
