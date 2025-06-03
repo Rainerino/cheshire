@@ -1,35 +1,28 @@
 import React, { useState } from 'react'
 import * as THREE from 'three'
-import { useSphere, useCylinder, useDistanceConstraint, usePointToPointConstraint } from '@react-three/cannon'
-import { useDragConstraint } from '@react-three/cannon'
-import { MeshProps } from '@react-three/fiber'
+// import { useSphere, useCylinder, useDistanceConstraint, usePointToPointConstraint } from '@react-three/cannon'
+
 import { SpotLight } from '@react-three/drei'
 
-export function Lamp(props: MeshProps) {
+export function OverheadLamp(props) {
     const [target] = useState(() => new THREE.Object3D())
-    const [fixed] = useSphere(() => ({ collisionFilterGroup: 0, type: 'Static', args: [0.2], ...props }))
-    const [lamp] = useCylinder(() => ({ mass: 1, args: [0.5, 1.5, 2, 16], angularDamping: 0.95, linearDamping: 0.95, material: { friction: 0.9 }, ...props }))
-    const bind = useDragConstraint(lamp)
-    useDistanceConstraint(fixed, lamp, { distance: 2, pivotA: [0, 0, 0], pivotB: [0, 2, 0] })
-    usePointToPointConstraint(fixed, lamp, { pivotA: [0, 0, 0], pivotB: [0, 2, 0] })
     return (
-      <mesh ref={lamp} {...bind}>
-        <cylinderGeometry args={[0.5, 1.5, 2, 32]} />
+      <mesh  {...props}>
+        <cylinderGeometry args={[0.1, 0.3, 0.2, 32]} />
         <meshStandardMaterial />
         <SpotLight
+          debug
           castShadow
-          target={target}
-          penumbra={0.2}
-          radiusTop={0.4}
-          radiusBottom={40}
-          distance={80}
-          angle={0.45}
-          attenuation={20}
-          anglePower={5}
-          intensity={1}
-          opacity={0.2}
+          // target={target}
+          volumetric
+          penumbra={0.8}
+          intensity={20}
+          angle={0.35}
+          distance={0}
+          shadow-bias={-0.0001}
+          shadow-mapSize={[1024, 1024]}
         />
-        <primitive object={target} position={[0, -1, 0]} />
+        {/* <primitive object={target} /> */}
       </mesh>
     )
 }

@@ -1,15 +1,8 @@
 import { useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial } from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper } from '@react-three/drei'
 import * as THREE from 'three'
 import { Route, Router } from "wouter"
 
-import { Desktop } from '../components/models/Desktop'
-import { Chair } from '../components/models/Chair'
-import { DeskLamp } from '../components/models/DeskLamp'
-import { LamyPen } from '../components/models/LamyPen'
-import { PaperHolder } from '../components/models/PaperHolder'
-import { TypeWriter } from '../components/models/TypeWriter'
-import { WoodenDesk } from '../components/models/WoodenDesk'
 import { Room2 } from '../components/models/Room2'
 import Curtain from '../components/models/Curtain'
 import HomeNavPage from './HomeNav'
@@ -24,6 +17,7 @@ import DuoYiPage from './DuoYi'
 import NextPage from './Next'
 import { Desktop2 } from '../components/models/Desktop2'
 import Mirror from '../components/modules/Mirror'
+import { OverheadLamp } from '../components/modules/OverheadLamp'
 
 
 const CAMERA_POSITION = [
@@ -98,16 +92,12 @@ function LandingPage() {
         />
         {/* <Environment preset='night' /> */}
         {/* <CameraControl /> */}
-        <Mirror
-            position={[2, 1.2, 1.7]}
-            rotation={[0, Math.PI / 6 + Math.PI, 0]}
-        />
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
           dampingFactor={0.05}
-          enablePan={false}
-          enableZoom={false}
+          // enablePan={false}
+          // enableZoom={false}
           // enableRotate={false}
           // minPolarAngle={-Math.PI / 5 + Math.PI / 2}
           // maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
@@ -119,29 +109,50 @@ function LandingPage() {
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={30}
         />
-        <ambientLight intensity={0.1} />
+        <ambientLight intensity={0.05} />
         <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
         <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
-        {/* <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
-        <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
-        <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI / 2 + Math.PI / 4, 0]} />
-        <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI / 2, 0]} /> */}
         <Curtain
           position={new THREE.Vector3(-2.3, 1.6, -0.55)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
         />
-        {/* <fog attach="fog" args={['#202020', 5, 20]} /> */}
-        <SpotLight
-          castShadow
-          volumetric
-          penumbra={0.1}
-          intensity={10}
-          angle={0.4}
-          distance={0}
-          shadow-bias={-0.0001}
-          shadow-mapSize={[512, 512]}
-          position={[0, 2.5, 0]} 
+        {/* Curtain and Mirror are conflicted somehow */}
+        <Mirror
+            position={[2, 1.2, 1.7]}
+            rotation={[0, Math.PI / 6 + Math.PI, 0]}
         />
+        <fog attach="fog" args={['#202020', 5, 20]} />
+        <pointLight
+          color={'#f7e7ba'}
+          castShadow
+          decay={1}
+          distance={0}
+          shadow-bias={-0.00001}
+          shadow-mapSize={[1024, 1024]}
+          // shadow-camera-far={100}
+          // shadow-camera-near={0.1}
+          position={[-2.25, 0.85, -2.245]}
+          intensity={1}>         
+        {/* <orthographicCamera attach='shadow-camera'>
+          <Helper type={THREE.CameraHelper} />
+        </orthographicCamera> */}
+        </pointLight>
+        <pointLight
+          color={'#f7e7ba'}
+          castShadow
+          decay={1}
+          distance={0}
+          shadow-bias={-0.00001}
+          shadow-mapSize={[1024, 1024]}
+          // shadow-camera-far={100}
+          // shadow-camera-near={0.1}
+          position={[0.775, 1.2, -2.245]}
+          intensity={1}>         
+        {/* <orthographicCamera attach='shadow-camera'>
+          <Helper type={THREE.CameraHelper} />
+        </orthographicCamera> */}
+        </pointLight>
+        <OverheadLamp position={[0, 2.5, 0]} />
       </Route>
       <Preload all />
     </group>
