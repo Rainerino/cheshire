@@ -4,7 +4,7 @@ import curtain_texture from '/textures/curtain_dense.png?url';
 import * as CANNON from 'cannon-es';
 
 const clothMass = 1;
-const clothSize = 1.4;
+const clothSize = 1.3;
 const Nx = 15;
 const Ny = 15;
 const mass = (clothMass / Nx) * Ny;

@@ -10,7 +10,7 @@ import { LamyPen } from '../components/models/LamyPen'
 import { PaperHolder } from '../components/models/PaperHolder'
 import { TypeWriter } from '../components/models/TypeWriter'
 import { WoodenDesk } from '../components/models/WoodenDesk'
-import { Room } from '../components/models/Room'
+import { Room2 } from '../components/models/Room2'
 import Curtain from '../components/models/Curtain'
 import HomeNavPage from './HomeNav'
 import ProjectScreen from '../components/modules/ProjectScreen'
@@ -103,22 +103,22 @@ function LandingPage() {
           enableZoom={false}
           minPolarAngle={-Math.PI / 5 + Math.PI / 2}
           maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
-          minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
-          maxAzimuthAngle={Math.PI / 6 + Math.PI / 2}
+          // minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
+          // maxAzimuthAngle={Math.PI / 6 + Math.PI / 2}
         />
         <PerspectiveCamera
           makeDefault
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
           fov={45}
         />
-        <ambientLight intensity={0.5} />
-        <Room />
+        <ambientLight intensity={0.1} />
+        <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI , 0]}/>
         <WoodenDesk position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <LamyPen position={[0.2, 0.882, 0.5]} rotation={[0, Math.PI * 4 / 3, 0]} />
         <DeskLamp position={[-0.1, 0.87, -0.43]} rotation={[0, Math.PI / 2 + Math.PI / 4, 0]} />
         <TypeWriter position={[0, 0.87, 0]} rotation={[0, -Math.PI / 2, 0]} />
         <Curtain
-          position={new THREE.Vector3(-2.8, 1.9, -0.31)}
+          position={new THREE.Vector3(-2.3, 1.6, -0.55)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
         />
         {/* <fog attach="fog" args={['#202020', 5, 20]} /> */}
