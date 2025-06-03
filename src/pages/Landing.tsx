@@ -19,6 +19,9 @@ import ProjectNavPage from './ProjectNav'
 import "./Landing.css"
 import CovariantPage from './Covariant'
 import CameraControl from '../components/common/CameraControl'
+import MotionMetricsPage from './MotionMetrics'
+import DuoYiPage from './DuoYi'
+import NextPage from './Next'
 
 const CAMERA_POSITION = [
   [1.8, 1.9, 0],
@@ -62,9 +65,10 @@ function LandingPage() {
       <Router base="/projects">
         <Route path="/" component={() => <ProjectNavPage />} />
         <Route path="/covariant" component={() => <CovariantPage />} />
+        <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
+        <Route path="/duoyi" component={() => <DuoYiPage />} />
+        <Route path="/next" component={() => <NextPage />} />
       </Router>
-
-
       <Route path="/about"  component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
       {/* <Route path="/duoyi" component={DuoyiPage} />
       <Route path="/motion_metrics" component={MotionMetricsPage} />

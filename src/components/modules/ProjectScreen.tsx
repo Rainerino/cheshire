@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from "wouter";
 import { useCursor, Decal, useScroll, Scroll, useTexture, ScrollControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
@@ -8,7 +8,7 @@ import CurvedPlane from '../common/CurvedPlane'
 import gsap from 'gsap'
 import { Router, Route, Link } from "wouter";
 
-const screen_state = proxy({ key: "covariant" })
+const screen_state = proxy({ key: "" })
 
 class ProjectInfo {
     constructor(color, title, path, url) {
@@ -23,28 +23,32 @@ const project_infos = new Map([
     ["covariant",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Covariant',
-            "/images/Covariant.jpg", '/covariant')],
+            "/images/Covariant.jpg",
+            '/covariant')],
     ["motion_metrics",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Motion Metrics',
             "/images/MotionMetrics.jpg",
-            '/projects//motion_metrics')],
+            '/motion_metrics')],
     ["duoyi",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'DuoYi',
             "/images/DuoYi.jpg",
-            '/projects//duoyi')],
+            '/duoyi')],
     ["next",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Next',
             "/images/Next.jpg",
-            '/projects//next')],
+            '/next')],
 ])
 
 function Display({ position, rotation, w, h, ...props }) {
     const ref = useRef()
     const scroll = useScroll()
     const [hovered, setHovered] = useState(false)
+    if (screen_state.key == '') {
+        screen_state.key = "covariant"
+    }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
     const texture = useTexture(project_infos.get(snap.key).path)
@@ -55,12 +59,11 @@ function Display({ position, rotation, w, h, ...props }) {
     }
     useFrame(() => {
         if (!ref.current) return
-
         // Update screen_state.key based on scroll offset
         const offset = scroll.offset
         if (offset < 0.25) screen_state.key = "covariant"
-        else if (offset < 0.5) screen_state.key = "duoyi"
-        else if (offset < 0.75) screen_state.key = "motion_metrics"
+        else if (offset < 0.5) screen_state.key = "motion_metrics"
+        else if (offset < 0.75) screen_state.key = "duoyi"
         else screen_state.key = "next"
 
         ref.current.material.toneMapped = false
