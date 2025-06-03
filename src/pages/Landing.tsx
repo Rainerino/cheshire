@@ -60,7 +60,7 @@ function LandingPage() {
   return (
     <group>
       <Router base="/projects">
-        <Route path="/home" component={() => <ProjectNavPage />} />
+        <Route path="/" component={() => <ProjectNavPage />} />
         <Route path="/covariant" component={() => <CovariantPage />} />
       </Router>
 
@@ -130,7 +130,7 @@ function LandingPage() {
           position={[0, 2.5, 0]} 
         />
       </Route>
-      <Preload all />
+      {/* <Preload all /> */}
     </group>
   )
 }

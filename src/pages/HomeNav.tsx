@@ -35,7 +35,7 @@ export default function HomeNavPage(props) {
                 <Link href="/about" >About</Link>
               </li>
               <li>
-                <Link href="/projects/home" >Project</Link>
+                <Link href="/projects" >Project</Link>
               </li>
               <li>
                 <Link href="/credit" >Credit</Link>

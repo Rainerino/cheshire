@@ -33,7 +33,17 @@ function Root() {
         <a
           style={{ position: 'absolute', top: 50, left: 50, fontSize: '13px' }}
           href="#"
-          onClick={() => setLocation('/projects/home')}
+          onClick={() => {
+            if (location.includes('projects')) {
+              if (location === '/projects') {
+                setLocation('/');
+              } else {
+                setLocation('/projects');
+              }
+            } else {
+              setLocation('/');
+            }
+          }}
         >
           {params ? `Home ${router.base} ${location}` : `Back ${router.base} ${location}`}
         </a>
@@ -42,5 +52,6 @@ function Root() {
     </React.StrictMode>
   )
 }
+
 
 createRoot(container).render(<Root />);
