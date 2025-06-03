@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight } from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload } from '@react-three/drei'
 import * as THREE from 'three'
 import { Route } from "wouter"
 
@@ -18,6 +18,7 @@ import ProjectNavPage from './ProjectNav'
 
 import "./Landing.css"
 import CovariantPage from './Covariant'
+import CameraControl from '../components/common/CameraControl'
 
 const CAMERA_POSITION = [
   [1.8, 1.9, 0],
@@ -78,12 +79,14 @@ function LandingPage() {
           rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 5]} 
           scale={[1, 1, 1]} 
         />
-        <Environment 
+        {/* <Environment 
           files="/textures/night.hdr"
           background
           backgroundBlurriness={0.1}
           backgroundIntensity={0.1} 
-        />
+        /> */}
+        <Environment preset='night' />
+        {/* <CameraControl /> */}
         <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
@@ -110,7 +113,7 @@ function LandingPage() {
           position={new THREE.Vector3(-2.8, 1.9, -0.31)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
         />
-        <fog attach="fog" args={['#202020', 5, 20]} />
+        {/* <fog attach="fog" args={['#202020', 5, 20]} /> */}
         <SpotLight
           castShadow
           volumetric
@@ -123,6 +126,7 @@ function LandingPage() {
           position={[0, 2.5, 0]} 
         />
       </Route>
+      <Preload all />
     </group>
   )
 }
