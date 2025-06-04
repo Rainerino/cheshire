@@ -96,18 +96,18 @@ function LandingPage() {
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
           dampingFactor={0.05}
-          // enablePan={false}
-          // enableZoom={false}
+          enablePan={false}
+          enableZoom={false}
           // enableRotate={false}
-          // minPolarAngle={-Math.PI / 5 + Math.PI / 2}
-          // maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
+          minPolarAngle={-Math.PI / 5 + Math.PI / 2}
+          maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
           // minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
           // maxAzimuthAngle={Math.PI / 6 + Math.PI / 2}
         />
         <PerspectiveCamera
           makeDefault
           position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
-          fov={30}
+          fov={25}
         />
         <ambientLight intensity={0.05} />
         <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
@@ -118,8 +118,8 @@ function LandingPage() {
         />
         {/* Curtain and Mirror are conflicted somehow */}
         <Mirror
-            position={[2, 1.2, 1.7]}
-            rotation={[0, Math.PI / 6 + Math.PI, 0]}
+            position={[1, 1, 1.3]}
+            rotation={[0, Math.PI / 17 + Math.PI, 0]}
         />
         <fog attach="fog" args={['#202020', 5, 20]} />
         <pointLight
@@ -133,9 +133,6 @@ function LandingPage() {
           // shadow-camera-near={0.1}
           position={[-2.25, 0.85, -2.245]}
           intensity={1}>         
-        {/* <orthographicCamera attach='shadow-camera'>
-          <Helper type={THREE.CameraHelper} />
-        </orthographicCamera> */}
         </pointLight>
         <pointLight
           color={'#f7e7ba'}

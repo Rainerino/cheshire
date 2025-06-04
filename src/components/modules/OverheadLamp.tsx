@@ -11,7 +11,6 @@ export function OverheadLamp(props) {
         <cylinderGeometry args={[0.1, 0.3, 0.2, 32]} />
         <meshStandardMaterial />
         <SpotLight
-          debug
           castShadow
           // target={target}
           volumetric
