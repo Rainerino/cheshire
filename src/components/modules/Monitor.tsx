@@ -9,7 +9,6 @@ import { Desktop } from '../models/Desktop'
 import { Room } from '../models/Room'
 import { RedcareStation } from '../models/RedcareStation'
 import { FC } from 'react'
-import CameraControl from '../common/CameraControl'
 import { RedcareTote } from '../models/RedcareTote'
 import { RedcareBase } from '../models/RedcareBase'
 import ABB1300 from '../models/ABB1300'
@@ -207,7 +206,7 @@ const MonitorDisplay: FC = (props) => {
     return (
         <group {...props}>
             <ambientLight intensity={1} />
-            {/* <CameraControl></CameraControl> */}
+
             <Items />
         </group>
     )

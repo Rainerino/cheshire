@@ -94,7 +94,7 @@ function Display({ position, rotation, w, h, ...props }) {
                 dispose={null}
             >
                 <Decal
-                    debug
+                    // debug
                     ref={ref}
                     position={[0, 0, 2]}
                     rotation={[0, Math.PI, 0]}

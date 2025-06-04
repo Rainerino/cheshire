@@ -13,7 +13,6 @@ import ToteScene from './Tote'
 import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 import "./Covariant.css"
-import CameraControl from '../components/common/CameraControl'
 
 const CAMERA_POSITION = [
   [-0.3, 4.33, 1.76],
@@ -81,7 +80,6 @@ function CovariantPage() {
   return (
     <group>
       <ScrollControls pages={3}>
-          {/* <CameraControl /> */}
           <CameraMovement />
           <PerspectiveCamera
             makeDefault

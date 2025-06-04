@@ -11,7 +11,6 @@ import ProjectNavPage from './ProjectNav'
 
 import "./Landing.css"
 import CovariantPage from './Covariant'
-import CameraControl from '../components/common/CameraControl'
 import MotionMetricsPage from './MotionMetrics'
 import DuoYiPage from './DuoYi'
 import NextPage from './Next'

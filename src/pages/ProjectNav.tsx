@@ -16,7 +16,7 @@ extend({ CameraControls })
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_FINISH_POSITION = [0, 1.7, 6]
-const CAMERA_LOOK_AT = [0, -0.3, -6]
+const CAMERA_LOOK_AT = [0.1, -0.2, -6]
 const EPS = 0.01
 
 const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
@@ -36,30 +36,15 @@ function ProjectNavPage() {
 
     useFrame((state, delta) => {
         if (isCameraAtPosition(controls.camera.position, CAMERA_START_POSITION)) {
-            // gsap.to(controls.camera.position, {
-            //     x: CAMERA_FINISH_POSITION[0],
-            //     y: CAMERA_FINISH_POSITION[1],
-            //     z: CAMERA_FINISH_POSITION[2],
-            //     duration: 1.5,
-            //     ease: 'power2.out',
-            // })
-            controls.smoothTime = 1.5;
-            controls.moveTo(...(CAMERA_FINISH_POSITION as [number, number, number]), true)
-            // controls.zoomTo(4, true)
+            controls.smoothTime = 1;
+            controls.zoomTo(1/3, true)
+            controls.dollyInFixed(3, true)
         }
         controls.update(delta)
     })
 
     return (
         <group>
-            {/* <OrbitControls
-                target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
-                enableDamping
-                dampingFactor={0.03}
-                enablePan={false}
-                enableRotate={false}
-                enableZoom={false}
-            /> */}
             <PerspectiveCamera
                 makeDefault
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
