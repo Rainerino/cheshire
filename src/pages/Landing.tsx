@@ -20,6 +20,7 @@ import Mirror from '../components/modules/Mirror'
 import { OverheadLamp } from '../components/modules/OverheadLamp'
 import { RedrumDoor } from '../components/modules/RedrumDoor'
 import RoomScene from '../components/RoomScene'
+import AboutScene from '../components/AboutScene'
 
 
 
@@ -62,14 +63,6 @@ function LandingPage() {
         <Route path="/duoyi" component={() => <DuoYiPage />} />
         <Route path="/next" component={() => <NextPage />} />
       </Router>
-      <Route path="/about">
-        <RedrumDoor position={[0, 0, 0]} rotation={[0, 0, 0]} />
-        <PerspectiveCamera fov={75} />
-        <OrbitControls makeDefaults />
-        <Environment preset='studio' />
-        <color attach="background" args={['#f0f0f0']} />
-        <Grid infiniteGrid></Grid>
-      </Route>
       {/* <Route path="/duoyi" component={DuoyiPage} />
       <Route path="/motion_metrics" component={MotionMetricsPage} />
       <Route path="/next" component={NextPage} /> */}
@@ -81,8 +74,11 @@ function LandingPage() {
           <Soda scale={6} position={[0, -1.6, 0]} />
         </PivotControls>
       </Route>
-      <Route path="/">
+      <Route path="/home" nest>
         <RoomScene />
+        <Route path="/about" >
+          <AboutScene />
+        </Route>
       </Route>
       <Preload all />
     </group>

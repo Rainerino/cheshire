@@ -7,20 +7,68 @@ import { Desktop2 } from "./models/Desktop2";
 import Curtain from "./models/Curtain";
 import Mirror from "./modules/Mirror";
 import { OverheadLamp } from "./modules/OverheadLamp";
+import CameraControl from "./common/CameraControl";
+import { useEffect, useMemo } from "react";
+import { extend, useFrame, useThree } from "@react-three/fiber";
+import CameraControls from 'camera-controls'
+CameraControls.install({ THREE })
+extend({ CameraControls })
     
-    
-const CAMERA_POSITION = [
-  [1.8, 1.9, 0],
-  [0.12, 1.25, 0.175]
-]
+const CAMERA_POSITION = [1.8, 1.9, 0]
 
-const CAMERA_LOOK_AT = [0, 1.1, 0]
+const CAMERA_LOOK_AT = [0, 1.1, 1]
 
 
 export default function RoomScene(props) {
+  // Upon enter, fix the camera
+  const camera = useThree((state) => state.camera)
+  const gl = useThree((state) => state.gl)
+  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
+  const tgt_look = new THREE.Vector3(0, 1.1, 0)
+  const tgt_pos = new THREE.Vector3(1.8, 1.9, 0);
+  const cur_pos = new THREE.Vector3();
+
+  useFrame((state, delta) => {
+    // camera.position.set(...CAMERA_POSITION)
+    // camera.lookAt(...CAMERA_LOOK_AT)
+    // controls.dollyTo(1.9, true);
+    // controls.draggingSmoothTime = 0.1
+    // controls.dollyToCursor = false;
+    // controls.minPolarAngle = -Math.PI / 5 + Math.PI / 2
+    // controls.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
+    // controls.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
+    // controls.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
+    // controls.enabled = false;
+    
+    // // If position and look at are not in CAMERA_POSITION and CAMERA_LOOK_AT, and zoom = 1, smoothly animate to them
+
+    // // Animate position
+    controls.getPosition(cur_pos, false)
+    console.log(cur_pos)
+    // if (
+    //   cur_pos.x !== tgt_pos.x ||
+    //   cur_pos.y !== tgt_pos.y  ||
+    //   cur_pos.z !== tgt_pos.z 
+    // ) {
+      // controls.smoothTime = 0.25;
+      // controls.moveTo(
+      //   tgt_look.x, tgt_look.y, tgt_look.z, true
+      // )
+      // const cur_look = new THREE.Vector3()
+      // controls.getTarget(cur_look, true);
+      // console.log(cur_look)
+      controls.setTarget(
+          tgt_look.x,
+          tgt_look.y,
+          tgt_look.z,
+          true);
+      
+    // }
+    controls.update(delta);
+  })
     return (
         <group {...props}>
-                <HomeNavPage 
+        <HomeNavPage 
           position={[0.1, 0.87, 0.5]} 
           rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 5]} 
           scale={[1, 1, 1]} 
@@ -33,21 +81,21 @@ export default function RoomScene(props) {
         />
         {/* <Environment preset='night' /> */}
         {/* <CameraControl /> */}
-        <OrbitControls
+        {/* <OrbitControls
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
           dampingFactor={0.05}
           enablePan={false}
           enableZoom={false}
           // enableRotate={false}
-          minPolarAngle={-Math.PI / 5 + Math.PI / 2}
-          maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
+          // minPolarAngle={-Math.PI / 5 + Math.PI / 2}
+          // maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
           // minAzimuthAngle={-Math.PI / 6 + Math.PI / 2}
           // maxAzimuthAngle={Math.PI / 6 + Math.PI / 2}
-        />
+        /> */}
         <PerspectiveCamera
           makeDefault
-          position={new THREE.Vector3().fromArray(CAMERA_POSITION[0])}
+          position={new THREE.Vector3().fromArray(CAMERA_POSITION)}
           fov={25}
         />
         <ambientLight intensity={0.05} />

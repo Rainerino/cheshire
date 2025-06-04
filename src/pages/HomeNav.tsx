@@ -6,10 +6,7 @@ import { useThree } from '@react-three/fiber'
 
 export default function HomeNavPage(props) {
   const [location] = useLocation()
-  const texture = useTexture('/textures/paper.jpg')
   const [hovered, setHovered] = useState(false)
-  const { invalidate } = useThree()
-  invalidate()
   useCursor(hovered)
   return (
     <group {...props}>
@@ -32,7 +29,7 @@ export default function HomeNavPage(props) {
             <ul>
               <li>{`The current page is: ${location}`}</li>
               <li>
-                <Link href="/about" >About</Link>
+                <Link href="/home/about" >About</Link>
               </li>
               <li>
                 <Link href="/projects" >Project</Link>

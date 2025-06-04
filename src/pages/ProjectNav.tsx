@@ -1,4 +1,4 @@
-import { useFrame, useThree } from '@react-three/fiber'
+import { extend, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera, SpotLight, Select } from '@react-three/drei'
 import { Autofocus, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from 'three'
@@ -9,6 +9,10 @@ import { SingleCouch } from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
 import './Landing.css'
 import gsap from 'gsap'
+import CameraControls from 'camera-controls'
+import { useEffect, useMemo } from 'react'
+CameraControls.install({ THREE })
+extend({ CameraControls })
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_FINISH_POSITION = [0, 1.7, 6]
@@ -21,30 +25,41 @@ const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.z - target[2]) < EPS
 
 function ProjectNavPage() {
-    const { camera } = useThree()
+    const camera = useThree((state) => state.camera)
+    const gl = useThree((state) => state.gl)
+    const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
+    
+    useEffect(() => {
+        controls.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
+        
+    }, [controls])
 
-    useFrame(() => {
-        if (isCameraAtPosition(camera.position, CAMERA_START_POSITION)) {
-            gsap.to(camera.position, {
-                x: CAMERA_FINISH_POSITION[0],
-                y: CAMERA_FINISH_POSITION[1],
-                z: CAMERA_FINISH_POSITION[2],
-                duration: 1.5,
-                ease: 'power2.out',
-            })
+    useFrame((state, delta) => {
+        if (isCameraAtPosition(controls.camera.position, CAMERA_START_POSITION)) {
+            // gsap.to(controls.camera.position, {
+            //     x: CAMERA_FINISH_POSITION[0],
+            //     y: CAMERA_FINISH_POSITION[1],
+            //     z: CAMERA_FINISH_POSITION[2],
+            //     duration: 1.5,
+            //     ease: 'power2.out',
+            // })
+            controls.smoothTime = 1.5;
+            controls.moveTo(...(CAMERA_FINISH_POSITION as [number, number, number]), true)
+            // controls.zoomTo(4, true)
         }
+        controls.update(delta)
     })
 
     return (
         <group>
-            <OrbitControls
+            {/* <OrbitControls
                 target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
                 enableDamping
                 dampingFactor={0.03}
                 enablePan={false}
                 enableRotate={false}
                 enableZoom={false}
-            />
+            /> */}
             <PerspectiveCamera
                 makeDefault
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}

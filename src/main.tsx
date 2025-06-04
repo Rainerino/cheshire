@@ -16,7 +16,7 @@ if (!container) throw new Error('Root element not found');
 const debug = true;
 
 function Root() {
-  const [, params] = useRoute('/')
+  const [, params] = useRoute('/home')
   const [location, setLocation] = useLocation()
   const router = useRouter()
   return (
@@ -36,12 +36,12 @@ function Root() {
           onClick={() => {
             if (location.includes('projects')) {
               if (location === '/projects') {
-                setLocation('/');
+                setLocation('/home#');
               } else {
                 setLocation('/projects');
               }
             } else {
-              setLocation('/');
+              setLocation('/home#');
             }
           }}
         >
