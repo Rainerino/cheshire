@@ -21,8 +21,6 @@ type GLTFResult = GLTF & {
     Node8001: THREE.Mesh
     Node9001: THREE.Mesh
     Node1001: THREE.Mesh
-    night_stand_2: THREE.Mesh
-    night_stand_1: THREE.Mesh
     slap: THREE.Mesh
     Node1003: THREE.Mesh
     Node10002: THREE.Mesh
@@ -54,8 +52,6 @@ type GLTFResult = GLTF & {
     Node1004: THREE.Mesh
     Node2003: THREE.Mesh
     Node3003: THREE.Mesh
-    OBJ: THREE.Mesh
-    OBJ_1: THREE.Mesh
     stand: THREE.Mesh
     Table_lamp_base_3d_model_kathzerrato001: THREE.Mesh
     Table_lamp_base_3d_model_kathzerrato001_1: THREE.Mesh
@@ -63,6 +59,17 @@ type GLTFResult = GLTF & {
     Table_lamp_base_3d_model_kathzerrato001_3: THREE.Mesh
     Table_lamp_base_3d_model_kathzerrato001_4: THREE.Mesh
     Table_lamp_base_3d_model_kathzerrato001_5: THREE.Mesh
+    Node1005: THREE.Mesh
+    Node1006: THREE.Mesh
+    Node2004: THREE.Mesh
+    Node1008: THREE.Mesh
+    wood: THREE.Mesh
+    wood003: THREE.Mesh
+    wood001: THREE.Mesh
+    wood002: THREE.Mesh
+    wood004: THREE.Mesh
+    carpet001: THREE.Mesh
+    Node1010: THREE.Mesh
   }
   materials: {
     ['#BB935CFF.003']: THREE.MeshStandardMaterial
@@ -70,8 +77,6 @@ type GLTFResult = GLTF & {
     ['#855A1DFF.003']: THREE.MeshStandardMaterial
     ['#F2E2C5FF.003']: THREE.MeshStandardMaterial
     ['x1.002']: THREE.MeshStandardMaterial
-    ['Material.005']: THREE.MeshStandardMaterial
-    ['Material.006']: THREE.MeshStandardMaterial
     ['Material.007']: THREE.MeshStandardMaterial
     ['#D7D0C0FF']: THREE.MeshStandardMaterial
     ['#F7E099FF']: THREE.MeshStandardMaterial
@@ -96,8 +101,6 @@ type GLTFResult = GLTF & {
     ['#181818FF.003']: THREE.MeshStandardMaterial
     ['#F5F5F2FF.002']: THREE.MeshPhysicalMaterial
     ['#F4F4F5FF.002']: THREE.MeshStandardMaterial
-    Wood: THREE.MeshPhysicalMaterial
-    Brass_A_5: THREE.MeshPhysicalMaterial
     ['Material.008']: THREE.MeshStandardMaterial
     ['Aluminum_-_Polished.001']: THREE.MeshPhysicalMaterial
     ['Fabric_(Generic).001']: THREE.MeshPhysicalMaterial
@@ -105,6 +108,17 @@ type GLTFResult = GLTF & {
     ['Paint_-_Metallic_(Blue).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Enamel_Glossy_(Yellow).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Metallic_(Dark_Grey).001']: THREE.MeshPhysicalMaterial
+    ['#000000FF']: THREE.MeshStandardMaterial
+    ['#FFFFFFFF']: THREE.MeshStandardMaterial
+    ['#4C4C4CFF']: THREE.MeshStandardMaterial
+    ['#E0DFDBFF.001']: THREE.MeshStandardMaterial
+    ['Material.003']: THREE.MeshStandardMaterial
+    ['Material.009']: THREE.MeshStandardMaterial
+    ['Material.001']: THREE.MeshStandardMaterial
+    ['Material.004']: THREE.MeshStandardMaterial
+    ['Material.011']: THREE.MeshStandardMaterial
+    ['Material.012']: THREE.MeshStandardMaterial
+    ['#CAD1EEFF.001']: THREE.MeshStandardMaterial
   }
 }
 
@@ -186,31 +200,13 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.night_stand_2.geometry}
-        material={materials['Material.005']}
-        position={[0.755, 0.007, 1.814]}
-        rotation={[Math.PI, -1.543, Math.PI]}
-        scale={0.01}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.night_stand_1.geometry}
-        material={materials['Material.006']}
-        position={[0.742, 0.007, 2.217]}
-        rotation={[Math.PI, -1.543, Math.PI]}
-        scale={0.01}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.slap.geometry}
         material={materials['Material.007']}
         position={[1.058, 0.003, -2.503]}
         rotation={[1.571, -0.002, -1.562]}
         scale={[3, 3, 2]}
       />
-      <group position={[0.79, 0.532, 2.265]} rotation={[Math.PI / 2, 0, 0.753]} scale={0.01}>
+      <group position={[0.79, 0.619, 2.299]} rotation={[Math.PI / 2, 0, 1.647]} scale={0.01}>
         <mesh
           castShadow
           receiveShadow
@@ -293,24 +289,15 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
           />
         </mesh>
       </group>
-      <group position={[-3.155, 1.051, 2.638]} rotation={[Math.PI / 2, 0, 3.138]} scale={0.01}>
-        <mesh castShadow receiveShadow geometry={nodes.OBJ.geometry} material={materials.Wood} />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.OBJ_1.geometry}
-          material={materials.Brass_A_5}
-        />
-      </group>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.stand.geometry}
         material={materials['Material.008']}
         position={[-2.292, 0.002, 2.249]}
-        scale={[0.015, 0.01, 0.015]}
+        scale={[0.012, 0.01, 0.012]}
       />
-      <group position={[-2.283, 0.631, 2.265]} rotation={[Math.PI / 2, 0, 1.866]} scale={0.01}>
+      <group position={[-2.297, 0.631, 2.265]} rotation={[Math.PI / 2, 0, 1.866]} scale={0.01}>
         <mesh
           castShadow
           receiveShadow
@@ -348,13 +335,112 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
           material={materials['Paint_-_Metallic_(Dark_Grey).001']}
         />
       </group>
+      <group position={[-1.738, 0, -2.438]} rotation={[1.571, 0, 0]} scale={0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node1005.geometry}
+          material={materials['#000000FF']}
+          position={[-285.339, -25.697, 0.012]}
+          scale={[1.51, 1.23, 1.68]}
+        />
+      </group>
+      <group position={[0, 0.892, 1.537]} scale={0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node1006.geometry}
+          material={materials['#FFFFFFFF']}
+          position={[56.457, -308.229, 759.251]}
+          rotation={[-Math.PI, 1.569, -Math.PI]}
+          scale={[1, 0.64, 1]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Node2004.geometry}
+            material={materials['#4C4C4CFF']}
+          />
+        </mesh>
+      </group>
+      <group position={[0.311, 0.392, -0.216]} rotation={[-1.683, 0.224, 0.468]} scale={0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node1008.geometry}
+          material={materials['#E0DFDBFF.001']}
+          position={[-4.671, -0.005, 18.31]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.wood.geometry}
+        material={materials['Material.003']}
+        position={[0.813, 0.2, -0.58]}
+        rotation={[-2.031, 0.715, 0.662]}
+        scale={[0.46, 0.74, 0.46]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.wood003.geometry}
+        material={materials['Material.009']}
+        position={[0.592, 0.29, -0.878]}
+        rotation={[1.564, -0.15, -0.47]}
+        scale={[0.4, 0.6, 0.4]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.wood001.geometry}
+        material={materials['Material.001']}
+        position={[0.707, 0.205, -0.512]}
+        rotation={[-1.505, -0.191, 0.464]}
+        scale={[0.55, 0.71, 0.55]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.wood002.geometry}
+        material={materials['Material.004']}
+        position={[0.575, 0.234, -0.494]}
+        rotation={[0.889, -0.917, 2.382]}
+        scale={[0.45, 0.6, 0.45]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.wood004.geometry}
+        material={materials['Material.011']}
+        position={[0.626, 0.278, -0.502]}
+        rotation={[-1.373, -0.251, 0.409]}
+        scale={[0.45, 0.6, 0.45]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.carpet001.geometry}
+        material={materials['Material.012']}
+        position={[0.119, 0.02, -0.92]}
+        rotation={[0, -0.734, -Math.PI / 2]}
+        scale={[0.5, 3, 3]}
+      />
+      <group position={[0, 0.032, -0.655]} rotation={[1.567, 0, 1.25]} scale={0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node1010.geometry}
+          material={materials['#CAD1EEFF.001']}
+          position={[63.956, 266.577, 9.98]}
+        />
+      </group>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Node1003.geometry}
         material={materials['#D7D0C0FF']}
-        position={[0.726, 0.581, 1.796]}
-        rotation={[1.574, -0.007, 1.926]}
+        position={[0.115, 0.674, 2.295]}
+        rotation={[1.578, -0.003, 2.741]}
         scale={0.001}>
         <mesh
           castShadow

@@ -20,14 +20,17 @@ type GLTFResult = GLTF & {
   }
 }
 
+const SCALE = 50;
+
 export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
     const { nodes, materials } = useGLTF(model) as GLTFResult
-    const textRef = useRef()
-    useFrame((state) => (textRef.current.position.x = Math.sin(state.clock.elapsedTime) * 1))
-  
+    // const textRef = useRef()
+    // useFrame((state) => (textRef.current.position.x = Math.sin(state.clock.elapsedTime) * 1))
+    //-3.15531 m
+    //-2.63777 m
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0.102, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.001}>
+      <group position={[1.65, 1.02, -2.63]} rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
               <mesh
                   castShadow
                   receiveShadow
@@ -37,23 +40,40 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                   {/* <planeGeometry args={[3.6 * 1000, 3.6* 1000]}></planeGeometry> */}
                   <Decal
                     debug
-                    position={[0, 0, 0]}
+                    position={[0, 0, 0.7 * SCALE]}
                     rotation={[-Math.PI / 2, Math.PI, 0]}
-                    scale={[0.9 * 100, 0.25 * 100, 1 * 100]}
+                    scale={[1 * SCALE, 2 * SCALE, 1 * SCALE]}
                   >
                       <meshStandardMaterial roughness={1} transparent polygonOffset polygonOffsetFactor={-1}>
                           <RenderTexture attach="map" anisotropy={16}>
-                              <PerspectiveCamera makeDefault manual aspect={0.9 / 0.25} rotation={[0, 0, 0]}  position={[0, 0, 2]} />
-                              <color attach="background" args={['#af2040']} />
+                              <PerspectiveCamera makeDefault manual aspect={1 / 2} rotation={[0, 0, 0]}  position={[0, 0, 2]} />
+                              {/* <color attach="background" args={['#af2040']} /> */}
                               <ambientLight intensity={1} />
                               {/* <directionalLight position={[10, 10, 5]} /> */}
                               <Text
-                                  position={[0, 0, 0]}
-                                  rotation={[0, Math.PI, 0]}
-                                  ref={textRef}
-                                  fontSize={0.5} color="red">
-                                    123456789
-                                </Text>
+                                  position={[0, 0.6, 0]}
+                                  rotation={[0, 0, 0]}
+                                //   ref={textRef}
+                                  fontSize={0.2}
+                                  color="red">
+                                  Hello
+                              </Text>
+                              <Text
+                                  position={[0, -0.1, 0]}
+                                  rotation={[0, 0, 0]}
+                                //   ref={textRef}
+                                  fontSize={0.07}
+                                  color="red">
+                                  I am Yiyi, AAAAAA
+                              </Text>
+                              <Text
+                                  position={[0, -0.2, 0]}
+                                  rotation={[0, 0, 0]}
+                                //   ref={textRef}
+                                  fontSize={0.1}
+                                  color="red">
+                                  I am Yiyi, AAAAAA
+                              </Text>
                       </RenderTexture>
                       </meshStandardMaterial>
                     </Decal>

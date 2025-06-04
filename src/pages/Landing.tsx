@@ -119,6 +119,7 @@ function LandingPage() {
         />
         <ambientLight intensity={0.05} />
         <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
+        <RedrumDoor />
         <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <Curtain
           position={new THREE.Vector3(-2.3, 1.6, -0.55)}
