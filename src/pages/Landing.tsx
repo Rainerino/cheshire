@@ -93,10 +93,10 @@ function LandingPage() {
           scale={[1, 1, 1]} 
         />
         <Environment 
-          files="/textures/night.hdr"
+          files="/textures/satara_night_no_lamps_1k.hdr"
           background
           backgroundBlurriness={0.1}
-          backgroundIntensity={0.1} 
+          backgroundIntensity={0.5} 
         />
         {/* <Environment preset='night' /> */}
         {/* <CameraControl /> */}
@@ -104,8 +104,8 @@ function LandingPage() {
           target={new THREE.Vector3().fromArray(CAMERA_LOOK_AT)}
           enableDamping
           dampingFactor={0.05}
-          enablePan={false}
-          enableZoom={false}
+          // enablePan={false}
+          // enableZoom={false}
           // enableRotate={false}
           minPolarAngle={-Math.PI / 5 + Math.PI / 2}
           maxPolarAngle={-Math.PI / 18 + Math.PI / 2}
@@ -122,7 +122,7 @@ function LandingPage() {
         <RedrumDoor />
         <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <Curtain
-          position={new THREE.Vector3(-2.3, 1.6, -0.55)}
+          position={new THREE.Vector3(-2.45, 1.7, -0.6)}
           rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
         />
         {/* Curtain and Mirror are conflicted somehow */}
@@ -134,26 +134,28 @@ function LandingPage() {
         <pointLight
           color={'#f7e7ba'}
           castShadow
-          decay={1}
-          distance={0}
+          decay={2}
           shadow-bias={-0.00001}
-          shadow-mapSize={[1024, 1024]}
+          shadow-mapSize={[512, 512]}
+          shadow-camera-fov={120}
           // shadow-camera-far={100}
           // shadow-camera-near={0.1}
-          position={[-2.25, 0.85, -2.245]}
-          intensity={1}>         
+          position={[-2.25, 1, -2.245]}
+          intensity={0.8}>     
+       {/* <orthographicCamera attach='shadow-camera'>
+          <Helper type={THREE.CameraHelper} />
+        </orthographicCamera> */}
         </pointLight>
         <pointLight
           color={'#f7e7ba'}
           castShadow
-          decay={1}
-          distance={0}
+          decay={2}
           shadow-bias={-0.00001}
           shadow-mapSize={[1024, 1024]}
           // shadow-camera-far={100}
           // shadow-camera-near={0.1}
-          position={[0.775, 1.2, -2.245]}
-          intensity={1}>         
+          position={[0.775, 1.1, -2.245]}
+          intensity={2}>         
         {/* <orthographicCamera attach='shadow-camera'>
           <Helper type={THREE.CameraHelper} />
         </orthographicCamera> */}
@@ -169,7 +171,7 @@ function preloadGLTFFiles() {
   [
     // '/models/room/DeskLamp.glb?url',
     // '/models/room/LamyPen.glb?url',
-    // '/models/room/TypeWriter.glb?url',
+    '/models/es/CAT_6080_S.glb?url',
     '/models/room/Desktop.glb?url',
     '/models/room/Room2.glb?url',
     '/models/stations/pick_tote.glb?url',

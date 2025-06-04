@@ -39,7 +39,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
               >
                   {/* <planeGeometry args={[3.6 * 1000, 3.6* 1000]}></planeGeometry> */}
                   <Decal
-                    debug
+                    // debug
                     position={[0, 0, 0.7 * SCALE]}
                     rotation={[-Math.PI / 2, Math.PI, 0]}
                     scale={[1 * SCALE, 2 * SCALE, 1 * SCALE]}
