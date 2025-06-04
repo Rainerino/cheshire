@@ -18,6 +18,7 @@ const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_FINISH_POSITION = [0, 1.7, 6]
 const CAMERA_LOOK_AT = [0.1, -0.2, -6]
 const EPS = 0.01
+let Enough = false;
 
 const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.x - target[0]) < EPS &&
@@ -30,15 +31,26 @@ function ProjectNavPage() {
     const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
     
     useEffect(() => {
+        controls.zoomTo(1)
         controls.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
-        
+        controls.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
+        controls.smoothTime = 0.25;
     }, [controls])
 
     useFrame((state, delta) => {
         if (isCameraAtPosition(controls.camera.position, CAMERA_START_POSITION)) {
-            controls.smoothTime = 1;
-            controls.zoomTo(1/3, true)
-            controls.dollyInFixed(3, true)
+            if (!Enough) {
+                controls.smoothTime = 2;
+                controls.zoomTo(1/2.5, true)
+                controls.dollyInFixed(5, true)
+                Enough = true;
+            } else {
+                controls.smoothTime = 0.25;
+                // controls.zoomTo(1/2.5)
+                // controls.zoomTo(1/3, false)
+                // controls.dollyInFixed(3, false)
+            }
+
         }
         controls.update(delta)
     })

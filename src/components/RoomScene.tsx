@@ -43,27 +43,11 @@ export default function RoomScene(props) {
     // // If position and look at are not in CAMERA_POSITION and CAMERA_LOOK_AT, and zoom = 1, smoothly animate to them
 
     // // Animate position
-    controls.getPosition(cur_pos, false)
-    console.log(cur_pos)
-    // if (
-    //   cur_pos.x !== tgt_pos.x ||
-    //   cur_pos.y !== tgt_pos.y  ||
-    //   cur_pos.z !== tgt_pos.z 
-    // ) {
-      // controls.smoothTime = 0.25;
-      // controls.moveTo(
-      //   tgt_look.x, tgt_look.y, tgt_look.z, true
-      // )
-      // const cur_look = new THREE.Vector3()
-      // controls.getTarget(cur_look, true);
-      // console.log(cur_look)
-      controls.setTarget(
-          tgt_look.x,
-          tgt_look.y,
-          tgt_look.z,
-          true);
-      
-    // }
+    controls.setTarget(
+      tgt_look.x,
+      tgt_look.y,
+      tgt_look.z,
+      true);
     controls.update(delta);
   })
     return (
