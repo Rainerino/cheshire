@@ -116,10 +116,10 @@ function CovariantPage() {
             position={TOTE_OFFSET}
             rotation={STATION_ROTATION}
           />
-          {/* <ABB1300
+          <ABB1300
             position={STATION_OFFSET}
             rotation={STATION_ROTATION}
-          /> */}
+          />
         </ScrollControls>
     </group>
   )

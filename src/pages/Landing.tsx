@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper } from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid } from '@react-three/drei'
 import * as THREE from 'three'
 import { Route, Router } from "wouter"
 
@@ -18,6 +18,7 @@ import NextPage from './Next'
 import { Desktop2 } from '../components/models/Desktop2'
 import Mirror from '../components/modules/Mirror'
 import { OverheadLamp } from '../components/modules/OverheadLamp'
+import { RedrumDoor } from '../components/modules/RedrumDoor'
 
 
 const CAMERA_POSITION = [
@@ -66,7 +67,14 @@ function LandingPage() {
         <Route path="/duoyi" component={() => <DuoYiPage />} />
         <Route path="/next" component={() => <NextPage />} />
       </Router>
-      <Route path="/about"  component={() => <ProjectScreen position={[0, 0, 0]} rotation={[0, 0, 0]} />} />
+      <Route path="/about">
+        <RedrumDoor position={[0, 0, 0]} rotation={[0, 0, 0]} />
+        <PerspectiveCamera fov={75} />
+        <OrbitControls makeDefaults />
+        <Environment preset='studio' />
+        <color attach="background" args={['#f0f0f0']} />
+        <Grid infiniteGrid></Grid>
+      </Route>
       {/* <Route path="/duoyi" component={DuoyiPage} />
       <Route path="/motion_metrics" component={MotionMetricsPage} />
       <Route path="/next" component={NextPage} /> */}
