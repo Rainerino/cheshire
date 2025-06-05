@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import {
-  PerspectiveCamera,
-  useScroll,
-  ScrollControls,
-  Text,
-  OrbitControls,
-  Html
+    PerspectiveCamera,
+    useScroll,
+    ScrollControls,
+    Text,
+    OrbitControls,
+    Html, Scroll
 } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -35,6 +35,27 @@ const CAMERA_LOOK_AT = [
   [1, 0.5, 1],
   [0, 0.5, 2.11],
 ]
+// #ddeef4 blue
+// #ff5e63 pink
+
+{/*
+Title: Covariant.AI
+text: As Robotic engineer at Covariant.AI,
+a silicon valley based company that builds
+AI-powered robotic systems for industrial
+automation and logistics.
+
+Developed a digital twin framework for sim-to-real de-
+ployment in robotic pick-and-place tasks.
+
+Optimized
+motion planning algorithms
+
+ enhanced gripper config-
+urations, and designed station layouts to improve item
+placement and scanning efficiency
+
+*/}
 
 const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8)
 const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0)
@@ -47,24 +68,41 @@ function HudText() {
   const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
   const mesh_ref = useRef()
   const scroll = useScroll()
+    const timeDivRef = React.useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        controls.camera.add(mesh_ref.current)
+    }, [controls.camera])
 
   useFrame(() => {
-    
+      const text = `${new Date().toLocaleTimeString()} ${scroll.offset}`
+      if (timeDivRef.current) {
+          timeDivRef.current.textContent = text;
+      }
   })
   return (
-          <mesh ref={mesh_ref}  position={[0, 0, -1]}>
-              <boxGeometry args={[0.4, 0.2, 0.05]} />
-              {/* <meshStandardMaterial color="orange" /> */}
-              <Html center distanceFactor={3}>
+          <mesh ref={mesh_ref}  position={[0, 0, -3]}>
+              {/*<boxGeometry args={[0.1, 0.1, 0.05]} />*/}
+              <planeGeometry args={[0.1, 0.1]}></planeGeometry>
+               <meshStandardMaterial color="orange" />
+              <Html
+                  position={[0, 0, -10]}
+                  // transform
+                  // prepend
+                  // fullscreen
+              >
                   <div
                       ref={timeDivRef}
-                      style={{
-                          background: 'rgba(255,255,255,0.5)',
-                          padding: '8px 16px',
-                          borderRadius: '8px',
-                          fontSize: '16px',
-                          color: '#222',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        style={{
+                        pointerEvents: 'none',
+                        userSelect: 'none',
+                      background: 'rgba(255,255,255,0.5)',
+                      position: 'fixed',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      color: '#222',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
                       }}
                   >
                       {/* Initial text, will be updated */}
@@ -84,6 +122,8 @@ function CameraRig() {
   useEffect(() => {
     controls.smoothTime = 0.5
     controls.enabled = true;
+    controls.mouseButtons.wheel = CameraControls.ACTION.NONE
+
     controls.setLookAt(
       CAMERA_POSITION[0][0],
       CAMERA_POSITION[0][1],
@@ -108,20 +148,6 @@ function CameraRig() {
         CAMERA_LOOK_AT[0][2],
         true
       )
-
-      
-      // SplitText.create(".split", {
-      //   type: "words, chars",
-      //   onSplit(self) {
-      //     gsap.from(self.chars, {
-      //       duration: 1, 
-      //       y: 100, 
-      //       autoAlpha: 0, 
-      //       stagger: 0.05
-      //     });
-      //   }
-      // });
-      // display text
     }
 
     if (scroll.visible(1/PART, 1/PART, 0.01)) {
@@ -180,6 +206,7 @@ function CameraRig() {
   
     controls.update(delta)
   })
+    return null
 }
 
 function CovariantPage() {
@@ -191,9 +218,16 @@ function CovariantPage() {
       />
       {/* <OrbitControls /> */}
       <ScrollControls pages={PART}>
-        
+          <Scroll html>
+              {/* This needs to be scaled with the screen size...*/}
+              <h1 style={{ position: 'absolute', top: '60vh', left: '0.5em', fontSize: '40vw' }}>to</h1>
+              <h1 style={{ position: 'absolute', top: '120vh', left: '60vw', fontSize: '40vw'}}>be</h1>
+              <h1 style={{ position: 'absolute', top: '200vh', left: '0.5vw', fontSize: '40vw' }}>home</h1>
+              <h1 style={{ position: 'absolute', top: '300vh', left: '0.5vw', fontSize: '40vw' }}>Again</h1>
+              <h1 style={{ position: 'absolute', top: '400vh', left: '0.5vw', fontSize: '40vw' }}>Mext</h1>
+          </Scroll>
           <CameraRig />
-
+            {/*<HudText />*/}
         
         {/* <Text position={[0, -4, 0]} color="red" anchorX="center" anchorY="middle" fontSize={1}>
           hello world!

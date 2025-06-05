@@ -21,7 +21,7 @@ function Root() {
   const router = useRouter()
   return (
     <React.StrictMode>
-      <Redirect to="/projects/covariant" />
+      <Redirect to="/projects/next" />
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows gl={{ antialias: true, autoClear: true }} >
           <Suspense fallback={null}>
