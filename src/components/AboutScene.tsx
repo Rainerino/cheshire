@@ -26,20 +26,16 @@ export default function AboutPage(props) {
         //     camera.zoom += (3 - camera.zoom) * 0.05;
         //     camera.updateProjectionMatrix();
         // }
-        // controls.zoomTo(1, false);
         controls.getPosition(cur_pos, false)
         controls.getTarget(cur_look, false);
-        console.log(cur_pos)
-        controls.smoothTime = 1;
-        // controls.setLookAt(
-        //     tgt_pos.x,
-        //     tgt_pos.y,
-        //     tgt_pos.z,
-        //     tgt_look.x,
-        //     tgt_look.y,
-        //     tgt_look.z,
-        //     true);
+        controls.smoothTime = 2;
 
+        // controls.setTarget(            tgt_look.x,
+        //     tgt_look.y,
+        //     tgt_look.z, true)
+        // controls.setPosition(          tgt_pos.x,
+        //     tgt_pos.y,
+        //     tgt_pos.z, true)
         controls.lerpLookAt(
             tgt_pos.x,
             tgt_pos.y,
@@ -53,7 +49,7 @@ export default function AboutPage(props) {
             cur_look.x,
             cur_look.y,
             cur_look.z,
-            0.0, 
+            0.1,
             true
         )
         

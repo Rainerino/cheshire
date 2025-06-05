@@ -35,6 +35,7 @@ function ProjectNavPage() {
         controls.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
         controls.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
         controls.smoothTime = 0.25;
+        controls.enabled = true;
     }, [controls])
 
     useFrame((state, delta) => {
@@ -67,7 +68,7 @@ function ProjectNavPage() {
                 <planeGeometry args={[20, 100]} />
                 <meshPhongMaterial color="#202020" />
             </mesh>
-            <EffectComposer multisampling={8} autoClear={false}>
+            {/* <EffectComposer multisampling={8} autoClear={false}>
                 <Autofocus
                     mouse
                     smoothTime={0.15}
@@ -77,12 +78,12 @@ function ProjectNavPage() {
                     resolutionX={2048}
                     resolutionY={2048}
                 />
-            </EffectComposer>
+            </EffectComposer> */}
             <fog attach="fog" args={['#202020', 5, 20]} />
             <Select enabled={false}>
                 <SpotLight
                     castShadow
-                    shadow-bias={-0.0001}
+                    shadow-bias={-0.0003}
                     shadow-mapSize={[2048, 2048]}
                     position={[0, 5, -5]}
                     distance={70}

@@ -23,7 +23,7 @@ function Root() {
     <React.StrictMode>
       <Redirect to="/projects/covariant" />
       <div style={{ width: '100%', height: '100%' }}>
-        <Canvas shadows>
+        <Canvas shadows gl={{ antialias: true, autoClear: true }} >
           <Suspense fallback={null}>
             <LandingPage />
           </Suspense>
