@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useMemo, useRef } from 'react'
+import { extend, useFrame, useThree } from '@react-three/fiber'
 import {
   PerspectiveCamera,
   useScroll,
@@ -13,6 +13,9 @@ import ToteScene from './Tote'
 import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 import "./Covariant.css"
+import CameraControls from 'camera-controls'
+CameraControls.install({ THREE })
+extend({ CameraControls })
 
 const CAMERA_POSITION = [
   [-0.3, 4.33, 1.76],
@@ -31,46 +34,69 @@ const STATION_OFFSET = new THREE.Vector3(-0.9, 0, 1.8)
 const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0)
 const TOTE_OFFSET = new THREE.Vector3(0.556, 0.867, 0.725).add(STATION_OFFSET)
 
-function CameraMovement() {
-  const { camera } = useThree()
+function CameraRig() {
+  const camera = useThree((state) => state.camera)
+  const gl = useThree((state) => state.gl)
+  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
+  
   const scroll = useScroll()
 
-  useFrame(() => {
+  useFrame((state, delta) => {
     if (!scroll) return
-    const t = Math.max(0, Math.min(1, scroll.offset))
-
-    const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0])
-    const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1])
-    const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2])
-    const posD = new THREE.Vector3().fromArray(CAMERA_POSITION[3])
-
-    const tgtA = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[0])
-    const tgtB = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[1])
-    const tgtC = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[2])
-    const tgtD = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[3])
-
-    const targetPosition = new THREE.Vector3()
-    const targetLookAt = new THREE.Vector3()
-
-    if (t < 1 / 3) {
-      const localT = t * 3
-      targetPosition.lerpVectors(posA, posB, localT)
-      targetLookAt.lerpVectors(tgtA, tgtB, localT)
-    } else if (t < 2 / 3) {
-      const localT = (t - 1 / 3) * 3
-      targetPosition.lerpVectors(posB, posC, localT)
-      targetLookAt.lerpVectors(tgtB, tgtC, localT)
-    } else {
-      const localT = (t - 2 / 3) * 3
-      targetPosition.lerpVectors(posC, posD, localT)
-      targetLookAt.lerpVectors(tgtC, tgtD, localT)
+    controls.smoothTime = 0.25
+    if (scroll.visible(0, 1 / 4, 0.1)) {
+      // First scene
+      controls.setLookAt(
+        CAMERA_POSITION[0][0],
+        CAMERA_POSITION[0][1],
+        CAMERA_POSITION[0][2],
+        CAMERA_LOOK_AT[0][0],
+        CAMERA_LOOK_AT[0][1],
+        CAMERA_LOOK_AT[0][2],
+        false
+      )
+      // display text
     }
 
-    camera.position.lerp(targetPosition, 0.1)
-    const currentLookAt = new THREE.Vector3()
-    camera.getWorldDirection(currentLookAt)
-    currentLookAt.lerp(targetLookAt, 1)
-    camera.lookAt(currentLookAt)
+
+  
+    controls.update(delta)
+
+
+    // const t = Math.max(0, Math.min(1, scroll.offset))
+
+    // const posA = new THREE.Vector3().fromArray(CAMERA_POSITION[0])
+    // const posB = new THREE.Vector3().fromArray(CAMERA_POSITION[1])
+    // const posC = new THREE.Vector3().fromArray(CAMERA_POSITION[2])
+    // const posD = new THREE.Vector3().fromArray(CAMERA_POSITION[3])
+
+    // const tgtA = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[0])
+    // const tgtB = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[1])
+    // const tgtC = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[2])
+    // const tgtD = new THREE.Vector3().fromArray(CAMERA_LOOK_AT[3])
+
+    // const targetPosition = new THREE.Vector3()
+    // const targetLookAt = new THREE.Vector3()
+
+    // if (t < 1 / 3) {
+    //   const localT = t * 3
+    //   targetPosition.lerpVectors(posA, posB, localT)
+    //   targetLookAt.lerpVectors(tgtA, tgtB, localT)
+    // } else if (t < 2 / 3) {
+    //   const localT = (t - 1 / 3) * 3
+    //   targetPosition.lerpVectors(posB, posC, localT)
+    //   targetLookAt.lerpVectors(tgtB, tgtC, localT)
+    // } else {
+    //   const localT = (t - 2 / 3) * 3
+    //   targetPosition.lerpVectors(posC, posD, localT)
+    //   targetLookAt.lerpVectors(tgtC, tgtD, localT)
+    // }
+
+    // camera.position.lerp(targetPosition, 0.1)
+    // const currentLookAt = new THREE.Vector3()
+    // camera.getWorldDirection(currentLookAt)
+    // currentLookAt.lerp(targetLookAt, 1)
+    // camera.lookAt(currentLookAt)
   })
 }
 
@@ -79,11 +105,11 @@ const CURRENT_TARGET = 0
 function CovariantPage() {
   return (
     <group>
-      <ScrollControls pages={3}>
-          <CameraMovement />
+      <ScrollControls pages={4}>
+          <CameraRig />
           <PerspectiveCamera
             makeDefault
-            position={CAMERA_POSITION[CURRENT_TARGET]}
+            // position={CAMERA_POSITION[CURRENT_TARGET]}
             fov={30}
           />
           <PointLightWShadow

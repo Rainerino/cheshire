@@ -20,7 +20,12 @@ export default function MotionMetricsPage(props) {
         <group {...props}>
             {/* <OrbitControls />
             <PerspectiveCamera makeDefault /> */}
-            <Environment preset='city' />
+            <Environment 
+            files="/textures/snow_field_1k.hdr"
+            background
+            backgroundBlurriness={0.1}
+            backgroundIntensity={0.5} 
+            />
             <CAT6080 />
             <Grid infiniteGrid/>
                 {/* Add 3D objects here if needed */}

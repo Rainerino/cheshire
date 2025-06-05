@@ -30,14 +30,8 @@ type GLTFResult = GLTF & {
     obj003_17: THREE.Mesh
     obj003_18: THREE.Mesh
     Node1: THREE.Mesh
-    Node10: THREE.Mesh
-    Node2: THREE.Mesh
-    Node3: THREE.Mesh
     Node4: THREE.Mesh
     Node5: THREE.Mesh
-    Node6: THREE.Mesh
-    Node7: THREE.Mesh
-    Node8: THREE.Mesh
     Node9: THREE.Mesh
     Node1001: THREE.Mesh
     Node2001: THREE.Mesh
@@ -72,14 +66,8 @@ type GLTFResult = GLTF & {
     ['Mat_17.003']: THREE.MeshPhysicalMaterial
     ['Mat_18.003']: THREE.MeshPhysicalMaterial
     ['#D3D6D3FF']: THREE.MeshStandardMaterial
-    ['#999999FF']: THREE.MeshStandardMaterial
-    ['#808080FF']: THREE.MeshStandardMaterial
-    ['#A58300FF']: THREE.MeshStandardMaterial
     ['#0A7DB5FF']: THREE.MeshStandardMaterial
     ['#4C4C4CFF']: THREE.MeshStandardMaterial
-    ['#895956FF']: THREE.MeshStandardMaterial
-    ['#CAD1EEFF']: THREE.MeshStandardMaterial
-    ['#EFEFEFFF']: THREE.MeshStandardMaterial
     ['#FFFFFFFF']: THREE.MeshStandardMaterial
     ['Loader.001']: THREE.MeshStandardMaterial
     Loader: THREE.MeshStandardMaterial
@@ -225,24 +213,6 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Node10.geometry}
-          material={materials['#999999FF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node2.geometry}
-          material={materials['#808080FF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node3.geometry}
-          material={materials['#A58300FF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
           geometry={nodes.Node4.geometry}
           material={materials['#0A7DB5FF']}
         />
@@ -251,24 +221,6 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
           receiveShadow
           geometry={nodes.Node5.geometry}
           material={materials['#4C4C4CFF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node6.geometry}
-          material={materials['#895956FF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node7.geometry}
-          material={materials['#CAD1EEFF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node8.geometry}
-          material={materials['#EFEFEFFF']}
         />
         <mesh
           castShadow
@@ -333,7 +285,7 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.Node1002.geometry}
         material={materials['#292929FF']}
-        position={[-0.37, 0.868, -0.158]}
+        position={[-0.386, 0.868, -0.158]}
         rotation={[-Math.PI, 0.715, -Math.PI]}
         scale={0.001}>
         <mesh

@@ -4,7 +4,7 @@ import './index.css'
 import { Canvas } from '@react-three/fiber'
 import { Stats } from '@react-three/drei'
 import { Perf } from "r3f-perf"
-import { useLocation, useRoute, useRouter } from "wouter"
+import { Redirect, useLocation, useRoute, useRouter } from "wouter"
 import { Loader } from '@react-three/drei'
 import LandingPage from './pages/Landing'
 import CovariantPage from './pages/Covariant'
@@ -21,6 +21,7 @@ function Root() {
   const router = useRouter()
   return (
     <React.StrictMode>
+      <Redirect to="/projects/covariant" />
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows>
           <Suspense fallback={null}>

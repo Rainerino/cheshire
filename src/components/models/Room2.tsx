@@ -18,8 +18,6 @@ type GLTFResult = GLTF & {
     Node5001: THREE.Mesh
     Node6001: THREE.Mesh
     Node7001: THREE.Mesh
-    Node8001: THREE.Mesh
-    Node9001: THREE.Mesh
     Node1001: THREE.Mesh
     slap: THREE.Mesh
     Node1003: THREE.Mesh
@@ -74,8 +72,6 @@ type GLTFResult = GLTF & {
   materials: {
     ['#BB935CFF.003']: THREE.MeshStandardMaterial
     ['#000000FF.003']: THREE.MeshStandardMaterial
-    ['#855A1DFF.003']: THREE.MeshStandardMaterial
-    ['#F2E2C5FF.003']: THREE.MeshStandardMaterial
     ['x1.002']: THREE.MeshStandardMaterial
     ['Material.007']: THREE.MeshStandardMaterial
     ['#D7D0C0FF']: THREE.MeshStandardMaterial
@@ -174,18 +170,6 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
           receiveShadow
           geometry={nodes.Node7001.geometry}
           material={materials['#BB935CFF.003']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node8001.geometry}
-          material={materials['#855A1DFF.003']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node9001.geometry}
-          material={materials['#F2E2C5FF.003']}
         />
       </group>
       <group position={[0.461, 0.072, -1.907]} rotation={[1.561, 0.003, 0.787]} scale={0.001}>
@@ -385,8 +369,8 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.wood003.geometry}
         material={materials['Material.009']}
-        position={[0.592, 0.29, -0.878]}
-        rotation={[1.564, -0.15, -0.47]}
+        position={[0.58, 0.29, -0.935]}
+        rotation={[1.558, -0.149, -0.509]}
         scale={[0.4, 0.6, 0.4]}
       />
       <mesh
@@ -394,8 +378,8 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.wood001.geometry}
         material={materials['Material.001']}
-        position={[0.707, 0.205, -0.512]}
-        rotation={[-1.505, -0.191, 0.464]}
+        position={[0.691, 0.205, -0.551]}
+        rotation={[-1.502, -0.191, 0.464]}
         scale={[0.55, 0.71, 0.55]}
       />
       <mesh
@@ -403,8 +387,8 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.wood002.geometry}
         material={materials['Material.004']}
-        position={[0.575, 0.234, -0.494]}
-        rotation={[0.889, -0.917, 2.382]}
+        position={[0.569, 0.246, -0.494]}
+        rotation={[0.916, -0.932, 2.415]}
         scale={[0.45, 0.6, 0.45]}
       />
       <mesh
@@ -412,8 +396,8 @@ export function Room2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.wood004.geometry}
         material={materials['Material.011']}
-        position={[0.626, 0.278, -0.502]}
-        rotation={[-1.373, -0.251, 0.409]}
+        position={[0.626, 0.287, -0.502]}
+        rotation={[-1.368, -0.353, 0.329]}
         scale={[0.45, 0.6, 0.45]}
       />
       <mesh

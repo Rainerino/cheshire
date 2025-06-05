@@ -34,10 +34,10 @@ export default function RoomScene(props) {
     controls.dollyTo(1.9, true);
     controls.draggingSmoothTime = 0.1
     // controls.dollyToCursor = false;
-    controls.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-    controls.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
-    controls.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
-    controls.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
+    // controls.minPolarAngle = -Math.PI / 5 + Math.PI / 2
+    // controls.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
+    // controls.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
+    // controls.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
     // controls.enabled = false;
     
     // // If position and look at are not in CAMERA_POSITION and CAMERA_LOOK_AT, and zoom = 1, smoothly animate to them
