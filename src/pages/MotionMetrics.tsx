@@ -91,7 +91,7 @@ function CameraRig(controls) {
 
 
 }
-export default function MotionMetricsPage({ ...props }) {
+export default function MotionMetricsPage(props) {
   // const cam_ref = useRef()
   const controls = useRef();
     return (

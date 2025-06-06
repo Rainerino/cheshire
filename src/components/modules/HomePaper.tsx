@@ -18,7 +18,6 @@ export default function HomeNavPage(props) {
   useCursor(hovered)
   return (
     <group {...props}>
-      <CameraControls />
       <mesh
         // onPointerOver={(e) => setHovered(true)}
         // onPointerOut={(e) => setHovered(false)}

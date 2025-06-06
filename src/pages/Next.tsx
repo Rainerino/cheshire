@@ -1,10 +1,8 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Grid, OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import CameraControls from 'camera-controls'
+import { Environment, Grid, OrbitControls, PerspectiveCamera, CameraControls } from '@react-three/drei';
 import * as THREE from 'three'
-CameraControls.install({ THREE })
-extend({ CameraControls })
+
 import type { InstancedMesh, BufferGeometry} from 'three'
 import {useConvexPolyhedron, useSphere} from '@react-three/cannon'
 import { Debug, Physics, useCompoundBody, usePlane } from '@react-three/cannon'
@@ -103,16 +101,13 @@ function HorizonWall(props: PlaneProps) {
 
 
 export default function NextPage(props) {
-    const camera = useThree((state) => state.camera)
-    const gl = useThree((state) => state.gl)
-    const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-
+    const controls = useRef(null);
     useFrame((state, delta) => {
-        controls.enabled = true;
-        controls.update(delta);
+        controls.current.enabled = true;
     });
     return (
         <group {...props}>
+            <CameraControls ref={controls} />
             <hemisphereLight intensity={0.35 * Math.PI} />
             <ambientLight intensity={5} />
             <Physics gravity={[0, -10, 0]}>

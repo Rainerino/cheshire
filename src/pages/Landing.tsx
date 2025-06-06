@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid } from '@react-three/drei'
+import { Suspense, useRef, useState } from 'react'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader } from '@react-three/drei'
 import * as THREE from 'three'
-import { Route, Router } from "wouter"
+import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 
 import { Room2 } from '../components/models/Room2'
 import Curtain from '../components/models/Curtain'
@@ -19,7 +19,10 @@ import { OverheadLamp } from '../components/modules/OverheadLamp'
 import { RedrumDoor } from '../components/modules/RedrumDoor'
 import RoomScene from '../components/RoomScene'
 import AboutScene from '../components/AboutScene'
-
+import { Canvas } from '@react-three/fiber'
+import { Stats } from '@react-three/drei'
+import { Perf } from "r3f-perf"
+import React from 'react'
 
 
 function useHover() {
@@ -50,36 +53,63 @@ function Soda(props: any) {
     </group>
   )
 }
-
+const debug = true
 function LandingPage() {
+  const [, params] = useRoute('/home')
+  const [location, setLocation] = useLocation()
+  const router = useRouter()
   return (
-    <group>
-      <Router base="/projects">
-        <Route path="/" component={() => <ProjectNavPage />} />
-        <Route path="/covariant" component={() => <CovariantPage />} />
-        <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
-        <Route path="/duoyi" component={() => <DuoYiPage />} />
-        <Route path="/next" component={() => <NextPage />} />
-      </Router>
-      {/* <Route path="/duoyi" component={DuoyiPage} />
-      <Route path="/motion_metrics" component={MotionMetricsPage} />
-      <Route path="/next" component={NextPage} /> */}
-      <Route path="/credit" >
-        <PerspectiveCamera fov={75} />
-        <ambientLight intensity={1} />
-        <OrbitControls makeDefaults />
-        <PivotControls lineWidth={3} depthTest={false} scale={2}>
-          <Soda scale={6} position={[0, -1.6, 0]} />
-        </PivotControls>
-      </Route>
-      <Route path="/home" nest>
-        <RoomScene />
-        <Route path="/about" >
-          <AboutScene />
+    <React.StrictMode>
+      <Redirect to="/home" />
+      <div style={{ width: '100%', height: '100%' }}>
+      <Canvas shadows gl={{ antialias: true, autoClear: true }} >
+      <Suspense fallback={null}>
+        <Router base="/projects">
+          <Route path="/" component={() => <ProjectNavPage />} />
+          <Route path="/covariant" component={() => <CovariantPage />} />
+          <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
+          <Route path="/next" component={() => <NextPage />} />
+        </Router>
+        {/* <Route path="/duoyi" component={DuoyiPage} />
+    <Route path="/motion_metrics" component={MotionMetricsPage} />
+    <Route path="/next" component={NextPage} /> */}
+        <Route path="/credit" >
+          <PerspectiveCamera fov={75} />
+          <ambientLight intensity={1} />
+          <OrbitControls makeDefaults />
+          <PivotControls lineWidth={3} depthTest={false} scale={2}>
+            <Soda scale={6} position={[0, -1.6, 0]} />
+          </PivotControls>
         </Route>
-      </Route>
-      <Preload all />
-    </group>
+
+        <RoomScene />
+
+        <Preload all />
+      </Suspense>
+      {debug && <Stats />}
+      {debug && <Perf position="bottom-left" />}
+
+    </Canvas>
+    {/* <Loader /> */}
+        <a
+          style={{ position: 'absolute', top: 50, left: 50, fontSize: '13px' }}
+          href="#"
+          onClick={() => {
+            if (location.includes('projects')) {
+              if (location === '/projects') {
+                setLocation('/home#');
+              } else {
+                setLocation('/projects');
+              }
+            } else {
+              setLocation('/home#');
+            }
+          }}
+        >
+          {params ? `Home ${router.base} ${location}` : `Back ${router.base} ${location}`}
+        </a>
+      </div>
+    </React.StrictMode>
   )
 }
 
