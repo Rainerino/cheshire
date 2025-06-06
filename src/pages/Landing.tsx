@@ -62,7 +62,8 @@ function LandingPage() {
     <React.StrictMode>
       <Redirect to="/home" />
       <div style={{ width: '100%', height: '100%' }}>
-      <Canvas shadows gl={{ antialias: true, autoClear: true }} >
+        <Canvas shadows gl={{ antialias: true, autoClear: true }} >
+          <color attach="background" args={['black']} />
       <Suspense fallback={null}>
         <Router base="/projects">
           <Route path="/" component={() => <ProjectNavPage />} />
@@ -74,7 +75,7 @@ function LandingPage() {
     <Route path="/motion_metrics" component={MotionMetricsPage} />
     <Route path="/next" component={NextPage} /> */}
         <Route path="/credit" >
-          <PerspectiveCamera fov={75} />
+          <PerspectiveCamera makeDefault fov={75} />
           <ambientLight intensity={1} />
           <OrbitControls makeDefaults />
           <PivotControls lineWidth={3} depthTest={false} scale={2}>

@@ -1,5 +1,5 @@
 import { extend, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, PerspectiveCamera, SpotLight, Select } from '@react-three/drei'
+import { CameraControls, OrbitControls, PerspectiveCamera, SpotLight, Select } from '@react-three/drei'
 import { Autofocus, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { OldTV } from '../components/models/TV'
@@ -7,12 +7,8 @@ import { CouchTable } from '../components/models/CouchTable'
 import { DoubleCouch } from '../components/models/DoubleCouch'
 import { SingleCouch } from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
-import './Landing.css'
-import gsap from 'gsap'
-import CameraControls from 'camera-controls'
-import { useEffect, useMemo } from 'react'
-CameraControls.install({ THREE })
-extend({ CameraControls })
+import { useEffect, useRef } from 'react'
+
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_FINISH_POSITION = [0, 1.7, 6]
@@ -25,44 +21,51 @@ const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.y - target[1]) < EPS &&
     Math.abs(pos.z - target[2]) < EPS
 
-function ProjectNavPage() {
-    const camera = useThree((state) => state.camera)
-    const gl = useThree((state) => state.gl)
-    const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-    
+function CameraRig(controls) {
     useEffect(() => {
-        controls.zoomTo(1)
-        controls.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
-        controls.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
-        controls.smoothTime = 0.25;
-        controls.enabled = true;
+        controls.controls.current.zoomTo(1)
+        controls.controls.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
+        controls.controls.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
+        controls.controls.current.smoothTime = 0.25;
+        controls.controls.current.disconnect();
     }, [controls])
 
     useFrame((state, delta) => {
-        if (isCameraAtPosition(controls.camera.position, CAMERA_START_POSITION)) {
+        if (isCameraAtPosition(controls.controls.current.camera.position, CAMERA_START_POSITION)) {
             if (!Enough) {
-                controls.smoothTime = 2;
-                controls.zoomTo(1/2.5, true)
-                controls.dollyInFixed(5, true)
+                controls.controls.current.smoothTime = 2;
+                controls.controls.current.zoomTo(1 / 2.5, true)
+                controls.controls.current.dollyInFixed(5, true)
                 Enough = true;
             } else {
-                controls.smoothTime = 0.25;
-                // controls.zoomTo(1/2.5)
-                // controls.zoomTo(1/3, false)
-                // controls.dollyInFixed(3, false)
+                controls.controls.current.smoothTime = 0.25;
+                // controls.controls.current.zoomTo(1/2.5)
+                // controls.controls.current.zoomTo(1/3, false)
+                // controls.controls.current.dollyInFixed(3, false)
             }
 
+        } else {
+            controls.controls.current.zoomTo(1)
+            controls.controls.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
+            controls.controls.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
+            controls.controls.current.smoothTime = 0.25;
+            controls.controls.current.disconnect();
         }
-        controls.update(delta)
     })
+    return null
+}
+export default function ProjectNavPage(props) {
+    const controls = useRef();
 
     return (
-        <group>
+        <group {...props}>
             <PerspectiveCamera
                 makeDefault
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
                 fov={15}
             />
+            <CameraControls ref={controls} />
+            <CameraRig controls={controls} />
             <ambientLight intensity={0.1} />
             <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
                 <planeGeometry args={[20, 100]} />
@@ -111,5 +114,3 @@ function ProjectNavPage() {
         </group>
     )
 }
-
-export default ProjectNavPage

@@ -17,7 +17,7 @@ import { RedcareStation } from '../components/models/RedcareStation'
 import ToteScene from './Tote'
 import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
-import "./Covariant.css"
+
 
 
 const CAMERA_POSITION = [
