@@ -31,11 +31,6 @@ const project_infos = new Map([
             'Motion Metrics',
             "/images/MotionMetrics.jpg",
             '/motion_metrics')],
-    ["duoyi",
-        new ProjectInfo(new THREE.Color(0x2185d0),
-            'DuoYi',
-            "/images/DuoYi.jpg",
-            '/duoyi')],
     ["next",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Next',
@@ -44,7 +39,7 @@ const project_infos = new Map([
 ])
 
 const RADIUS = 1;
-
+const PART = 3;
 function Display({ position, rotation, w, h, ...props }) {
     const ref = useRef()
     const scroll = useScroll()
@@ -65,10 +60,13 @@ function Display({ position, rotation, w, h, ...props }) {
         if (!ref.current) return
         // Update screen_state.key based on scroll offset
         const offset = scroll.offset
-        if (offset < 0.25) screen_state.key = "covariant"
-        else if (offset < 0.5) screen_state.key = "motion_metrics"
-        else if (offset < 0.75) screen_state.key = "duoyi"
-        else screen_state.key = "next"
+        if (scroll.visible(0, 1 / PART, 0.01)) {
+            screen_state.key = "covariant"
+        } else if (scroll.visible(1 / PART, 1 / PART, 0.01)) {
+            screen_state.key = "motion_metrics"
+        } else {
+            screen_state.key = "next"
+        }
 
         ref.current.material.toneMapped = false
 
@@ -134,7 +132,7 @@ function Display({ position, rotation, w, h, ...props }) {
 export default function ProjectScreen({ position, rotation, w = 1, h = 1, ...props }) {
     return (
         <group {...props}>
-            <ScrollControls prepend={true} damping={0.1} pages={4}>
+            <ScrollControls prepend={true} damping={0.1} pages={PART}>
                 <Display position={position} rotation={rotation} w={w} h={h} />
             </ScrollControls>
         </group>

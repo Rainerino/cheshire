@@ -5,9 +5,9 @@ import { Route, Router } from "wouter"
 
 import { Room2 } from '../components/models/Room2'
 import Curtain from '../components/models/Curtain'
-import HomeNavPage from './HomeNav'
+import HomeNavPage from '../components/modules/HomePaper'
 import ProjectScreen from '../components/modules/ProjectScreen'
-import ProjectNavPage from './ProjectNav'
+import ProjectNavPage from './NavigateProjects'
 
 import "./Landing.css"
 import CovariantPage from './Covariant'

@@ -68,17 +68,17 @@ function ProjectNavPage() {
                 <planeGeometry args={[20, 100]} />
                 <meshPhongMaterial color="#202020" />
             </mesh>
-            {/* <EffectComposer multisampling={8} autoClear={false}>
+            <EffectComposer multisampling={8} autoClear={false}>
                 <Autofocus
                     mouse
                     smoothTime={0.15}
                     focusRange={0.00025}
-                    bokehScale={8}
+                    bokehScale={5}
                     resolutionScale={0.5}
                     resolutionX={2048}
                     resolutionY={2048}
                 />
-            </EffectComposer> */}
+            </EffectComposer>
             <fog attach="fog" args={['#202020', 5, 20]} />
             <Select enabled={false}>
                 <SpotLight

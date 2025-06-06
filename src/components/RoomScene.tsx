@@ -1,5 +1,5 @@
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import HomeNavPage from "../pages/HomeNav";
+import HomeNavPage from "./modules/HomePaper";
 import * as THREE from 'three'
 import { RedrumDoor } from "./modules/RedrumDoor";
 import { Room2 } from "./models/Room2";

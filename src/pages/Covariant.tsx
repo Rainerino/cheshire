@@ -66,13 +66,7 @@ function CameraRig(controls) {
   useEffect(() => {
     if (!controls.controls.current) return
     controls.controls.current.smoothTime = 0.5
-    // controls.controls.current.enabled = false;
-    controls.controls.current.disconnect();
-    controls.controls.current.minZoom = 0;
-    controls.controls.current.maxZoom = 0;
-    controls.controls.current.minDistance = 0;
-    controls.controls.current.maxDistance = 0;
-    controls.controls.current.dollySpeed = 0;
+
     // controls.controls.current.mouseButtons.wheel = CameraControls.ACTION.NONE
     controls.controls.current.setLookAt(
       CAMERA_POSITION[0][0],
@@ -89,7 +83,8 @@ function CameraRig(controls) {
       console.log('no camera')
       return
     }
-    console.log(scroll.offset)
+    controls.controls.current.disconnect();
+
     if (scroll.visible(0, 1 / PART, 0.01)) {
       // First scene
       controls.controls.current.setLookAt(
