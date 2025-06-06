@@ -26,7 +26,7 @@ export default function RoomScene(props) {
   const handleHomeClick = () => {
     homeClickedRef.current = !homeClickedRef.current;
   };
-  const ref = useRef();
+  const ref = useRef<CameraControls>(null);
   useEffect(() => {
     if (!ref.current) return;
     ref.current.smoothTime = 0.25;
@@ -104,7 +104,7 @@ export default function RoomScene(props) {
         />
         {mycam && <CameraControls ref={ref} camera={mycam} />}
         <ambientLight intensity={0.05} />
-        <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
+        {/* <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} /> */}
         <RedrumDoor />
         <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <Curtain

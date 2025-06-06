@@ -20,6 +20,8 @@ export default function HomeNavPage(props) {
     <group {...props}>
       <CameraControls />
       <mesh
+        // onPointerOver={(e) => setHovered(true)}
+        // onPointerOut={(e) => setHovered(false)}
         receiveShadow>
         <planeGeometry args={[SIZE, SIZE * GOLDEN]} />
         <Decal
