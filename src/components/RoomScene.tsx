@@ -1,4 +1,4 @@
-import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { CameraControls, Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import HomeNavPage from "./modules/HomePaper";
 import * as THREE from 'three'
 import { RedrumDoor } from "./modules/RedrumDoor";
@@ -7,81 +7,114 @@ import { Desktop2 } from "./models/Desktop2";
 import Curtain from "./models/Curtain";
 import Mirror from "./modules/Mirror";
 import { OverheadLamp } from "./modules/OverheadLamp";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import CameraControls from 'camera-controls'
-CameraControls.install({ THREE })
-extend({ CameraControls })
     
 const CAMERA_POSITION = [1.8, 1.9, 0]
-const CAMERA_LOOK_AT = [0, 1.1, 1]
+const CAMERA_LOOK_AT = [0, 1.1, 0]
 
+const PAGE_ANGLE = Math.PI / 6.5;
+const LOOKAT_EPS = 0.00001;
+const HOME_POSITION = [0.077, 1.2, 0.218]
+const HOME_LOOK_AT = [0.077 - LOOKAT_EPS * Math.cos(PAGE_ANGLE), 0, 0.218 + LOOKAT_EPS * Math.sin(PAGE_ANGLE)]
 
 export default function RoomScene(props) {
   // Upon enter, fix the camera
-  const camera = useThree((state) => state.camera)
-  const gl = useThree((state) => state.gl)
-  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-  const tgt_look = new THREE.Vector3(0, 1.1, 0)
-  const tgt_pos = new THREE.Vector3(1.8, 1.9, 0);
-  const cur_pos = new THREE.Vector3();
+  const homeClickedRef = useRef(true);
+  const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
 
+  const handleHomeClick = () => {
+    homeClickedRef.current = !homeClickedRef.current;
+  };
+  const ref = useRef();
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.smoothTime = 0.25;
+    // ref.current.camera.lookAt(new THREE.Vector3(HOME_LOOK_AT[0], HOME_LOOK_AT[1], HOME_LOOK_AT[2]));
+
+  }, [ref]);
   useFrame((state, delta) => {
-    // camera.position.set(...CAMERA_POSITION)
-    // camera.lookAt(...CAMERA_LOOK_AT)
-    controls.smoothTime = 0.25;
-    controls.dollyTo(1.9, false);
-    controls.draggingSmoothTime = 0.2;
-    controls.azimuthRotateSpeed = 0.3;
-    controls.polarRotateSpeed = 0.3;
-    // controls.dollyToCursor = false;
-    controls.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-    controls.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
-    controls.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
-    controls.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
-    controls.enabled = true;
+    if (!ref.current) return;
 
-    // // If position and look at are not in CAMERA_POSITION and CAMERA_LOOK_AT, and zoom = 1, smoothly animate to them
+    // console.log(ref.current.camera.position)
 
-    // // Animate position
-    controls.setTarget(
-      tgt_look.x,
-      tgt_look.y,
-      tgt_look.z,
-      false);
-    controls.update(delta);
+    if (homeClickedRef.current) {
+      // ref.current.enabled = false;
+      ref.current.disconnect();
+      ref.current.setLookAt(
+        HOME_POSITION[0],
+        HOME_POSITION[1],
+        HOME_POSITION[2],
+        HOME_LOOK_AT[0],
+        HOME_LOOK_AT[1],
+        HOME_LOOK_AT[2],
+        true
+      )
+    } else {
+      ref.current.connect(state.gl.domElement);
+      ref.current.smoothTime = 1.0;
+      ref.current.azimuthRotateSpeed = 3;
+      ref.current.polarRotateSpeed = 1;
+      ref.current.boundaryFriction = 1
+      // ref.current.dollyToCursor = false;
+      ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
+      ref.current.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
+      ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
+      ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
+      ref.current.maxZoom = 1.2;
+      // ref.current.minZoom = 0.3;
+      ref.current.dollySpeed = 0.5;
+      ref.current.minDistance = 1;
+      ref.current.maxDistance = 2.5;
+      ref.current.infinityDolly = false;
+
+      ref.current.setLookAt(
+        CAMERA_POSITION[0],
+        CAMERA_POSITION[1],
+        CAMERA_POSITION[2],
+        CAMERA_LOOK_AT[0],
+        CAMERA_LOOK_AT[1],
+        CAMERA_LOOK_AT[2],
+        true
+      )
+    }
+
   })
     return (
-        <group {...props}>
-        <HomeNavPage 
-          position={[0.1, 0.87, 0.5]} 
-          rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 5]} 
-          scale={[1, 1, 1]} 
+      <group {...props}>
+        <HomeNavPage
+          position={[0.11, 0.87, 0.2]}
+          rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 6.5]}
+          scale={[1, 1, 1]}
+          onClick={(e) => handleHomeClick()}
         />
-        <Environment 
+        <Environment
           files="/textures/satara_night_no_lamps_1k.hdr"
           background
           backgroundBlurriness={0.1}
-          backgroundIntensity={0.5} 
+          backgroundIntensity={0.5}
         />
         {/* <Environment preset='night' /> */}
         <PerspectiveCamera
+          ref={setMycam}
           makeDefault
-          position={new THREE.Vector3().fromArray(CAMERA_POSITION)}
+          position={new THREE.Vector3().fromArray(HOME_POSITION)}
+          // lookAt={new THREE.Vector3().fromArray(HOME_LOOK_AT)}
           fov={25}
         />
+        {mycam && <CameraControls ref={ref} camera={mycam} />}
         <ambientLight intensity={0.05} />
         <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
         <RedrumDoor />
         <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
         <Curtain
           position={new THREE.Vector3(-2.45, 1.7, -0.6)}
-          rotation={new THREE.Euler(0, -Math.PI / 2, 0)} 
+          rotation={new THREE.Euler(0, -Math.PI / 2, 0)}
         />
         {/* Curtain and Mirror are conflicted somehow */}
         <Mirror
-            position={[1, 1, 1.3]}
-            rotation={[0, Math.PI / 17 + Math.PI, 0]}
+          position={[1, 1, 1.3]}
+          rotation={[0, Math.PI / 17 + Math.PI, 0]}
         />
         <fog attach="fog" args={['#202020', 5, 20]} />
         <pointLight
@@ -94,10 +127,10 @@ export default function RoomScene(props) {
           // shadow-camera-far={100}
           // shadow-camera-near={0.1}
           position={[-2.25, 1, -2.245]}
-          intensity={0.8}>     
-       {/* <orthographicCamera attach='shadow-camera'>
-          <Helper type={THREE.CameraHelper} />
-        </orthographicCamera> */}
+          intensity={0.8}>
+          {/* <orthographicCamera attach='shadow-camera'>
+        <Helper type={THREE.CameraHelper} />
+      </orthographicCamera> */}
         </pointLight>
         <pointLight
           color={'#f7e7ba'}
@@ -108,13 +141,13 @@ export default function RoomScene(props) {
           // shadow-camera-far={100}
           // shadow-camera-near={0.1}
           position={[0.775, 1.1, -2.245]}
-          intensity={2}>         
-        {/* <orthographicCamera attach='shadow-camera'>
-          <Helper type={THREE.CameraHelper} />
-        </orthographicCamera> */}
+          intensity={2}>
+          {/* <orthographicCamera attach='shadow-camera'>
+        <Helper type={THREE.CameraHelper} />
+      </orthographicCamera> */}
         </pointLight>
         <OverheadLamp position={[0, 2.5, 0]} />
-        
-    </group>
+
+      </group>
     )
 }

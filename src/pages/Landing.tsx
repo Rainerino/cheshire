@@ -12,7 +12,6 @@ import ProjectNavPage from './NavigateProjects'
 import "./Landing.css"
 import CovariantPage from './Covariant'
 import MotionMetricsPage from './MotionMetrics'
-import DuoYiPage from './DuoYi'
 import NextPage from './Next'
 import { Desktop2 } from '../components/models/Desktop2'
 import Mirror from '../components/modules/Mirror'
