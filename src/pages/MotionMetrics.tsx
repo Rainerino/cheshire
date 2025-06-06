@@ -1,35 +1,41 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Grid, OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { CameraControls, Environment, Grid, OrbitControls, PerspectiveCamera, Scroll, ScrollControls, useScroll } from '@react-three/drei';
 import { CAT6080 } from '../components/models/CAT_6080';
-import CameraControls from 'camera-controls'
-import * as THREE from 'three'
-CameraControls.install({ THREE })
-extend({ CameraControls })
 
-export default function MotionMetricsPage(props) {
- const camera = useThree((state) => state.camera)
-  const gl = useThree((state) => state.gl)
-  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-
+export default function MotionMetricsPage({ ...props }) {
+  // const cam_ref = useRef()
+  const data = useScroll()
+  const ref = useRef()
+  const cameraControlRef = useRef<CameraControls | null>(null);
     useFrame((state, delta) => {
-    controls.enabled = true;
-      controls.update(delta);
+      // cameraControlRef.current.enabled = false;
+      console.log(data?.offset)
+      // controls.update(delta);
+      // controls.mouseButtons.wheel = CameraControls.ACTION.NONE
+      // // controls.rotate(45 * THREE.MathUtils.DEG2RAD, 0, true)
+      // // console.log(controls.camera.position)
+      // cameraControlRef.connect(gl.domElement)
+      // cameraControlRef.current.disconnect()
     });
     return (
-        <group {...props}>
-            {/* <OrbitControls />
-            <PerspectiveCamera makeDefault /> */}
-            <Environment 
+      <group {...props}>
+        {/* <PerspectiveCamera makeDefault /> */}
+        {/* <CameraControls ref={cameraControlRef}></CameraControls> */}
+        <ScrollControls pages={3} damping={0.1}>
+          <CAT6080 ref={ref} />
+        </ScrollControls>
+
+
+        <Environment
             files="/textures/minedump_flats_1k.hdr"
             background
             backgroundBlurriness={0.1}
-            backgroundIntensity={0.5} 
-            />
-            <CAT6080 />
-            <Grid infiniteGrid/>
-                {/* Add 3D objects here if needed */}
-        </group>
+          backgroundIntensity={0.5}
+        />
+
+        <Grid infiniteGrid />
+      </group>
     )
 } 
 

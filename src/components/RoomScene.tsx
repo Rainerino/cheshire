@@ -14,7 +14,6 @@ CameraControls.install({ THREE })
 extend({ CameraControls })
     
 const CAMERA_POSITION = [1.8, 1.9, 0]
-
 const CAMERA_LOOK_AT = [0, 1.1, 1]
 
 
@@ -41,7 +40,7 @@ export default function RoomScene(props) {
     controls.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
     controls.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
     controls.enabled = true;
-    
+
     // // If position and look at are not in CAMERA_POSITION and CAMERA_LOOK_AT, and zoom = 1, smoothly animate to them
 
     // // Animate position

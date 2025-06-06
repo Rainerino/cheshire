@@ -21,7 +21,7 @@ function Root() {
   const router = useRouter()
   return (
     <React.StrictMode>
-      <Redirect to="/projects/next" />
+      <Redirect to="/projects/covariant" />
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows gl={{ antialias: true, autoClear: true }} >
           <Suspense fallback={null}>
@@ -48,7 +48,6 @@ function Root() {
         >
           {params ? `Home ${router.base} ${location}` : `Back ${router.base} ${location}`}
         </a>
-        {/* <Overlay ref={overlay} caption={caption} scroll={scroll} /> */}
       </div>
     </React.StrictMode>
   )

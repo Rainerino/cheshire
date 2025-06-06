@@ -5,6 +5,7 @@ import {
     useScroll,
     ScrollControls,
     Text,
+  CameraControls,
     OrbitControls,
     Html, Scroll
 } from '@react-three/drei'
@@ -18,10 +19,6 @@ import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 import "./Covariant.css"
 
-
-import CameraControls from 'camera-controls'
-CameraControls.install({ THREE })
-extend({ CameraControls })
 
 const CAMERA_POSITION = [
   [-0.3, 4.33, 1.76],
@@ -62,69 +59,22 @@ const STATION_ROTATION = new THREE.Euler(0, -Math.PI, 0)
 const TOTE_OFFSET = new THREE.Vector3(0.556, 0.867, 0.725).add(STATION_OFFSET)
 const PART = 5;
 
-function HudText() {
-  const camera = useThree((state) => state.camera)
-  const gl = useThree((state) => state.gl)
-  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-  const mesh_ref = useRef()
-  const scroll = useScroll()
-    const timeDivRef = React.useRef<HTMLDivElement>(null);
+function CameraRig(controls) {
 
-    useEffect(() => {
-        controls.camera.add(mesh_ref.current)
-    }, [controls.camera])
-
-  useFrame(() => {
-      const text = `${new Date().toLocaleTimeString()} ${scroll.offset}`
-      if (timeDivRef.current) {
-          timeDivRef.current.textContent = text;
-      }
-  })
-  return (
-          <mesh ref={mesh_ref}  position={[0, 0, -3]}>
-              {/*<boxGeometry args={[0.1, 0.1, 0.05]} />*/}
-              <planeGeometry args={[0.1, 0.1]}></planeGeometry>
-               <meshStandardMaterial color="orange" />
-              <Html
-                  position={[0, 0, -10]}
-                  // transform
-                  // prepend
-                  // fullscreen
-              >
-                  <div
-                      ref={timeDivRef}
-                        style={{
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                      background: 'rgba(255,255,255,0.5)',
-                      position: 'fixed',
-                      padding: '8px 16px',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      color: '#222',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-                      }}
-                  >
-                      {/* Initial text, will be updated */}
-                      {new Date().toLocaleTimeString()}
-                  </div>
-              </Html>
-          </mesh>
-  )
-}
-function CameraRig() {
-  const camera = useThree((state) => state.camera)
-  const gl = useThree((state) => state.gl)
-  const controls = useMemo(() => new CameraControls(camera, gl.domElement), [camera, gl.domElement]);
-  
   const scroll = useScroll()
 
   useEffect(() => {
-    controls.smoothTime = 0.5
-    controls.enabled = true;
-    controls.mouseButtons.wheel = CameraControls.ACTION.NONE
-
-    controls.setLookAt(
+    if (!controls.controls.current) return
+    controls.controls.current.smoothTime = 0.5
+    // controls.controls.current.enabled = false;
+    controls.controls.current.disconnect();
+    controls.controls.current.minZoom = 0;
+    controls.controls.current.maxZoom = 0;
+    controls.controls.current.minDistance = 0;
+    controls.controls.current.maxDistance = 0;
+    controls.controls.current.dollySpeed = 0;
+    // controls.controls.current.mouseButtons.wheel = CameraControls.ACTION.NONE
+    controls.controls.current.setLookAt(
       CAMERA_POSITION[0][0],
       CAMERA_POSITION[0][1],
       CAMERA_POSITION[0][2],
@@ -135,11 +85,14 @@ function CameraRig() {
     )
   }, [controls])
   useFrame((state, delta) => {
-  
-
+    if (!controls.controls.current) {
+      console.log('no camera')
+      return
+    }
+    console.log(scroll.offset)
     if (scroll.visible(0, 1 / PART, 0.01)) {
       // First scene
-      controls.setLookAt(
+      controls.controls.current.setLookAt(
         CAMERA_POSITION[0][0],
         CAMERA_POSITION[0][1],
         CAMERA_POSITION[0][2],
@@ -152,7 +105,7 @@ function CameraRig() {
 
     if (scroll.visible(1/PART, 1/PART, 0.01)) {
       // First scene
-      controls.setLookAt(
+      controls.controls.current.setLookAt(
         CAMERA_POSITION[1][0],
         CAMERA_POSITION[1][1],
         CAMERA_POSITION[1][2],
@@ -166,7 +119,7 @@ function CameraRig() {
     
     if (scroll.visible(2/PART, 1/PART, 0.01)) {
       // First scene
-      controls.setLookAt(
+      controls.controls.current.setLookAt(
         CAMERA_POSITION[2][0],
         CAMERA_POSITION[2][1],
         CAMERA_POSITION[2][2],
@@ -179,7 +132,7 @@ function CameraRig() {
 
     if (scroll.visible(3/PART, 1/PART, 0.01)) {
       // Go to the next page
-      controls.setLookAt(
+      controls.controls.current.setLookAt(
         CAMERA_POSITION[3][0],
         CAMERA_POSITION[3][1],
         CAMERA_POSITION[3][2],
@@ -192,7 +145,7 @@ function CameraRig() {
 
     if (scroll.visible(4/PART, 1/PART, 0.01)) {
       // Go to the next page
-      controls.setLookAt(
+      controls.controls.current.setLookAt(
         CAMERA_POSITION[0][0],
         CAMERA_POSITION[0][1],
         CAMERA_POSITION[0][2],
@@ -202,20 +155,19 @@ function CameraRig() {
         true
       )
     }
-
-  
-    controls.update(delta)
   })
     return null
 }
 
 function CovariantPage() {
+  const controls = useRef();
   return (
     <group>
       <PerspectiveCamera
         makeDefault
         fov={30}
       />
+      <CameraControls ref={controls} />
       {/* <OrbitControls /> */}
       <ScrollControls pages={PART}>
           <Scroll html>
@@ -226,7 +178,7 @@ function CovariantPage() {
               <h1 style={{ position: 'absolute', top: '300vh', left: '0.5vw', fontSize: '40vw' }}>Again</h1>
               <h1 style={{ position: 'absolute', top: '400vh', left: '0.5vw', fontSize: '40vw' }}>Mext</h1>
           </Scroll>
-          <CameraRig />
+        <CameraRig controls={controls} mouseButtons={{ wheel: 0 }} />
             {/*<HudText />*/}
         
         {/* <Text position={[0, -4, 0]} color="red" anchorX="center" anchorY="middle" fontSize={1}>
