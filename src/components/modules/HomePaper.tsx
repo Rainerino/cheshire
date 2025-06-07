@@ -27,6 +27,7 @@ export default function HomeNavPage(props) {
           roughness={1}
           map={texture} />
         <Decal
+          receiveShadow
           // debug
           position={[0, 0, 0]}
           rotation={[0, 0, 0]}
@@ -47,8 +48,7 @@ export default function HomeNavPage(props) {
                 fontSize={LIST_FONT_SIZE}
                 color="black"
                 onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("/about")}>
+                onPointerOut={() => setHovered(false)}>
                 Welcome to my page
               </Text>
               <Text
@@ -115,7 +115,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and no play made Jack a dull boy
               </Text>
 
@@ -126,7 +126,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and no play makes All a dull boy
               </Text>
 
@@ -137,7 +137,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 AI
               </Text>
               <Text
@@ -147,7 +147,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 dl boy
               </Text>
               <Text
@@ -157,7 +157,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 boy
               </Text>
               <Text
@@ -167,7 +167,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 dull boy
               </Text>
               <Text
@@ -177,7 +177,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 ull boj
               </Text>
               <Text
@@ -187,7 +187,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 l boy
               </Text>
               <Text
@@ -197,7 +197,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 oy
               </Text>
               <Text
@@ -207,7 +207,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and not
               </Text>
               <Text
@@ -217,7 +217,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work not play
               </Text>
               <Text
@@ -227,7 +227,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and play not makes Jack a dull boy
               </Text>
               <Text
@@ -237,7 +237,7 @@ export default function HomeNavPage(props) {
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All works and no plays make Jack dull boys
               </Text>
               <Text
@@ -247,7 +247,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and no play makes John a dull boy
               </Text>
               <Text
@@ -257,7 +257,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All work and no play makes Jack a doll boy
               </Text>
               <Text
@@ -267,7 +267,7 @@ export default function HomeNavPage(props) {
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+              >
                 All play and no work makes Jack a dull boy
               </Text>
             </RenderTexture>

@@ -19,7 +19,7 @@ export default function AboutPage(controls, props) {
         //     camera.updateProjectionMatrix();
         // }
         controls.controls.current.disconnect();
-        controls.controls.current.smoothTime = 0.25;
+        controls.controls.current.smoothTime = 1;
         // async function complexTransition() {
         // await controls.setPosition(1.8, 1.9, 0, true);
         // controls.controls.current.setPosition(
@@ -57,8 +57,9 @@ export default function AboutPage(controls, props) {
 
         const arrived = state.camera.position.distanceTo(tgt_pos) < eps;
         if (arrived) {
+            controls.controls.current.maxZoom = 4.5;
             controls.controls.current.smoothTime = 0.01;
-            // controls.controls.current.zoomTo(4.5, true)
+            controls.controls.current.zoomTo(4.5, true)
             controls.controls.current.smoothTime = 0.25;
             // Arrived at target position
             // You can trigger any logic here if needed

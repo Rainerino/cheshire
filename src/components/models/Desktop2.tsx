@@ -29,10 +29,6 @@ type GLTFResult = GLTF & {
     obj003_16: THREE.Mesh
     obj003_17: THREE.Mesh
     obj003_18: THREE.Mesh
-    Node1: THREE.Mesh
-    Node4: THREE.Mesh
-    Node5: THREE.Mesh
-    Node9: THREE.Mesh
     Node1001: THREE.Mesh
     Node2001: THREE.Mesh
     Node3001: THREE.Mesh
@@ -44,6 +40,12 @@ type GLTFResult = GLTF & {
     Node1002: THREE.Mesh
     Node2002: THREE.Mesh
     Node3002: THREE.Mesh
+    Node1003: THREE.Mesh
+    Node4002: THREE.Mesh
+    Node5002: THREE.Mesh
+    Node6: THREE.Mesh
+    Node7: THREE.Mesh
+    Node9001: THREE.Mesh
   }
   materials: {
     ['Mat.003']: THREE.MeshPhysicalMaterial
@@ -65,10 +67,6 @@ type GLTFResult = GLTF & {
     ['Mat_16.003']: THREE.MeshPhysicalMaterial
     ['Mat_17.003']: THREE.MeshPhysicalMaterial
     ['Mat_18.003']: THREE.MeshPhysicalMaterial
-    ['#D3D6D3FF']: THREE.MeshStandardMaterial
-    ['#0A7DB5FF']: THREE.MeshStandardMaterial
-    ['#4C4C4CFF']: THREE.MeshStandardMaterial
-    ['#FFFFFFFF']: THREE.MeshStandardMaterial
     ['Loader.001']: THREE.MeshStandardMaterial
     Loader: THREE.MeshStandardMaterial
     Key: THREE.MeshStandardMaterial
@@ -79,6 +77,12 @@ type GLTFResult = GLTF & {
     ['#292929FF']: THREE.MeshStandardMaterial
     ['#0EAA49FF']: THREE.MeshPhysicalMaterial
     ['#C6901CFF']: THREE.MeshStandardMaterial
+    ['#D3D6D3FF.001']: THREE.MeshStandardMaterial
+    ['#0A7DB5FF.001']: THREE.MeshStandardMaterial
+    ['#4C4C4CFF.001']: THREE.MeshStandardMaterial
+    ['#895956FF']: THREE.MeshStandardMaterial
+    ['#CAD1EEFF']: THREE.MeshStandardMaterial
+    ['#FFFFFFFF.001']: THREE.MeshStandardMaterial
   }
 }
 
@@ -205,36 +209,9 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.Node1.geometry}
-        material={materials['#D3D6D3FF']}
-        position={[-0.425, 0.882, 0.16]}
-        rotation={[-2.23, -0.872, 0.779]}
-        scale={0.001}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node4.geometry}
-          material={materials['#0A7DB5FF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node5.geometry}
-          material={materials['#4C4C4CFF']}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Node9.geometry}
-          material={materials['#FFFFFFFF']}
-        />
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Node1001.geometry}
         material={materials['Loader.001']}
-        position={[0, 0.871, -0.157]}
+        position={[0, 0.868, -0.157]}
         rotation={[1.569, 0, 3.14]}
         scale={0.03}>
         <mesh
@@ -285,7 +262,7 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.Node1002.geometry}
         material={materials['#292929FF']}
-        position={[-0.386, 0.868, -0.158]}
+        position={[-0.378, 0.868, -0.137]}
         rotation={[-Math.PI, 0.715, -Math.PI]}
         scale={0.001}>
         <mesh
@@ -299,6 +276,46 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
           receiveShadow
           geometry={nodes.Node3002.geometry}
           material={materials['#C6901CFF']}
+          position={[0, 0.966, 0]}
+        />
+      </mesh>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Node1003.geometry}
+        material={materials['#D3D6D3FF.001']}
+        position={[-0.419, 0.88, 0.163]}
+        rotation={[-3.093, -0.89, 0.015]}
+        scale={0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node4002.geometry}
+          material={materials['#0A7DB5FF.001']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node5002.geometry}
+          material={materials['#4C4C4CFF.001']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node6.geometry}
+          material={materials['#895956FF']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node7.geometry}
+          material={materials['#CAD1EEFF']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Node9001.geometry}
+          material={materials['#FFFFFFFF.001']}
         />
       </mesh>
     </group>

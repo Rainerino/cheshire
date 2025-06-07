@@ -25,15 +25,17 @@ function CameraRig() {
     const cam_ref = useRef<CameraControls>(null);
     const { controls, camera } = useThree()
     useEffect(() => {
-        camera.lookAt([CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]]);
+        if (!cam_ref.current) return;
         cam_ref.current.zoomTo(1)
-        cam_ref.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
-        cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
+        cam_ref.current.setLookAt(
+            CAMERA_START_POSITION[0],
+            CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
         cam_ref.current.smoothTime = 0.25;
         cam_ref.current.disconnect();
-    }, [cam_ref, controls])
+    }, [cam_ref])
 
     useFrame((state, delta) => {
+        if (!cam_ref.current) return;
         if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
             if (!Enough) {
                 cam_ref.current.smoothTime = 2;

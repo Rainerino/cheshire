@@ -19,7 +19,7 @@ export function OverheadLamp(props) {
           angle={0.35}
           distance={0}
           shadow-bias={-0.0001}
-          shadow-mapSize={[1024, 1024]}
+          shadow-mapSize={[2048, 2048]}
         />
         {/* <primitive object={target} /> */}
       </mesh>

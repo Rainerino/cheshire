@@ -9,7 +9,7 @@ import Mirror from "./modules/Mirror";
 import { OverheadLamp } from "./modules/OverheadLamp";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import { Route } from "wouter";
+import { Route, useLocation } from "wouter";
 import AboutScene from "./AboutScene";
     
 const CAMERA_POSITION = [1.8, 1.9, 0]
@@ -23,6 +23,7 @@ const HOME_LOOK_AT = [0.077 - LOOKAT_EPS * Math.cos(PAGE_ANGLE), 0, 0.218 + LOOK
 export default function RoomScene(props) {
   // Upon enter, fix the camera
   const [shift, setShift] = useState(true);
+  const [location, setLocation] = useLocation();
   const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
   const [hovered, setHovered] = useState(false)
   useCursor(hovered)
@@ -32,16 +33,29 @@ export default function RoomScene(props) {
     if (!ref.current) return;
     ref.current.smoothTime = 0.25;
     setShift(true)
-    // ref.current.camera.lookAt(new THREE.Vector3(HOME_LOOK_AT[0], HOME_LOOK_AT[1], HOME_LOOK_AT[2]));
+    ref.current.setLookAt(
+      HOME_POSITION[0],
+      HOME_POSITION[1],
+      HOME_POSITION[2],
+      HOME_LOOK_AT[0],
+      HOME_LOOK_AT[1],
+      HOME_LOOK_AT[2],
+      false
+    )
 
   }, [ref]);
   useFrame((state, delta) => {
     if (!ref.current) return;
 
     // console.log(ref.current.camera.position)
-    ref.current.zoomTo(1, false);
+
     // console.log(homeClickedRef.current)
     if (shift) {
+      if (location === "/home") {
+        ref.current.zoomTo(1, false);
+      }
+
+      ref.current.smoothTime = 0.25;
       // ref.current.enabled = false;
       ref.current.disconnect();
       ref.current.setLookAt(
@@ -54,23 +68,26 @@ export default function RoomScene(props) {
         true
       )
     } else {
+      if (location === "/home") {
+        ref.current.zoomTo(1, false);
+      }
       ref.current.connect(state.gl.domElement);
       // ref.current.disconnect();
-      // ref.current.smoothTime = 1.0;
-      // ref.current.azimuthRotateSpeed = 3;
-      // ref.current.polarRotateSpeed = 1;
-      // ref.current.boundaryFriction = 1
-      // // ref.current.dollyToCursor = false;
-      // ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-      // ref.current.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
-      // ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
-      // ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
-      // ref.current.maxZoom = 1.2;
-      // // ref.current.minZoom = 0.3;
-      // ref.current.dollySpeed = 0.5;
-      // ref.current.minDistance = 1;
-      // ref.current.maxDistance = 2.5;
-      // ref.current.infinityDolly = false;
+      ref.current.smoothTime = 1.0;
+      ref.current.azimuthRotateSpeed = 3;
+      ref.current.polarRotateSpeed = 1;
+      ref.current.boundaryFriction = 1
+
+      ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
+      ref.current.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
+      ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
+      ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
+      ref.current.maxZoom = 1.2;
+      // ref.current.minZoom = 0.3;
+      ref.current.dollySpeed = 0.5;
+      ref.current.minDistance = 1;
+      ref.current.maxDistance = 2.5;
+      ref.current.infinityDolly = false;
 
       ref.current.setLookAt(
         CAMERA_POSITION[0],
@@ -117,7 +134,7 @@ export default function RoomScene(props) {
           <Desktop2
             // onPointerOver={() => setHovered(true)}
             // onPointerOut={() => setHovered(false)}
-            onClick={(e) => setShift(!shift)}
+            onDoubleClick={(e) => setShift(!shift)}
             position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           <Curtain
             position={new THREE.Vector3(-2.45, 1.7, -0.6)}
@@ -158,7 +175,7 @@ export default function RoomScene(props) {
         <Helper type={THREE.CameraHelper} />
       </orthographicCamera> */}
           </pointLight>
-          <OverheadLamp position={[0, 2.5, 0]} />
+          <OverheadLamp position={[-1, 2.5, -0.4]} />
 
         </Route>
 
