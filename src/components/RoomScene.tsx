@@ -117,7 +117,7 @@ export default function RoomScene(props) {
           <Desktop2
             // onPointerOver={() => setHovered(true)}
             // onPointerOut={() => setHovered(false)}
-            // onClick={(e) => setShift(!shift)}
+            onClick={(e) => setShift(!shift)}
             position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           <Curtain
             position={new THREE.Vector3(-2.45, 1.7, -0.6)}

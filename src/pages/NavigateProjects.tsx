@@ -21,42 +21,43 @@ const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.y - target[1]) < EPS &&
     Math.abs(pos.z - target[2]) < EPS
 
-function CameraRig(controls) {
+function CameraRig() {
+    const cam_ref = useRef<CameraControls>(null);
+    const { controls, camera } = useThree()
     useEffect(() => {
-        controls.controls.current.zoomTo(1)
-        controls.controls.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
-        controls.controls.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
-        controls.controls.current.smoothTime = 0.25;
-        controls.controls.current.disconnect();
-    }, [controls])
+        camera.lookAt([CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]]);
+        cam_ref.current.zoomTo(1)
+        cam_ref.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
+        cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2])
+        cam_ref.current.smoothTime = 0.25;
+        cam_ref.current.disconnect();
+    }, [cam_ref, controls])
 
     useFrame((state, delta) => {
-        if (isCameraAtPosition(controls.controls.current.camera.position, CAMERA_START_POSITION)) {
+        if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
             if (!Enough) {
-                controls.controls.current.smoothTime = 2;
-                controls.controls.current.zoomTo(1 / 2.5, true)
-                controls.controls.current.dollyInFixed(5, true)
+                cam_ref.current.smoothTime = 2;
+                cam_ref.current.zoomTo(1 / 2.5, true)
+                cam_ref.current.dollyInFixed(5, true)
                 Enough = true;
             } else {
-                controls.controls.current.smoothTime = 0.25;
-                // controls.controls.current.zoomTo(1/2.5)
-                // controls.controls.current.zoomTo(1/3, false)
-                // controls.controls.current.dollyInFixed(3, false)
+                cam_ref.current.smoothTime = 0.25;
+                // cam_ref.current.zoomTo(1/2.5)
+                // cam_ref.current.zoomTo(1/3, false)
+                // cam_ref.current.dollyInFixed(3, false)
             }
 
         } else {
-            controls.controls.current.zoomTo(1)
-            controls.controls.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
-            controls.controls.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
-            controls.controls.current.smoothTime = 0.25;
-            controls.controls.current.disconnect();
+            cam_ref.current.zoomTo(1)
+            cam_ref.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
+            cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
+            cam_ref.current.smoothTime = 0.25;
+            cam_ref.current.disconnect();
         }
     })
-    return null
+    return <CameraControls ref={cam_ref} />
 }
 export default function ProjectNavPage(props) {
-    const controls = useRef();
-
     return (
         <group {...props}>
             <PerspectiveCamera
@@ -64,8 +65,7 @@ export default function ProjectNavPage(props) {
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
                 fov={15}
             />
-            <CameraControls ref={controls} />
-            <CameraRig controls={controls} />
+            <CameraRig />
             <ambientLight intensity={0.1} />
             <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
                 <planeGeometry args={[20, 100]} />

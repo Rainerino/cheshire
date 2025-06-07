@@ -39,10 +39,10 @@ export default  function ToteScene(props) {
         /> */}
         {/* <CameraControl /> */}
         <RedcareTote />
-        <CapBottle
+        {/* <CapBottle
             position={randomPosition()}
             rotation={randomRotation()}
-        />
+        /> */}
         {/* <BaseSKU
             position={randomPosition()}
             rotation={randomRotation()}

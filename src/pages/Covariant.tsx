@@ -163,22 +163,16 @@ function CovariantPage() {
         fov={30}
       />
       <CameraControls ref={controls} />
-      {/* <OrbitControls /> */}
       <ScrollControls pages={PART}>
-          <Scroll html>
-              {/* This needs to be scaled with the screen size...*/}
+        {/* <Scroll html>
               <h1 style={{ position: 'absolute', top: '60vh', left: '0.5em', fontSize: '40vw' }}>to</h1>
               <h1 style={{ position: 'absolute', top: '120vh', left: '60vw', fontSize: '40vw'}}>be</h1>
               <h1 style={{ position: 'absolute', top: '200vh', left: '0.5vw', fontSize: '40vw' }}>home</h1>
               <h1 style={{ position: 'absolute', top: '300vh', left: '0.5vw', fontSize: '40vw' }}>Again</h1>
               <h1 style={{ position: 'absolute', top: '400vh', left: '0.5vw', fontSize: '40vw' }}>Mext</h1>
-          </Scroll>
+          </Scroll> */}
         <CameraRig controls={controls} mouseButtons={{ wheel: 0 }} />
-            {/*<HudText />*/}
-        
-        {/* <Text position={[0, -4, 0]} color="red" anchorX="center" anchorY="middle" fontSize={1}>
-          hello world!
-        </Text> */}
+
           <PointLightWShadow
             position={new THREE.Vector3(-0.35, 2.4, 2.5)}
             rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}

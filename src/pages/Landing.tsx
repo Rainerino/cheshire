@@ -71,9 +71,6 @@ function LandingPage() {
           <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
           <Route path="/next" component={() => <NextPage />} />
         </Router>
-        {/* <Route path="/duoyi" component={DuoyiPage} />
-    <Route path="/motion_metrics" component={MotionMetricsPage} />
-    <Route path="/next" component={NextPage} /> */}
         <Route path="/credit" >
           <PerspectiveCamera makeDefault fov={75} />
           <ambientLight intensity={1} />
@@ -116,10 +113,8 @@ function LandingPage() {
 
 function preloadGLTFFiles() {
   [
-    // '/models/room/DeskLamp.glb?url',
-    // '/models/room/LamyPen.glb?url',
     '/models/es/CAT_6080_S.glb?url',
-    '/models/room/Desktop.glb?url',
+    '/models/room/Desktop2.glb?url',
     '/models/room/Room2.glb?url',
     '/models/stations/pick_tote.glb?url',
     '/models/stations/redcare_one_piece.glb?url',
