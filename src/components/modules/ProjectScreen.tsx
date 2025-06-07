@@ -1,13 +1,12 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from "wouter";
-import { Text, useCursor, Decal, useScroll, Scroll, useTexture, ScrollControls, RenderTexture, PerspectiveCamera } from '@react-three/drei'
+import { Text, useCursor, Decal, useScroll, Scroll, useTexture, ScrollControls, RenderTexture, PerspectiveCamera, useVideoTexture } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { proxy, useSnapshot } from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
 import gsap from 'gsap'
 import { Router, Route, Link } from "wouter";
-
 
 const screen_state = proxy({ key: "" })
 
@@ -24,22 +23,23 @@ const project_infos = new Map([
     ["covariant",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Covariant',
-            "/images/Covariant.jpg",
+            "/images/covariant.mp4",
             '/covariant')],
     ["motion_metrics",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Motion Metrics',
-            "/images/MotionMetrics.jpg",
+            "/images/mm.mp4",
             '/motion_metrics')],
     ["next",
         new ProjectInfo(new THREE.Color(0x2185d0),
             'Next',
-            "/images/Next.jpg",
+            "/images/covariant2.mp4",
             '/next')],
 ])
 
 const RADIUS = 1;
 const PART = 3;
+const ASPECT_RATIO = 4 / 3;
 function Display({ position, rotation, w, h, ...props }) {
     const ref = useRef()
     const scroll = useScroll()
@@ -49,7 +49,12 @@ function Display({ position, rotation, w, h, ...props }) {
     }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
-    const texture = useTexture(project_infos.get(snap.key).path)
+    const texture = useVideoTexture(
+        project_infos.get(snap.key).path,
+        {
+            loop: true,
+            muted: true,
+        })
     useCursor(hovered)
 
     const handleClick = () => {
@@ -100,9 +105,9 @@ function Display({ position, rotation, w, h, ...props }) {
             <Decal
                 // debug
                 ref={ref}
-                position={[0, 0, RADIUS]}
-                rotation={[0, Math.PI, 0]}
-                scale={[w, h, 1]}
+                    position={[0, 0, RADIUS]}
+                    rotation={[0, 0.0001, 0]}
+                    scale={[w, h / ASPECT_RATIO, 1]}
                 map={texture}
             />
                 
@@ -140,6 +145,6 @@ export default function ProjectScreen({ position, rotation, w = 1, h = 1, ...pro
 }
 
 // Preload all project images
-project_infos.forEach((value) => {
-    useTexture.preload(value.path)
-})
+// project_infos.forEach((value) => {
+//     useVideoTexture.preload(value.path)
+// })

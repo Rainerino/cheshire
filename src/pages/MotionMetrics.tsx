@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
-import { CameraControls, Environment, Grid, OrbitControls, PerspectiveCamera, Scroll, ScrollControls, useScroll } from '@react-three/drei';
+import {
+  CameraControls, Environment,
+  Grid, OrbitControls, PerspectiveCamera, Scroll, ScrollControls, useScroll
+} from '@react-three/drei';
 import { CAT6080 } from '../components/models/CAT_6080';
 
 const CAMERA_POSITION = [

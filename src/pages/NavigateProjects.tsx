@@ -8,10 +8,10 @@ import { DoubleCouch } from '../components/models/DoubleCouch'
 import { SingleCouch } from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
 import { useEffect, useRef } from 'react'
+import { useLocation } from 'wouter'
 
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
-const CAMERA_FINISH_POSITION = [0, 1.7, 6]
 const CAMERA_LOOK_AT = [0.1, -0.2, -6]
 const EPS = 0.01
 let Enough = false;
@@ -29,10 +29,14 @@ function CameraRig() {
         cam_ref.current.zoomTo(1)
         cam_ref.current.setLookAt(
             CAMERA_START_POSITION[0],
-            CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2]);
+            CAMERA_START_POSITION[1],
+            CAMERA_START_POSITION[2],
+            CAMERA_LOOK_AT[0],
+            CAMERA_LOOK_AT[1],
+            CAMERA_LOOK_AT[2]);
         cam_ref.current.smoothTime = 0.25;
         cam_ref.current.disconnect();
-    }, [cam_ref])
+    }, [cam_ref, location])
 
     useFrame((state, delta) => {
         if (!cam_ref.current) return;
@@ -48,10 +52,10 @@ function CameraRig() {
                 // cam_ref.current.zoomTo(1/3, false)
                 // cam_ref.current.dollyInFixed(3, false)
             }
-
         } else {
             cam_ref.current.zoomTo(1)
-            cam_ref.current.setTarget(CAMERA_LOOK_AT[0], CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
+            cam_ref.current.setTarget(CAMERA_LOOK_AT[0],
+                CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
             cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
             cam_ref.current.smoothTime = 0.25;
             cam_ref.current.disconnect();
@@ -85,28 +89,27 @@ export default function ProjectNavPage(props) {
                 />
             </EffectComposer>
             <fog attach="fog" args={['#202020', 5, 20]} />
-            <Select enabled={false}>
-                <SpotLight
-                    castShadow
-                    shadow-bias={-0.0003}
-                    shadow-mapSize={[2048, 2048]}
-                    position={[0, 5, -5]}
-                    distance={70}
-                    penumbra={0.4}
-                    radiusTop={0.4}
-                    radiusBottom={40}
-                    angle={0.45}
-                    attenuation={20}
-                    anglePower={5}
-                    intensity={300}
-                    opacity={0.2}
-                />
-                <OldTV rotation={[0, Math.PI, 0]} position={[0, 0, 0]} />
-                <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]} />
-                <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]} />
-                <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]} />
-                <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
-            </Select>
+            <SpotLight
+                castShadow
+                shadow-bias={-0.0003}
+                shadow-mapSize={[2048, 2048]}
+                position={[0, 5, -5]}
+                distance={70}
+                penumbra={0.4}
+                radiusTop={0.4}
+                radiusBottom={40}
+                angle={0.45}
+                attenuation={20}
+                anglePower={5}
+                intensity={300}
+                opacity={0.2}
+            />
+            <OldTV rotation={[0, Math.PI, 0]} position={[0, 0, 0]} />
+            <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]} />
+            <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]} />
+            <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]} />
+            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
+
             <ProjectScreen
                 position={[-0.07, 0.885, -0.04]}
                 rotation={[0, 0, 0]}

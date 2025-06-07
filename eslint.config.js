@@ -26,3 +26,9 @@ export default tseslint.config(
     },
   },
 )
+/**
+ * Enforce a maximum line length of 80 characters.
+ */
+export const rules = {
+  'max-len': ['warn', { code: 80 }],
+}
