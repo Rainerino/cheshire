@@ -14,7 +14,7 @@ import gsap from 'gsap'
 
 import { RedcareBase } from '../components/models/RedcareBase'
 import { RedcareStation } from '../components/models/RedcareStation'
-import ToteScene from './Tote'
+import ToteScene from '../components/modules/Tote'
 import { ABB1300 } from '../components/models/ABB1300'
 import PointLightWShadow from '../components/common/PointLightWShadow'
 
@@ -164,13 +164,13 @@ function CovariantPage() {
       />
       <CameraControls ref={controls} />
       <ScrollControls pages={PART}>
-        {/* <Scroll html>
+        <Scroll html>
               <h1 style={{ position: 'absolute', top: '60vh', left: '0.5em', fontSize: '40vw' }}>to</h1>
               <h1 style={{ position: 'absolute', top: '120vh', left: '60vw', fontSize: '40vw'}}>be</h1>
               <h1 style={{ position: 'absolute', top: '200vh', left: '0.5vw', fontSize: '40vw' }}>home</h1>
               <h1 style={{ position: 'absolute', top: '300vh', left: '0.5vw', fontSize: '40vw' }}>Again</h1>
               <h1 style={{ position: 'absolute', top: '400vh', left: '0.5vw', fontSize: '40vw' }}>Mext</h1>
-          </Scroll> */}
+          </Scroll>
         <CameraRig controls={controls} mouseButtons={{ wheel: 0 }} />
 
           <PointLightWShadow

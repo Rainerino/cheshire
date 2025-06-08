@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState } from 'react'
+import { Suspense, useReducer, useRef, useState } from 'react'
 import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader } from '@react-three/drei'
 import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
@@ -53,9 +53,12 @@ function Soda(props: any) {
     </group>
   )
 }
+
+
+
 const debug = true
 function LandingPage() {
-  const [, params] = useRoute('/home')
+  const [, params] = useRoute('/projects/next')
   const [location, setLocation] = useLocation()
   const router = useRouter()
   return (
@@ -95,6 +98,8 @@ function LandingPage() {
           onClick={() => {
             if (location.includes('projects')) {
               if (location === '/projects') {
+                // TODO: fix the actual problems. I guess this works for now.
+                window.location.reload();
                 setLocation('/home#');
               } else {
                 setLocation('/projects');
