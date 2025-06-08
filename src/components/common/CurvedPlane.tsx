@@ -7,7 +7,7 @@ export default function CurvedPlane({ width, height, radius, children, ...props 
   return (
     <group {...props}>
       <mesh geometry={geometry}
-        // receiveShadow castShadow
+        receiveShadow castShadow
         position-z={-heightMax}>
       {children}
       </mesh>

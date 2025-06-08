@@ -1,5 +1,5 @@
 import { extend, useFrame, useThree } from '@react-three/fiber'
-import { CameraControls, OrbitControls, PerspectiveCamera, SpotLight, Select } from '@react-three/drei'
+import { CameraControls, OrbitControls, PerspectiveCamera, SpotLight, Select, Environment } from '@react-three/drei'
 import { Autofocus, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { OldTV } from '../components/models/TV'
@@ -66,7 +66,7 @@ export default function ProjectNavPage(props) {
                 makeDefault
                 ref={setMycam}
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
-                fov={10}
+                fov={12}
             />
             <CameraRig camera={mycam} />
             <ambientLight intensity={0.1} />
@@ -88,8 +88,8 @@ export default function ProjectNavPage(props) {
             <fog attach="fog" args={['#202020', 5, 20]} />
             <SpotLight
                 castShadow
-                shadow-bias={-0.0003}
-                shadow-mapSize={[2048, 2048]}
+                shadow-bias={-0.000001}
+                shadow-mapSize={[1024, 1024]}
                 position={[0, 5, -5]}
                 distance={70}
                 penumbra={0.4}
@@ -106,8 +106,6 @@ export default function ProjectNavPage(props) {
             <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]} />
             <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]} />
             <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
-
-
         </group>
     )
 }

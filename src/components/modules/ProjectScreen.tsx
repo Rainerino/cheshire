@@ -148,8 +148,8 @@ function Display({ position, rotation, w, h, ...props }) {
                 onClick={handleClick}
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                // castShadow
-                // receiveShadow
+                castShadow
+                receiveShadow
                 dispose={null}
             >
                 <meshStandardMaterial attach="material" color="#827f7f" />
