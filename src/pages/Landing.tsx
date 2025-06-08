@@ -119,7 +119,17 @@ function LandingPage() {
             }
           }}
         >
-          {params ? `Home ${router.base} ${location}` : `Back ${router.base} ${location}`}
+          {params ? `` : `Back ${router.base} ${location}`}
+        </a>
+        <a
+          style={{ position: 'absolute', top: 50, right: 50, fontSize: '13px' }}
+          href="#"
+          onClick={() => {
+            window.location.reload();
+            setLocation('/home');
+          }}
+        >
+          {`Home ${router.base} ${location}`}
         </a>
       </div>
     </React.StrictMode>

@@ -46,6 +46,8 @@ type GLTFResult = GLTF & {
     Node6: THREE.Mesh
     Node7: THREE.Mesh
     Node9001: THREE.Mesh
+    mug: THREE.Mesh
+    plate: THREE.Mesh
   }
   materials: {
     ['Mat.003']: THREE.MeshPhysicalMaterial
@@ -83,6 +85,8 @@ type GLTFResult = GLTF & {
     ['#895956FF']: THREE.MeshStandardMaterial
     ['#CAD1EEFF']: THREE.MeshStandardMaterial
     ['#FFFFFFFF.001']: THREE.MeshStandardMaterial
+    material_0: THREE.MeshPhysicalMaterial
+    ['material_0.001']: THREE.MeshPhysicalMaterial
   }
 }
 
@@ -206,6 +210,23 @@ export function Desktop2(props: JSX.IntrinsicElements['group']) {
           material={materials['Mat_18.003']}
         />
       </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.mug.geometry}
+        material={materials.material_0}
+        position={[0.587, 0.875, -0.018]}
+        rotation={[-0.007, -1.176, -0.026]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.plate.geometry}
+        material={materials['material_0.001']}
+        position={[0.58, 0.868, -0.033]}
+        rotation={[-0.02, -1.176, -0.038]}
+        scale={0.7}
+      />
       <mesh
         castShadow
         receiveShadow

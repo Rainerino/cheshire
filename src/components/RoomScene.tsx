@@ -11,7 +11,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { extend, useFrame, useThree } from "@react-three/fiber";
 import { Route, useLocation } from "wouter";
 import AboutScene from "./AboutScene";
-    
+import BusinessCard from "./modules/BusinessCard";
+import lang_toggle from '../lib/glb_const'
+
 const CAMERA_POSITION = [1.8, 2., 0]
 const CAMERA_LOOK_AT = [0, 1.1, 0]
 
@@ -44,15 +46,11 @@ export default function RoomScene(props) {
       HOME_LOOK_AT[2],
       false
     )
+    lang_toggle.is_en = true
 
   }, [ref]);
   useFrame((state, delta) => {
     if (!ref.current) return;
-
-    // console.log(ref.current.camera.position)
-
-    // console.log(homeClickedRef.current)
-
 
     ref.current.smoothTime = 0.5;
     if (location === "/home") {
@@ -102,19 +100,21 @@ export default function RoomScene(props) {
             CAMERA_LOOK_AT[2],
             true
           )
-          console.log("?????????")
         } else {
           setEnableMouse(true);
           ref.current.connect(state.gl.domElement);
         }
       } else {
-        console.log("???ASD")
-
-        ref.current.dollySpeed = 0;
+        ref.current.dollySpeed = 1;
         ref.current.truckSpeed = 0;
         ref.current.azimuthRotateSpeed = 1;
         ref.current.polarRotateSpeed = 0.5;
+        ref.current.boundaryFriction = 1;
 
+        ref.current.smoothTime = 1.0;
+        ref.current.draggingSmoothTime = 0.5;
+        ref.current.maxDistance = 2.5;
+        ref.current.minDistance = 0.5;
         ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
         ref.current.maxPolarAngle = -0.01 + Math.PI / 2
         ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
@@ -137,6 +137,10 @@ export default function RoomScene(props) {
             scale={[1, 1, 1]}
             shift={shift}
             setShift={setShift}
+          />
+          <BusinessCard
+            position={[0., 0.87, -0.43]}
+            rotation={[-Math.PI / 2, 0, Math.PI / 2 - Math.PI / 13]}
           />
           <Environment
             files="/textures/satara_night_no_lamps_1k.hdr"

@@ -9,7 +9,6 @@ import { type GLTF } from 'three-stdlib'
 import model from '/models/room/door.glb?url'
 import handwritten_font from '/fonts/handwritten.ttf?url'
 import engineer_font from '/fonts/engineer.ttf?url'
-import lang_toggle from '../../lib/glb_const'
 import { useTranslation } from "react-i18next"
 
 type GLTFResult = GLTF & {

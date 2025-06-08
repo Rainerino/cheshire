@@ -14,24 +14,8 @@ export default function AboutPage(controls, props) {
     useFrame((state, delta) => {
         // Update camera position and tgt_look at based on the current time
         // Animate camera zoom manually since GSAP can't tween Three.js camera properties directly
-        // if (camera.zoom !== 3) {
-        //     camera.zoom += (3 - camera.zoom) * 0.05;
-        //     camera.updateProjectionMatrix();
-        // }
         controls.controls.current.disconnect();
         controls.controls.current.smoothTime = 1;
-        // async function complexTransition() {
-        // await controls.setPosition(1.8, 1.9, 0, true);
-        // controls.controls.current.setPosition(
-        //     tgt_pos.x,
-        //     tgt_pos.y,
-        //     tgt_pos.z, true
-        // )
-        // controls.controls.current.setTarget(
-        //     tgt_look.x,
-        //     tgt_look.y,
-        //     tgt_look.z, true
-        // )
         controls.controls.current.lerpLookAt(
             tgt_pos.x,
             tgt_pos.y,
@@ -48,10 +32,6 @@ export default function AboutPage(controls, props) {
             0.,
             true
         )
-
-        // complexTransition().then(() => {
-        //     console.log('Transition completed');
-        // });
 
         const eps = 0.1;
 

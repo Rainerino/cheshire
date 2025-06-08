@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { useLocation, Link } from "wouter"
 import { PerspectiveCamera, Text, CameraControls, useTexture, Html, useCursor, Decal, RenderTexture } from '@react-three/drei'
-import { useState } from 'react'
-import { useLoader, useThree } from '@react-three/fiber'
+import { useEffect, useState } from 'react'
+import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { useTranslation } from "react-i18next"
 
 import handwritten_font from '/fonts/elegant_typewriter/ELEGANT TYPEWRITER Regular.ttf?url'
@@ -27,16 +27,15 @@ export default function HomeNavPage({
   const [fontFamily, setFontFamily] = useState(handwritten_font);
   const [langFontFamily, setLangFontFamily] = useState(handwritten_cn_font);
   const on_click_callback = () => {
-    console.log('click')
-    // Ensure lang_toggle has the is_en property for TypeScript
+    // Ensure lang_toggle has the is_en property for 
+    lang_toggle.is_en = !lang_toggle.is_en;
+  }
+  useFrame((state, delta) => {
     if (!('is_en' in lang_toggle)) {
       (lang_toggle as any).is_en = true;
 
       setFontFamily(handwritten_font);
-    } else {
-      lang_toggle.is_en = !lang_toggle.is_en;
     }
-
     if (lang_toggle.is_en) {
       i18n.changeLanguage("en")
       setFontFamily(handwritten_font);
@@ -46,15 +45,11 @@ export default function HomeNavPage({
       setFontFamily(handwritten_cn_font);
       setLangFontFamily(handwritten_font);
     }
-  }
-
-
+  })
   useCursor(hovered)
   return (
     <group {...props}>
       <mesh
-        // onPointerOver={(e) => setHovered(true)}
-        // onPointerOut={(e) => setHovered(false)}
         receiveShadow>
         <planeGeometry args={[SIZE, SIZE * GOLDEN]} />
         <meshPhongMaterial
@@ -142,7 +137,8 @@ export default function HomeNavPage({
                 color="black"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+                onClick={() => window.open(lang_toggle.is_en ?
+                  '/files/cv_2025__Robotic.pdf' : '/files/cv_2025__Robotic_CN.pdf', '_blank')}>
                 {t("resume")}
               </Text>
 
