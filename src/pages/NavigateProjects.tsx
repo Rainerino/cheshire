@@ -7,71 +7,85 @@ import { CouchTable } from '../components/models/CouchTable'
 import { DoubleCouch } from '../components/models/DoubleCouch'
 import { SingleCouch } from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'wouter'
 
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_LOOK_AT = [0.1, -0.2, -6]
 const EPS = 0.01
-let Enough = false;
 
 const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.x - target[0]) < EPS &&
     Math.abs(pos.y - target[1]) < EPS &&
     Math.abs(pos.z - target[2]) < EPS
 
-function CameraRig() {
+function CameraRig({ camera, ...props }) {
     const cam_ref = useRef<CameraControls>(null);
-    const { controls, camera } = useThree()
+
+    const [enough, setEnough] = useState(true)
     useEffect(() => {
         if (!cam_ref.current) return;
-        cam_ref.current.zoomTo(1)
         cam_ref.current.setLookAt(
             CAMERA_START_POSITION[0],
             CAMERA_START_POSITION[1],
             CAMERA_START_POSITION[2],
             CAMERA_LOOK_AT[0],
             CAMERA_LOOK_AT[1],
-            CAMERA_LOOK_AT[2]);
-        cam_ref.current.smoothTime = 0.25;
-        cam_ref.current.disconnect();
-    }, [cam_ref, location])
+            CAMERA_LOOK_AT[2],
+            false);
+
+    }, [camera])
 
     useFrame((state, delta) => {
         if (!cam_ref.current) return;
-        if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
-            if (!Enough) {
-                cam_ref.current.smoothTime = 2;
-                cam_ref.current.zoomTo(1 / 2.5, true)
-                cam_ref.current.dollyInFixed(5, true)
-                Enough = true;
-            } else {
-                cam_ref.current.smoothTime = 0.25;
-                // cam_ref.current.zoomTo(1/2.5)
-                // cam_ref.current.zoomTo(1/3, false)
-                // cam_ref.current.dollyInFixed(3, false)
-            }
-        } else {
-            cam_ref.current.zoomTo(1)
-            cam_ref.current.setTarget(CAMERA_LOOK_AT[0],
-                CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
-            cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
-            cam_ref.current.smoothTime = 0.25;
-            cam_ref.current.disconnect();
-        }
+
+        cam_ref.current.disconnect();
+        cam_ref.current.zoomTo(1, false)
+        cam_ref.current.setLookAt(
+            CAMERA_START_POSITION[0],
+            CAMERA_START_POSITION[1],
+            CAMERA_START_POSITION[2],
+            CAMERA_LOOK_AT[0],
+            CAMERA_LOOK_AT[1],
+            CAMERA_LOOK_AT[2],
+            true);
+        cam_ref.current.smoothTime = 0.25;
+
+        // if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
+        //     if (!enough) {
+        //         cam_ref.current.smoothTime = 2;
+        //         cam_ref.current.zoomTo(1 / 2.5, true)
+        //         cam_ref.current.dollyInFixed(5, true)
+        //         setEnough(false);
+        //     } else {
+        //         cam_ref.current.smoothTime = 0.25;
+        //         // cam_ref.current.zoomTo(1/2.5)
+        //         // cam_ref.current.zoomTo(1/3, false)
+        //         // cam_ref.current.dollyInFixed(3, false)
+        //     }
+        // } else {
+        //     cam_ref.current.zoomTo(1)
+        //     cam_ref.current.setTarget(CAMERA_LOOK_AT[0],
+        //         CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
+        //     cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
+        //     cam_ref.current.smoothTime = 0.25;
+        //     cam_ref.current.disconnect();
+        // }
     })
-    return <CameraControls ref={cam_ref} />
+    return <CameraControls ref={cam_ref} camera={camera} />
 }
 export default function ProjectNavPage(props) {
+    const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
     return (
         <group {...props}>
             <PerspectiveCamera
                 makeDefault
+                ref={setMycam}
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
-                fov={15}
+                fov={10}
             />
-            <CameraRig />
+            <CameraRig camera={mycam} />
             <ambientLight intensity={0.1} />
             <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
                 <planeGeometry args={[20, 100]} />
@@ -111,7 +125,7 @@ export default function ProjectNavPage(props) {
             <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
 
             <ProjectScreen
-                position={[-0.07, 0.885, -0.04]}
+                position={[-0.07, 0.884, -0.00]}
                 rotation={[0, 0, 0]}
                 w={0.51}
                 h={0.4}

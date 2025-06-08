@@ -10,10 +10,8 @@ type CurtainProps = {
 
 const Curtain: React.FC<CurtainProps> = ({ position, rotation, ...props }) => {
     const curtainRef = useRef<CurtainSimulation>(new CurtainSimulation(position, rotation));
-    const { invalidate, camera, gl } = useThree()
     useFrame((state, delta) => {
         curtainRef.current.update(delta);
-        invalidate()
     });
 
     return (

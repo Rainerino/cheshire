@@ -6,7 +6,9 @@ export default function CurvedPlane({ width, height, radius, children, ...props 
 
   return (
     <group {...props}>
-      <mesh geometry={geometry} receiveShadow castShadow position-z={-heightMax}>
+      <mesh geometry={geometry}
+        // receiveShadow castShadow
+        position-z={-heightMax}>
       {children}
       </mesh>
     </group>
@@ -39,6 +41,5 @@ function curvedPlaneGeometry(width = 1, height = 1, radius = 2) {
 
   geometry.computeVertexNormals()
   position.needsUpdate = true
-  console.log(heightMax)
   return { geometry, heightMin, heightMax }
 }

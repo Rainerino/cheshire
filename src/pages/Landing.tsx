@@ -1,5 +1,5 @@
 import { Suspense, useReducer, useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader, PerformanceMonitor } from '@react-three/drei'
+import { CameraControls, useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader, PerformanceMonitor } from '@react-three/drei'
 import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 
@@ -26,34 +26,6 @@ import React from 'react'
 
 THREE.ColorManagement.enabled = true
 
-function useHover() {
-  const [hovered, setHovered] = useState(false)
-  return [hovered, { onPointerOver: () => setHovered(true), onPointerOut: () => setHovered(false) }]
-}
-
-function Soda(props: any) {
-  const ref = useRef<THREE.Group>(null)
-  const [hovered, eventHandlers] = useHover()
-  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/soda-bottle/model.gltf') as any
-  return (
-    <group ref={ref} {...props} {...eventHandlers} dispose={null}>
-      <ambientLight intensity={10} />
-      <mesh geometry={nodes.Mesh_sodaBottle.geometry}>
-        <meshStandardMaterial 
-          color={hovered ? 'red' : 'green'} 
-          roughness={0.33} 
-          metalness={0.8} 
-          envMapIntensity={2} 
-        />
-      </mesh>
-      <mesh 
-        geometry={nodes.Mesh_sodaBottle_1.geometry} 
-        material={materials.red} 
-        material-envMapIntensity={0} 
-      />
-    </group>
-  )
-}
 const debug = true
 function LandingPage() {
   const [, params] = useRoute('/home')
@@ -90,10 +62,13 @@ function LandingPage() {
               <Route path="/credit" >
                 <PerspectiveCamera makeDefault fov={75} />
                 <ambientLight intensity={1} />
-                <OrbitControls makeDefaults />
-                <PivotControls lineWidth={3} depthTest={false} scale={2}>
-                  <Soda scale={6} position={[0, -1.6, 0]} />
-                </PivotControls>
+                <CameraControls enabled dollySpeed={1} />
+                {/* <Environment preset='city' /> */}
+                {/* <PivotControls lineWidth={3} depthTest={false} scale={2}>
+                  <Curtain position={new THREE.Vector3(-2.45, 1.7, -0.6)}
+                    rotation={new THREE.Euler(0, -Math.PI / 2, 0)} />
+                </PivotControls> */}
+                {/* <Grid infiniteGrid={true} /> */}
               </Route>
               <RoomScene />
               <Preload all />
