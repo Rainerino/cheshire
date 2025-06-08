@@ -69,17 +69,16 @@ function LandingPage() {
           frameloop="demand"
           performance={{ min: 0.5 }}
           shadows gl={{
-            // powerPreference: "high-performance",
+            powerPreference: "high-performance",
             antialias: false,
             autoClear: true,
             preserveDrawingBuffer: false
           }} >
           <color attach="background" args={['black']} />
-
-          {debug && <Stats />}
-          {debug && <Perf position="bottom-left" />}
-
           <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(0.5)} >
+            {debug && <Stats />}
+            {debug && <Perf position="bottom-left" />}
+
             <Suspense fallback={null}>
               <Router base="/projects">
                 <Route path="/" component={() => <ProjectNavPage />} />

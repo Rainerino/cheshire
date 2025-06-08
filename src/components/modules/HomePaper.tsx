@@ -30,6 +30,7 @@ export default function HomeNavPage({
     // Ensure lang_toggle has the is_en property for 
     lang_toggle.is_en = !lang_toggle.is_en;
   }
+
   useFrame((state, delta) => {
     if (!('is_en' in lang_toggle)) {
       (lang_toggle as any).is_en = true;
@@ -73,7 +74,7 @@ export default function HomeNavPage({
               {/* <ambientLight intensity={1} /> */}
               <Text
                 font={langFontFamily}
-                position={[0.5, -0.3, 0]}
+                position={[0.3, -0.3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="black"
                 anchorX="right"
@@ -85,7 +86,7 @@ export default function HomeNavPage({
               {/* <ambientLight intensity={1} /> */}
               <Text
                 font={fontFamily}
-                position={[0.5, -0.2, 0]}
+                position={[0.3, -0.2, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="black"
                 anchorX="right"
@@ -281,13 +282,13 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[-0.19, -0.5, 0]}
+                position={[-0.53, -0.5, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-
+                anchorX="left"
 
               >
-                All work and play not makes
+                All work and play not                        lboy
               </Text>
               <Text
                 font={handwritten_font}
