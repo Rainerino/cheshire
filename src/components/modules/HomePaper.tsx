@@ -16,7 +16,10 @@ const SIZE = 0.3;
 const STARTING_HEIGHT = 0.3
 const LINE_HEIGHT = 0.1;
 const LIST_FONT_SIZE = 0.05;
-export default function HomeNavPage(props) {
+export default function HomeNavPage({
+  shift,
+  setShift,
+  ...props }) {
   const [location, setLocation] = useLocation()
   const [hovered, setHovered] = useState(false)
   const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')
@@ -75,14 +78,26 @@ export default function HomeNavPage(props) {
               {/* <ambientLight intensity={1} /> */}
               <Text
                 font={langFontFamily}
-                position={[0.4, -0.2, 0]}
+                position={[0.5, -0.3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="black"
-                anchorX="center"
+                anchorX="right"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
                 onClick={() => on_click_callback()} >
                 {t("lang")}
+              </Text>
+              {/* <ambientLight intensity={1} /> */}
+              <Text
+                font={fontFamily}
+                position={[0.5, -0.2, 0]}
+                fontSize={LIST_FONT_SIZE}
+                color="black"
+                anchorX="right"
+                onPointerOver={() => setHovered(true)}
+                onPointerOut={() => setHovered(false)}
+                onClick={() => setShift(!shift)} >
+                {t("switch")}
               </Text>
               <Text
                 font={fontFamily}
@@ -237,13 +252,13 @@ export default function HomeNavPage(props) {
               </Text>
               <Text
                 font={handwritten_font}
-                position={[-0.33, -0.2, 0]}
+                position={[-0.43, -0.2, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
               >
-                All work and not
+                All play
               </Text>
               <Text
                 font={handwritten_font}
@@ -257,13 +272,13 @@ export default function HomeNavPage(props) {
               </Text>
               <Text
                 font={handwritten_font}
-                position={[0, -0.4, 0]}
+                position={[-0.19, -0.4, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
               >
-                All work and play not makes Jack a dull boy
+                All work and play not makes
               </Text>
               <Text
                 font={handwritten_font}

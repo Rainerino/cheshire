@@ -12,7 +12,7 @@ import { extend, useFrame, useThree } from "@react-three/fiber";
 import { Route, useLocation } from "wouter";
 import AboutScene from "./AboutScene";
     
-const CAMERA_POSITION = [1.8, 1.9, 0]
+const CAMERA_POSITION = [1.8, 2., 0]
 const CAMERA_LOOK_AT = [0, 1.1, 0]
 
 const PAGE_ANGLE = Math.PI / 6.5;
@@ -79,7 +79,7 @@ export default function RoomScene(props) {
       ref.current.boundaryFriction = 1
 
       ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-      ref.current.maxPolarAngle = -Math.PI / 18 + Math.PI / 2
+      ref.current.maxPolarAngle = -Math.PI / 10 + Math.PI / 2
       ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
       ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
       ref.current.maxZoom = 1.2;
@@ -112,6 +112,8 @@ export default function RoomScene(props) {
             position={[0.11, 0.87, 0.2]}
             rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 6.5]}
             scale={[1, 1, 1]}
+            shift={shift}
+            setShift={setShift}
           />
           <Environment
             files="/textures/satara_night_no_lamps_1k.hdr"
@@ -134,7 +136,7 @@ export default function RoomScene(props) {
           <Desktop2
             // onPointerOver={() => setHovered(true)}
             // onPointerOut={() => setHovered(false)}
-            onDoubleClick={(e) => setShift(!shift)}
+            // onDoubleClick={(e) => setShift(!shift)}
             position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           <Curtain
             position={new THREE.Vector3(-2.45, 1.7, -0.6)}
