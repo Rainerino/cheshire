@@ -172,8 +172,8 @@ export default function HomeNavPage({
                 position={[0, 0.8, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work and no play made Jack a dull boy
               </Text>
@@ -183,8 +183,8 @@ export default function HomeNavPage({
                 position={[0, 0.7, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work and no play makes All a dull boy
               </Text>
@@ -194,8 +194,8 @@ export default function HomeNavPage({
                 position={[-0.48, STARTING_HEIGHT + LINE_HEIGHT * 3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 AI
               </Text>
@@ -204,8 +204,8 @@ export default function HomeNavPage({
                 position={[0.43, STARTING_HEIGHT + LINE_HEIGHT * 3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 dl boy
               </Text>
@@ -214,8 +214,8 @@ export default function HomeNavPage({
                 position={[0.46, STARTING_HEIGHT + LINE_HEIGHT, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 boy
               </Text>
@@ -224,8 +224,8 @@ export default function HomeNavPage({
                 position={[0.4, STARTING_HEIGHT, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 dull boy
               </Text>
@@ -234,8 +234,8 @@ export default function HomeNavPage({
                 position={[0.41, STARTING_HEIGHT - LINE_HEIGHT, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 ull boj
               </Text>
@@ -244,8 +244,8 @@ export default function HomeNavPage({
                 position={[0.44, STARTING_HEIGHT - LINE_HEIGHT * 2, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 l boy
               </Text>
@@ -254,8 +254,8 @@ export default function HomeNavPage({
                 position={[0.47, STARTING_HEIGHT - LINE_HEIGHT * 3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 oy
               </Text>
@@ -264,8 +264,8 @@ export default function HomeNavPage({
                 position={[-0.43, -0.3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All play
               </Text>
@@ -274,8 +274,8 @@ export default function HomeNavPage({
                 position={[-0.31, -0.4, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work not play
               </Text>
@@ -284,8 +284,8 @@ export default function HomeNavPage({
                 position={[-0.19, -0.5, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work and play not makes
               </Text>
@@ -294,8 +294,8 @@ export default function HomeNavPage({
                 position={[0, -0.6, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All works and no plays make Jack dull boys
               </Text>
@@ -304,8 +304,8 @@ export default function HomeNavPage({
                 position={[0, -0.7, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work and no play makes John a dull boy
               </Text>
@@ -314,39 +314,14 @@ export default function HomeNavPage({
                 position={[0, -0.8, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+
+
               >
                 All work and no play makes Jack a doll boy
               </Text>
             </RenderTexture>
           </meshStandardMaterial>
         </Decal>
-        {/* <meshStandardMaterial color="white" side={THREE.DoubleSide} map={texture} /> */}
-        {/* <Html
-          center
-          style={{ userSelect: 'none' }}
-          transform
-          scale={0.03}
-          position={[-0.05, 0.1, 0]}
-
-        >
-          <div style={{ width: 10, height: 5 }}>
-            <ul>
-              <li>{`The current page is: ${location}`}</li>
-              <li>
-                <Link href="/home/about" >About</Link>
-              </li>
-              <li>
-                <Link href="/projects" >Project</Link>
-              </li>
-              <li>
-                <Link href="/credit" >Credit</Link>
-              </li>
-              <li>Milk</li>
-            </ul>
-          </div>
-        </Html> */}
       </mesh>
     </group>
   )
