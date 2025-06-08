@@ -118,7 +118,7 @@ function preloadGLTFFiles() {
     '/models/stations/pick_tote.glb?url',
     '/models/stations/redcare_one_piece.glb?url',
     '/models/stations/robot_base.glb?url',
-  ].forEach(useGLTF.preload)
+  ].forEach((url) => useGLTF.preload(url))
 }
 
 preloadGLTFFiles()

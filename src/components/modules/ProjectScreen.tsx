@@ -50,9 +50,9 @@ const ASPECT_RATIO = 4 / 3;
 const FADE_TIME = 1;
 
 function Display({position, rotation, w, h, ...props}) {
-    const co_ref = useRef()
-    const mm_ref2 = useRef()
-    const nxt_ref2 = useRef()
+    const co_ref = useRef<THREE.Mesh>(null)
+    const mm_ref2 = useRef<THREE.Mesh>(null)
+    const nxt_ref2 = useRef<THREE.Mesh>(null)
     const scroll = useScroll()
     const [hovered, setHovered] = useState(false)
     if (screen_state.key == '') {
@@ -73,13 +73,13 @@ function Display({position, rotation, w, h, ...props}) {
         setLocation(url);
     }
     useFrame((state, delta) => {
-        if (!co_ref.current) return
+        // if (!co_ref.current || !mm_ref2.current || !nxt_ref2.current) return
         // Update screen_state.key based on scroll offset
         if (!hovered) {
             const randomValue = Math.random() / 3 + 1
             co_ref.current.material.color.setScalar(randomValue)
-            mm_ref2.current.material.color.setScalar(randomValue)
-            nxt_ref2.current.material.color.setScalar(randomValue)
+            mm_ref2.current?.material.color.setScalar(randomValue)
+            nxt_ref2.current?.material.color.setScalar(randomValue)
         } else {
             gsap.to(co_ref.current.material.color, {
                 r: 1, g: 1, b: 1, duration: 0.5, overwrite: true
@@ -92,7 +92,7 @@ function Display({position, rotation, w, h, ...props}) {
             })
         }
 
-        co_ref.current.material.transparent = true;
+        (co_ref.current.material as THREE.Material).transparent = true;
         // co_ref.current.material.opacity = 0;
 
         if (scroll.visible(0, 1 / PART, 0.01)) {
