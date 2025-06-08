@@ -69,17 +69,24 @@ function Display({ position, rotation, w, h, ...props }) {
         if (!co_ref.current) return
         // Update screen_state.key based on scroll offset
         if (!hovered) {
-            const randomValue = Math.random() / 2 + 1.5
+            const randomValue = Math.random() / 3 + 1
             co_ref.current.material.color.setScalar(randomValue)
+            mm_ref2.current.material.color.setScalar(randomValue)
+            nxt_ref2.current.material.color.setScalar(randomValue)
         } else {
             gsap.to(co_ref.current.material.color, {
+                r: 1, g: 1, b: 1, duration: 0.5, overwrite: true
+            })
+            gsap.to(mm_ref2.current.material.color, {
+                r: 1, g: 1, b: 1, duration: 0.5, overwrite: true
+            })
+            gsap.to(nxt_ref2.current.material.color, {
                 r: 1, g: 1, b: 1, duration: 0.5, overwrite: true
             })
         }
 
         co_ref.current.material.transparent = true;
         // co_ref.current.material.opacity = 0;
-
 
         if (scroll.visible(0, 1 / PART, 0.01)) {
             co_video.play();
@@ -145,6 +152,7 @@ function Display({ position, rotation, w, h, ...props }) {
                 // receiveShadow
                 dispose={null}
             >
+                <meshStandardMaterial attach="material" color="#827f7f" />
                 <Decal
                 // debug
                     ref={co_ref}

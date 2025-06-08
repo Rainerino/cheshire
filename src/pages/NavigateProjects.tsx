@@ -59,8 +59,8 @@ export default function ProjectNavPage(props) {
             <ProjectScreen
                 position={[-0.07, 0.884, -0.00]}
                 rotation={[0, 0, 0]}
-                w={0.51}
-                h={0.4}
+                w={0.57}
+                h={0.41}
             />
             <PerspectiveCamera
                 makeDefault
@@ -79,7 +79,7 @@ export default function ProjectNavPage(props) {
                     mouse
                     smoothTime={0.15}
                     focusRange={0.00025}
-                    bokehScale={5}
+                    bokehScale={4}
                     resolutionScale={0.5}
                     resolutionX={2048}
                     resolutionY={2048}
