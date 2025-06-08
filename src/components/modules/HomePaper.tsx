@@ -34,7 +34,6 @@ export default function HomeNavPage({
   useFrame((state, delta) => {
     if (!('is_en' in lang_toggle)) {
       (lang_toggle as any).is_en = true;
-
       setFontFamily(handwritten_font);
     }
     if (lang_toggle.is_en) {
@@ -163,7 +162,7 @@ export default function HomeNavPage({
                 color="black"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
-                onClick={() => setLocation("~/projects")}>
+                onClick={() => setLocation("~/credit")}>
                 {t("credit")}
               </Text>
 

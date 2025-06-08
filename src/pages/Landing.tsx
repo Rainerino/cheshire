@@ -77,7 +77,7 @@ function LandingPage() {
           <color attach="background" args={['black']} />
           <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(0.5)} >
             {debug && <Stats />}
-            {debug && <Perf position="bottom-left" />}
+            {/* {debug && <Perf position="bottom-left" />} */}
 
             <Suspense fallback={null}>
               <Router base="/projects">

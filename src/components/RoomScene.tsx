@@ -12,7 +12,6 @@ import { extend, useFrame, useThree } from "@react-three/fiber";
 import { Route, useLocation } from "wouter";
 import AboutScene from "./AboutScene";
 import BusinessCard from "./modules/BusinessCard";
-import lang_toggle from '../lib/glb_const'
 
 const CAMERA_POSITION = [1.8, 2., 0]
 const CAMERA_LOOK_AT = [0, 1.1, 0]
@@ -27,15 +26,12 @@ export default function RoomScene(props) {
   const [shift, setShift] = useState(true);
   const [location, setLocation] = useLocation();
   const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
-  const [hovered, setHovered] = useState(false)
   const [enableMouse, setEnableMouse] = useState(false)
   const [initialize, setInitialize] = useState(false)
-  useCursor(hovered)
 
   const ref = useRef<CameraControls>(null);
   useEffect(() => {
     if (!ref.current) return;
-    ref.current.smoothTime = 0.25;
     setShift(true)
     ref.current.setLookAt(
       HOME_POSITION[0],
@@ -46,7 +42,6 @@ export default function RoomScene(props) {
       HOME_LOOK_AT[2],
       false
     )
-    lang_toggle.is_en = true
 
   }, [ref]);
   useFrame((state, delta) => {
@@ -61,11 +56,10 @@ export default function RoomScene(props) {
 
     if (shift) {
       ref.current.disconnect();
-
+      setEnableMouse(false)
       // Make sure the first frame is not transitioned.
       if (!initialize) {
         setInitialize(true)
-        setEnableMouse(false)
       }
 
       ref.current.setLookAt(
@@ -84,8 +78,6 @@ export default function RoomScene(props) {
         new THREE.Vector3(CAMERA_POSITION[0]
           , CAMERA_POSITION[1]
           , CAMERA_POSITION[2]))
-      console.log(dist)
-
 
       if (!enableMouse) {
         if (dist > eps) {

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useLocation, Link } from "wouter"
 import { PerspectiveCamera, Text, CameraControls, useTexture, Html, useCursor, Decal, RenderTexture } from '@react-three/drei'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { useTranslation } from "react-i18next"
 
@@ -15,23 +15,20 @@ const GOLDEN = 1.618033988
 const SIZE = 0.08;
 const CH_SCALE = 1.05;
 const FONT_SIZE = 0.1
-export default function BusinessCard({...props }) {
-    const [hovered, setHovered] = useState(false)
+export default function BusinessCard({ ...props }) {
     const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')
     const { t, i18n } = useTranslation();
-    const [fontFamily, setFontFamily] = useState(handwritten_font);
+    const [fontFamily, setFontFamily] = useState(handwritten_cn_font);
     const [fontSize, setFontSize] = useState(0.1);
-    useFrame((state, delta) => {
-        if (lang_toggle.is_en) {
-            setFontFamily(handwritten_font);
-            setFontSize(FONT_SIZE)
-        } else {
-            setFontFamily(handwritten_cn_font);
-            setFontSize(FONT_SIZE * CH_SCALE)
-        }
-        })
-
-    useCursor(hovered)
+    // useEffect(() => {
+    //     if (lang_toggle.is_en) {
+    //         setFontFamily(handwritten_font);
+    //         setFontSize(FONT_SIZE)
+    //     } else {
+    //         setFontFamily(handwritten_cn_font);
+    //         setFontSize(FONT_SIZE * CH_SCALE)
+    //     }
+    // }, [lang_toggle.is_en])
     return (
         <group {...props}>
             <mesh
@@ -41,7 +38,8 @@ export default function BusinessCard({...props }) {
                 <planeGeometry args={[SIZE * GOLDEN, SIZE]} />
                 <meshPhongMaterial
                     roughness={1}
-                    map={texture} />
+                // map={texture}
+                />
                 <Decal
                     receiveShadow
                     // debug
