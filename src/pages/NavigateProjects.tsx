@@ -13,8 +13,9 @@ import { useLocation } from 'wouter'
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_LOOK_AT = [0.1, -0.2, -6]
-const EPS = 0.01
+const EPS = 0.1
 
+let ENOUGH = false;
 const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.x - target[0]) < EPS &&
     Math.abs(pos.y - target[1]) < EPS &&
@@ -23,7 +24,6 @@ const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
 function CameraRig({ camera, ...props }) {
     const cam_ref = useRef<CameraControls>(null);
 
-    const [enough, setEnough] = useState(true)
     useEffect(() => {
         if (!cam_ref.current) return;
         cam_ref.current.setLookAt(
@@ -35,43 +35,20 @@ function CameraRig({ camera, ...props }) {
             CAMERA_LOOK_AT[2],
             false);
 
+        // cam_ref.current.maxZoom = Infinity
     }, [camera])
 
     useFrame((state, delta) => {
         if (!cam_ref.current) return;
-
         cam_ref.current.disconnect();
-        cam_ref.current.zoomTo(1, false)
-        cam_ref.current.setLookAt(
-            CAMERA_START_POSITION[0],
-            CAMERA_START_POSITION[1],
-            CAMERA_START_POSITION[2],
-            CAMERA_LOOK_AT[0],
-            CAMERA_LOOK_AT[1],
-            CAMERA_LOOK_AT[2],
-            true);
-        cam_ref.current.smoothTime = 0.25;
-
-        // if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
-        //     if (!enough) {
-        //         cam_ref.current.smoothTime = 2;
-        //         cam_ref.current.zoomTo(1 / 2.5, true)
-        //         cam_ref.current.dollyInFixed(5, true)
-        //         setEnough(false);
-        //     } else {
-        //         cam_ref.current.smoothTime = 0.25;
-        //         // cam_ref.current.zoomTo(1/2.5)
-        //         // cam_ref.current.zoomTo(1/3, false)
-        //         // cam_ref.current.dollyInFixed(3, false)
-        //     }
-        // } else {
-        //     cam_ref.current.zoomTo(1)
-        //     cam_ref.current.setTarget(CAMERA_LOOK_AT[0],
-        //         CAMERA_LOOK_AT[1], CAMERA_LOOK_AT[2], false);
-        //     cam_ref.current.setPosition(CAMERA_START_POSITION[0], CAMERA_START_POSITION[1], CAMERA_START_POSITION[2], false)
-        //     cam_ref.current.smoothTime = 0.25;
-        //     cam_ref.current.disconnect();
-        // }
+        if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
+            if (!ENOUGH) {
+                cam_ref.current.smoothTime = 2;
+                cam_ref.current.zoomTo(1 / 2.5, true)
+                cam_ref.current.dollyInFixed(5, true)
+                ENOUGH = true;
+            }
+        } 
     })
     return <CameraControls ref={cam_ref} camera={camera} />
 }
@@ -79,6 +56,12 @@ export default function ProjectNavPage(props) {
     const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
     return (
         <group {...props}>
+            <ProjectScreen
+                position={[-0.07, 0.884, -0.00]}
+                rotation={[0, 0, 0]}
+                w={0.51}
+                h={0.4}
+            />
             <PerspectiveCamera
                 makeDefault
                 ref={setMycam}
@@ -124,12 +107,7 @@ export default function ProjectNavPage(props) {
             <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]} />
             <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
 
-            <ProjectScreen
-                position={[-0.07, 0.884, -0.00]}
-                rotation={[0, 0, 0]}
-                w={0.51}
-                h={0.4}
-            />
+
         </group>
     )
 }

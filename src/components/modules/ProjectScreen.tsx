@@ -40,7 +40,7 @@ const project_infos = new Map([
 const RADIUS = 1;
 const PART = 3;
 const ASPECT_RATIO = 4 / 3;
-const FADE_TIME = 0.5;
+const FADE_TIME = 1;
 
 function Display({ position, rotation, w, h, ...props }) {
     const co_ref = useRef()
@@ -53,25 +53,12 @@ function Display({ position, rotation, w, h, ...props }) {
     }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
-    const covariant_texture = useVideoTexture(
-        "/images/covariant.mp4",
-        {
-            loop: true,
-            muted: true,
-        })
-    const mm_texture = useVideoTexture(
-        "/images/mm.mp4",
-        {
-            loop: true,
-            muted: true,
-        })
-
-    const nxt_texture = useVideoTexture(
-        "/images/covariant2.mp4",
-        {
-            loop: true,
-            muted: true,
-        })
+    const co_texture = useVideoTexture("/images/covariant.mp4", { start: false })
+    const co_video = co_texture.image as HTMLVideoElement;
+    const mm_texture = useVideoTexture("/images/mm.mp4", { start: false })
+    const mm_video = mm_texture.image as HTMLVideoElement;
+    const nt_texture = useVideoTexture("/images/covariant2.mp4", { start: false })
+    const nt_video = nt_texture.image as HTMLVideoElement;
     useCursor(hovered)
 
     const handleClick = () => {
@@ -94,8 +81,10 @@ function Display({ position, rotation, w, h, ...props }) {
         // co_ref.current.material.opacity = 0;
 
 
-
         if (scroll.visible(0, 1 / PART, 0.01)) {
+            co_video.play();
+            mm_video.pause();
+            nt_video.pause();
             gsap.to(co_ref.current.material, {
                 opacity: 1, duration: FADE_TIME, overwrite: true
             })
@@ -108,8 +97,11 @@ function Display({ position, rotation, w, h, ...props }) {
 
             screen_state.key = "covariant"
         } else if (scroll.visible(1 / PART, 1 / PART, 0.01)) {
+            co_video.pause();
+            mm_video.play();
+            nt_video.pause();
             gsap.to(co_ref.current.material, {
-                opacity: 0, duration: FADE_TIME, overwrite: true
+                opacity: 0, duration: FADE_TIME
             })
             gsap.to(mm_ref2.current.material, {
                 opacity: 1, duration: FADE_TIME
@@ -119,8 +111,11 @@ function Display({ position, rotation, w, h, ...props }) {
             })
             screen_state.key = "motion_metrics"
         } else {
+            co_video.pause();
+            mm_video.pause();
+            nt_video.play();
             gsap.to(co_ref.current.material, {
-                opacity: 0, duration: FADE_TIME, overwrite: true
+                opacity: 0, duration: FADE_TIME
             })
             gsap.to(mm_ref2.current.material, {
                 opacity: 0, duration: FADE_TIME
@@ -130,9 +125,9 @@ function Display({ position, rotation, w, h, ...props }) {
             })
             screen_state.key = "next"
         }
-        co_ref.current.material.needsUpdate = true;
-        mm_ref2.current.material.transparent = true;
-        nxt_ref2.current.material.transparent = true;
+        // co_ref.current.material.needsUpdate = true;
+        // mm_ref2.current.material.transparent = true;
+        // nxt_ref2.current.material.transparent = true;
     })
 
     return (
@@ -156,7 +151,7 @@ function Display({ position, rotation, w, h, ...props }) {
                     position={[0, 0, RADIUS]}
                     rotation={[0, 0.0001, 0]}
                     scale={[w, h / ASPECT_RATIO, 1]}
-                    map={covariant_texture}
+                    map={co_texture}
                 >
                 </Decal>
                 <Decal
@@ -174,7 +169,7 @@ function Display({ position, rotation, w, h, ...props }) {
                     position={[0, 0, RADIUS]}
                     rotation={[0, 0.0001, 0]}
                     scale={[w, h / ASPECT_RATIO, 1]}
-                    map={nxt_texture}
+                    map={nt_texture}
                 >
                 </Decal>
             </CurvedPlane>
