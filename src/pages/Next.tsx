@@ -1,69 +1,29 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Grid, OrbitControls, PerspectiveCamera, CameraControls } from '@react-three/drei';
+import { Environment, Grid, OrbitControls, PerspectiveCamera, CameraControls, Box } from '@react-three/drei';
 import * as THREE from 'three'
 
-import type { InstancedMesh, BufferGeometry} from 'three'
-import {useConvexPolyhedron, useSphere} from '@react-three/cannon'
-import { Debug, Physics, useCompoundBody, usePlane } from '@react-three/cannon'
+import type { InstancedMesh, BufferGeometry } from 'three'
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Geometry } from 'three-stdlib'
-import type { ConvexPolyhedronProps, PlaneProps, Triplet } from '@react-three/cannon'
+import { RedcareTote } from '../components/models/RedcareTote';
+import { Coffee } from '../components/sku/Coffee';
+import { InkBox } from '../components/sku/InkBox';
+import { Lotion } from '../components/sku/Lotion';
+import { PaperBox } from '../components/sku/PaperBox';
+import { CapBottle } from '../components/sku/CapBottle';
+import { Mustard } from '../components/sku/Mustard';
+import { TonerBox } from '../components/sku/TonerBox';
+import { MultuCapBottle } from '../components/sku/MutliCapBottle';
+import { PencilCase } from '../components/sku/PencilCase';
 
-function toConvexProps(bufferGeometry: BufferGeometry): [vertices: Triplet[], faces: Triplet[]] {
-    const geo = new Geometry().fromBufferGeometry(bufferGeometry)
-    geo.mergeVertices()
-    const vertices: Triplet[] = geo.vertices.map((v) => [v.x, v.y, v.z])
-    const faces: Triplet[] = geo.faces.map((f) => [f.a, f.b, f.c])
-    return [vertices, faces]
-}
 
-type CubeProps = Pick<ConvexPolyhedronProps, 'position' | 'rotation'> & {
-    size: number
-}
-function Cone({ position, rotation, sides }: ConeProps) {
-    const geometry = new THREE.ConeGeometry(0.1, 0.1, sides, 1)
-    const args = useMemo(() => toConvexProps(geometry), [geometry])
-    const [ref] = useConvexPolyhedron(() => ({ args, mass: 100, position, rotation }), useRef<THREE.Mesh>(null))
-
-    return (
-        <mesh castShadow {...{ geometry, position, ref, rotation }}>
-            <coneGeometry args={[0.7, 0.7, sides, 1]} />
-            <meshNormalMaterial />
-        </mesh>
-    )
-}
-
-function InstancedSpheres({ number = 100 }) {
-    const [ref] = useSphere(
-        (index) => ({
-            args: [0.1],
-            mass: 1,
-            position: [Math.random() - 0.5,  index * 2 , Math.random() - 0.5 ],
-        }),
-        useRef<InstancedMesh>(null),
-    )
-    const colors = useMemo(() => {
-        const array = new Float32Array(number * 3)
-        const color = new THREE.Color()
-        for (let i = 0; i < number; i++)
-            color.setRGB(Math.random(), Math.random(), Math.random())
-        return array
-    }, [number])
-
-    return (
-        <instancedMesh ref={ref} castShadow receiveShadow args={[undefined, undefined, number]}>
-            <sphereGeometry args={[0.1, 16, 16]}>
-                <instancedBufferAttribute attach="attributes-color" args={[colors, 3]} />
-            </sphereGeometry>
-            <meshPhongMaterial color={[Math.random(), Math.random(), Math.random()]} />
-        </instancedMesh>
-    )
-}
-
-const WALL_HEIGHT = 2;
-const BOTTOM_WIDTH = 10;
-const BOTTOM_LENGTH = 10;
-const EPS = 0.1
+const WALL_HEIGHT = 2 / 2;
+const BOTTOM_WIDTH = 0.58 / 2;
+const BOTTOM_LENGTH = 0.38 / 2;
+const WALL_THICKNESS = 0.02;
+const EPS = 0.001
+const HEIGHT_OFFSET = 0.3
 function Plane(props: PlaneProps) {
     const [ref] = usePlane(() =>
         ({ type: 'Static', ...props }), useRef<THREE.Mesh>(null))
@@ -87,16 +47,8 @@ function VerticalWall(props: PlaneProps) {
         </mesh>
     )
 }
-function HorizonWall(props: PlaneProps) {
-    const [ref] = usePlane(() =>
-        ({ type: 'Static', ...props }), useRef<THREE.Mesh>(null))
-    return (
-        <mesh ref={ref} receiveShadow>
-            <planeGeometry args={[BOTTOM_LENGTH, WALL_HEIGHT]} />
-            <shadowMaterial color="#171717" />
-            <meshStandardMaterial />
-        </mesh>
-    )
+function HorizonWall(position, rotation, props) {
+    return (<CuboidCollider position={position} rotation={rotation} args={[BOTTOM_LENGTH, 0.1, WALL_HEIGHT]} />)
 }
 
 
@@ -105,32 +57,47 @@ export default function NextPage(props) {
     useFrame((state, delta) => {
         controls.current.enabled = true;
     });
+    const [isPaused, togglePaused] = useState(true)
     return (
         <group {...props}>
             <CameraControls ref={controls} />
             <hemisphereLight intensity={0.35 * Math.PI} />
             <ambientLight intensity={5} />
-            <Physics gravity={[0, -10, 0]}>
-                <Debug color="black" scale={1.1}>
-                {/* Bottom plane */}
-                <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} />
+            <RedcareTote onClick={() => togglePaused((value) => !value)} />
+            <Physics paused={isPaused} debug gravity={[0, -10, 0]} colliders="hull">
+                {/* Bottom */}
+                <CuboidCollider position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} args={[BOTTOM_WIDTH, BOTTOM_LENGTH, WALL_THICKNESS]} />
+                {/* Side front and back */}
+                <CuboidCollider position={[0, WALL_HEIGHT, -BOTTOM_LENGTH - WALL_THICKNESS]} rotation={[0, 0, 0]} args={[BOTTOM_WIDTH, WALL_HEIGHT, WALL_THICKNESS,]} />
+                <CuboidCollider position={[0, WALL_HEIGHT, BOTTOM_LENGTH + WALL_THICKNESS]} rotation={[0, 0, 0]} args={[BOTTOM_WIDTH, WALL_HEIGHT, WALL_THICKNESS,]} />
 
-                {/* Four surrounding walls */}
-                {/* Back wall */}
-                <VerticalWall rotation={[0, 0, 0]} position={[0, WALL_HEIGHT/2, -BOTTOM_LENGTH/2-EPS]} />
-                {/* Front wall */}
-                <VerticalWall rotation={[0, Math.PI, 0]} position={[0, WALL_HEIGHT/2, BOTTOM_LENGTH/2+ EPS]} />
-                {/* Left wall */}
-                <HorizonWall rotation={[0, Math.PI / 2, 0]} position={[-BOTTOM_WIDTH/2-EPS, WALL_HEIGHT/2, 0]} />
-                {/* Right wall */}
-                <HorizonWall rotation={[0, -Math.PI / 2, 0]} position={[BOTTOM_WIDTH/2, WALL_HEIGHT/2, 0]} />
+                {/* Side left and right */}
+                <CuboidCollider position={[-BOTTOM_WIDTH - WALL_THICKNESS, WALL_HEIGHT, 0]} rotation={[0, Math.PI / 2, 0]} args={[BOTTOM_LENGTH, WALL_HEIGHT, WALL_THICKNESS,]} />
+                <CuboidCollider position={[BOTTOM_WIDTH + WALL_THICKNESS, WALL_HEIGHT, 0]} rotation={[0, -Math.PI / 2, 0]} args={[BOTTOM_LENGTH, WALL_HEIGHT, WALL_THICKNESS,]} />
+                {[
+                    { Component: Coffee, key: 'coffee' },
+                    { Component: InkBox, key: 'inkbox' },
+                    { Component: Lotion, key: 'lotion' },
+                    { Component: Mustard, key: 'mustard' },
+                    { Component: CapBottle, key: 'capbottle' },
+                    { Component: MultuCapBottle, key: 'multucapbottle' },
+                    { Component: PencilCase, key: 'pencilcase' },
+                ].map(({ Component, key }) => {
+                    // Define bounds
+                    const xMin = -BOTTOM_WIDTH + WALL_THICKNESS, xMax = BOTTOM_WIDTH - WALL_THICKNESS;
+                    const yMin = HEIGHT_OFFSET, yMax = HEIGHT_OFFSET + 1;
+                    const zMin = -BOTTOM_LENGTH + WALL_THICKNESS, zMax = BOTTOM_LENGTH - WALL_THICKNESS;
 
-                <InstancedSpheres number={100}/>
-                {/*<Cone position={[-1, 5, 0.5]} rotation={[0.1, 0.2, 0.1]} sides={6} />*/}
-                {/*<Cone position={[-1, 6, 0]} rotation={[0.5, 0.1, 0.1]} sides={8} />*/}
-                {/*<Cube position={[2, 3, -0.3]} rotation={[0.5, 0.4, -1]} size={0.4} />*/}
-                {/*<Cone position={[-0.3, 7, 1]} rotation={[1, 0.4, 0.1]} sides={7} />*/}
-                </Debug>
+                    // Random position within bounds
+                    const x = xMin + Math.random() * (xMax - xMin);
+                    const y = yMin + Math.random() * (yMax - yMin);
+                    const z = zMin + Math.random() * (zMax - zMin);
+                    return (
+                        <RigidBody key={key} position={[x, y, z]}>
+                            <Component />
+                        </RigidBody>
+                    );
+                })}
             </Physics>
             <Environment preset={"forest"} />
 

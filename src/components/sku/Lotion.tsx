@@ -18,6 +18,7 @@ type GLTFResult = GLTF & {
 
 export function Lotion(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(model) as GLTFResult
+
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -25,7 +26,6 @@ export function Lotion(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.model.geometry}
         material={materials['material_0.007']}
-        rotation={[Math.PI / 2, 0, 0]}
       />
     </group>
   )

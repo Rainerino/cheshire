@@ -25,7 +25,6 @@ export function MultuCapBottle(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.model.geometry}
         material={materials['material_0.005']}
-        rotation={[Math.PI / 2, 0, 0]}
       />
     </group>
   )

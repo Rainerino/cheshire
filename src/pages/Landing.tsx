@@ -58,12 +58,12 @@ function Soda(props: any) {
 
 const debug = true
 function LandingPage() {
-  const [, params] = useRoute('/projects/next')
+  const [, params] = useRoute('/home')
   const [location, setLocation] = useLocation()
   const router = useRouter()
   return (
     <React.StrictMode>
-      <Redirect to="/home" />
+      <Redirect to="/projects/next" />
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows gl={{ antialias: true, autoClear: true }} >
           <color attach="background" args={['black']} />

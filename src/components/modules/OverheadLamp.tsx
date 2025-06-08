@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import * as THREE from 'three'
-// import { useSphere, useCylinder, useDistanceConstraint, usePointToPointConstraint } from '@react-three/cannon'
 
 import { SpotLight } from '@react-three/drei'
 

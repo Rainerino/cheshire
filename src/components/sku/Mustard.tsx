@@ -25,7 +25,6 @@ export function Mustard(props: JSX.IntrinsicElements['group']) {
         receiveShadow
         geometry={nodes.textured.geometry}
         material={materials['material_0.001']}
-        rotation={[Math.PI / 2, 0, 0]}
       />
     </group>
   )
