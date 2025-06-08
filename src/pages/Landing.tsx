@@ -40,7 +40,7 @@ function LandingPage() {
         <Canvas
           dpr={dpr}
           // frameloop="demand"
-          performance={{ min: 0.5 }}
+          performance={{ min: 0.1 }}
           shadows gl={{
             powerPreference: "high-performance",
             antialias: true,
@@ -49,7 +49,7 @@ function LandingPage() {
           <color attach="background" args={['black']} />
           <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(0.5)} >
             {debug && <Stats />}
-            {debug && <Perf position="bottom-left" />}
+            {/* {debug && <Perf position="bottom-left" />} */}
 
             <Suspense fallback={null}>
               <Router base="/projects">
