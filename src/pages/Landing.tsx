@@ -19,11 +19,12 @@ import { OverheadLamp } from '../components/modules/OverheadLamp'
 import { RedrumDoor } from '../components/modules/RedrumDoor'
 import RoomScene from '../components/RoomScene'
 import AboutScene from '../components/AboutScene'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useLoader } from '@react-three/fiber'
 import { Stats } from '@react-three/drei'
 import { Perf } from "r3f-perf"
 import React from 'react'
 
+THREE.ColorManagement.enabled = true
 
 function useHover() {
   const [hovered, setHovered] = useState(false)
@@ -147,4 +148,15 @@ function preloadGLTFFiles() {
 }
 
 preloadGLTFFiles()
+
+function preloadTexturefiles() {
+  [
+    '/textures/curtain.png',
+    '/textures/paper_light.jpg'
+  ].forEach((url) => {
+    useLoader.preload(THREE.TextureLoader, url)
+  })
+}
+
+preloadTexturefiles()
 export default LandingPage

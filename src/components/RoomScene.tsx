@@ -106,7 +106,7 @@ export default function RoomScene(props) {
         ref.current.smoothTime = 1.0;
         ref.current.draggingSmoothTime = 0.5;
         ref.current.maxDistance = 2.5;
-        ref.current.minDistance = 0.5;
+        ref.current.minDistance = 1.5;
         ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
         ref.current.maxPolarAngle = -0.01 + Math.PI / 2
         ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
@@ -140,23 +140,21 @@ export default function RoomScene(props) {
             backgroundBlurriness={0.1}
             backgroundIntensity={0.5}
           />
-          {/* <Environment preset='night' /> */}
           <PerspectiveCamera
             ref={setMycam}
             makeDefault
             position={new THREE.Vector3().fromArray(HOME_POSITION)}
-            // lookAt={new THREE.Vector3().fromArray(HOME_LOOK_AT)}
             fov={25}
           />
           {mycam && <CameraControls ref={ref} camera={mycam} />}
           <ambientLight intensity={0.05} />
-          <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
-          <RedrumDoor />
-          <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           <Curtain
             position={new THREE.Vector3(-2.45, 1.7, -0.6)}
             rotation={new THREE.Euler(0, -Math.PI / 2, 0)}
           />
+          <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
+          <RedrumDoor />
+          <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           {/* Curtain and Mirror are conflicted somehow */}
           <Mirror
             position={[1, 1, 1.3]}

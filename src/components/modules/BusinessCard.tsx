@@ -19,16 +19,8 @@ export default function BusinessCard({ ...props }) {
     const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')
     const { t, i18n } = useTranslation();
     const [fontFamily, setFontFamily] = useState(handwritten_cn_font);
-    const [fontSize, setFontSize] = useState(0.1);
-    // useEffect(() => {
-    //     if (lang_toggle.is_en) {
-    //         setFontFamily(handwritten_font);
-    //         setFontSize(FONT_SIZE)
-    //     } else {
-    //         setFontFamily(handwritten_cn_font);
-    //         setFontSize(FONT_SIZE * CH_SCALE)
-    //     }
-    // }, [lang_toggle.is_en])
+    const [fontSize, setFontSize] = useState(FONT_SIZE);
+
     return (
         <group {...props}>
             <mesh
@@ -38,7 +30,7 @@ export default function BusinessCard({ ...props }) {
                 <planeGeometry args={[SIZE * GOLDEN, SIZE]} />
                 <meshPhongMaterial
                     roughness={1}
-                // map={texture}
+                    map={texture}
                 />
                 <Decal
                     receiveShadow

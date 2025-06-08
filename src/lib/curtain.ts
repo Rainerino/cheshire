@@ -108,8 +108,10 @@ class CurtainSimulation{
         const clothTexture = new THREE.TextureLoader().load(curtain_texture);
         clothTexture.wrapS = THREE.RepeatWrapping;
         clothTexture.wrapT = THREE.RepeatWrapping;
-        clothTexture.anisotropy = 16;
+        clothTexture.anisotropy = 8;
 
+        // Enable shadow for curtain mesh and sphere mesh
+        // (Sphere mesh is created later, but you can set it after creation)
         const clothMaterial = new THREE.MeshPhongMaterial({
             map: clothTexture,
             side: THREE.DoubleSide,
@@ -135,7 +137,7 @@ class CurtainSimulation{
             this.world.step(timeStep);
         } else {
             const dt = time - this.lastCallTime;
-            this.world.step(timeStep, dt);
+            this.world.step(timeStep, delta_time);
         }
         this.lastCallTime = time;
     }
