@@ -133,9 +133,22 @@ export default function HomeNavPage({
                 {t("projects")}
               </Text>
 
+
               <Text
                 font={fontFamily}
                 position={[-.3, STARTING_HEIGHT - LINE_HEIGHT * 2, 0]}
+                fontSize={LIST_FONT_SIZE}
+                anchorX="left"
+                color="black"
+                onPointerOver={() => setHovered(true)}
+                onPointerOut={() => setHovered(false)}
+                onClick={() => setLocation("~/projects")}>
+                {t("resume")}
+              </Text>
+
+              <Text
+                font={fontFamily}
+                position={[-.3, STARTING_HEIGHT - LINE_HEIGHT * 3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 anchorX="left"
                 color="black"
@@ -147,7 +160,7 @@ export default function HomeNavPage({
 
               <Text
                 font={fontFamily}
-                position={[-.3, STARTING_HEIGHT - LINE_HEIGHT * 3, 0]}
+                position={[-.3, STARTING_HEIGHT - LINE_HEIGHT * 4, 0]}
                 fontSize={LIST_FONT_SIZE}
                 anchorX="left"
                 color="black"
@@ -252,7 +265,7 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[-0.43, -0.2, 0]}
+                position={[-0.43, -0.3, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
@@ -262,7 +275,7 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[-0.31, -0.3, 0]}
+                position={[-0.31, -0.4, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
@@ -272,7 +285,7 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[-0.19, -0.4, 0]}
+                position={[-0.19, -0.5, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
@@ -282,7 +295,7 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[0, -0.5, 0]}
+                position={[0, -0.6, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#827f7f"
                 onPointerOver={() => setHovered(true)}
@@ -292,7 +305,7 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[0, -0.6, 0]}
+                position={[0, -0.7, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
@@ -302,23 +315,13 @@ export default function HomeNavPage({
               </Text>
               <Text
                 font={handwritten_font}
-                position={[0, -0.7, 0]}
-                fontSize={LIST_FONT_SIZE}
-                color="#5c5b5b"
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
-              >
-                All work and no play makes Jack a doll boy
-              </Text>
-              <Text
-                font={handwritten_font}
                 position={[0, -0.8, 0]}
                 fontSize={LIST_FONT_SIZE}
                 color="#5c5b5b"
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
               >
-                All play and no work makes Jack a dull boy
+                All work and no play makes Jack a doll boy
               </Text>
             </RenderTexture>
           </meshStandardMaterial>

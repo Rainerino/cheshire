@@ -23,7 +23,6 @@ import { Canvas } from '@react-three/fiber'
 import { Stats } from '@react-three/drei'
 import { Perf } from "r3f-perf"
 import React from 'react'
-import { useTranslation } from "react-i18next";
 
 
 function useHover() {
