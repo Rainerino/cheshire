@@ -137,7 +137,7 @@ class CurtainSimulation{
             this.world.step(timeStep);
         } else {
             const dt = time - this.lastCallTime;
-            this.world.step(timeStep, delta_time);
+            this.world.step(timeStep, dt);
         }
         this.lastCallTime = time;
     }

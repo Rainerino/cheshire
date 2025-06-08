@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import React, {useRef} from 'react';
+import {useFrame} from '@react-three/fiber';
 import CurtainSimulation from '../../lib/curtain';
 import * as THREE from 'three';
 
@@ -8,7 +8,7 @@ type CurtainProps = {
     rotation?: THREE.Euler;
 };
 
-const Curtain: React.FC<CurtainProps> = ({ position, rotation, ...props }) => {
+const Curtain: React.FC<CurtainProps> = ({position, rotation, ...props}) => {
     const curtainRef = useRef<CurtainSimulation>(new CurtainSimulation(position, rotation));
     useFrame((state, delta) => {
         curtainRef.current.update(delta);
@@ -16,7 +16,7 @@ const Curtain: React.FC<CurtainProps> = ({ position, rotation, ...props }) => {
 
     return (
         <group {...props}>
-            <primitive object={curtainRef.current?.clothMesh} />
+            <primitive object={curtainRef.current?.clothMesh}/>
             {/* <primitive object={curtainRef.current?.sphereMesh} /> */}
         </group>
     );

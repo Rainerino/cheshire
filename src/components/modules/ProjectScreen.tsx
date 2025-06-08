@@ -1,14 +1,21 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState } from 'react'
-import { useLocation } from "wouter";
-import { Text, useCursor, Decal, useScroll, Scroll, useTexture, ScrollControls, RenderTexture, PerspectiveCamera, useVideoTexture } from '@react-three/drei'
-import { extend, useFrame } from '@react-three/fiber'
-import { proxy, useSnapshot } from 'valtio'
+import {useRef, useState} from 'react'
+import {useLocation} from "wouter";
+import {
+
+    useCursor,
+    Decal,
+    useScroll,
+    ScrollControls,
+    useVideoTexture
+} from '@react-three/drei'
+import {useFrame} from '@react-three/fiber'
+import {proxy, useSnapshot} from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
 import gsap from 'gsap'
-import { Router, Route, Link } from "wouter";
 
-const screen_state = proxy({ key: "" })
+
+const screen_state = proxy({key: ""})
 
 class ProjectInfo {
     constructor(color, title, path, url) {
@@ -42,7 +49,7 @@ const PART = 3;
 const ASPECT_RATIO = 4 / 3;
 const FADE_TIME = 1;
 
-function Display({ position, rotation, w, h, ...props }) {
+function Display({position, rotation, w, h, ...props}) {
     const co_ref = useRef()
     const mm_ref2 = useRef()
     const nxt_ref2 = useRef()
@@ -53,11 +60,11 @@ function Display({ position, rotation, w, h, ...props }) {
     }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
-    const co_texture = useVideoTexture("/images/covariant.mp4", { start: false })
+    const co_texture = useVideoTexture("/images/covariant.mp4", {start: false})
     const co_video = co_texture.image as HTMLVideoElement;
-    const mm_texture = useVideoTexture("/images/mm.mp4", { start: false })
+    const mm_texture = useVideoTexture("/images/mm.mp4", {start: false})
     const mm_video = mm_texture.image as HTMLVideoElement;
-    const nt_texture = useVideoTexture("/images/covariant2.mp4", { start: false })
+    const nt_texture = useVideoTexture("/images/covariant2.mp4", {start: false})
     const nt_video = nt_texture.image as HTMLVideoElement;
     useCursor(hovered)
 
@@ -152,9 +159,9 @@ function Display({ position, rotation, w, h, ...props }) {
                 receiveShadow
                 dispose={null}
             >
-                <meshStandardMaterial attach="material" color="#827f7f" />
+                <meshStandardMaterial attach="material" color="#827f7f"/>
                 <Decal
-                // debug
+                    // debug
                     ref={co_ref}
                     position={[0, 0, RADIUS]}
                     rotation={[0, 0.0001, 0]}
@@ -185,11 +192,11 @@ function Display({ position, rotation, w, h, ...props }) {
     )
 }
 
-export default function ProjectScreen({ position, rotation, w = 1, h = 1, ...props }) {
+export default function ProjectScreen({position, rotation, w = 1, h = 1, ...props}) {
     return (
         <group {...props}>
             <ScrollControls damping={0.1} pages={PART}>
-                <Display position={position} rotation={rotation} w={w} h={h} />
+                <Display position={position} rotation={rotation} w={w} h={h}/>
             </ScrollControls>
         </group>
     )

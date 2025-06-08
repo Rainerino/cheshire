@@ -43,8 +43,7 @@ function LandingPage() {
           performance={{ min: 0.5 }}
           shadows gl={{
             powerPreference: "high-performance",
-            antialias: false,
-            autoClear: true,
+            antialias: true,
             preserveDrawingBuffer: false
           }} >
           <color attach="background" args={['black']} />

@@ -1,15 +1,10 @@
-import { Box } from "@react-three/drei";
-import { extend, useFrame, useThree } from "@react-three/fiber";
-import gsap from "gsap";
-import { useMemo, useRef, useState } from "react";
+import {useFrame} from "@react-three/fiber";
 import * as THREE from 'three'
 
-const CAMERA_LOOK_AT = [0, 1.1, 0]
 export default function AboutPage(controls, props) {
     const tgt_look = new THREE.Vector3(1.15, 1.1, 1.6)
     const tgt_pos = new THREE.Vector3(-0.5, 1.4, -1.2);
     const cur_look = new THREE.Vector3()
-    const cur_pos = new THREE.Vector3();
 
     useFrame((state, delta) => {
         // Update camera position and tgt_look at based on the current time

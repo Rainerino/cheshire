@@ -1,14 +1,13 @@
-import { extend, useFrame, useThree } from '@react-three/fiber'
-import { CameraControls, OrbitControls, PerspectiveCamera, SpotLight, Select, Environment } from '@react-three/drei'
-import { Autofocus, EffectComposer } from '@react-three/postprocessing'
+import {useFrame} from '@react-three/fiber'
+import {CameraControls, PerspectiveCamera, SpotLight} from '@react-three/drei'
+import {Autofocus, EffectComposer} from '@react-three/postprocessing'
 import * as THREE from 'three'
-import { OldTV } from '../components/models/TV'
-import { CouchTable } from '../components/models/CouchTable'
-import { DoubleCouch } from '../components/models/DoubleCouch'
-import { SingleCouch } from '../components/models/SingleCouch'
+import {OldTV} from '../components/models/TV'
+import {CouchTable} from '../components/models/CouchTable'
+import {DoubleCouch} from '../components/models/DoubleCouch'
+import {SingleCouch} from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
-import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'wouter'
+import {useEffect, useRef, useState} from 'react'
 
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
@@ -21,7 +20,7 @@ const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
     Math.abs(pos.y - target[1]) < EPS &&
     Math.abs(pos.z - target[2]) < EPS
 
-function CameraRig({ camera, ...props }) {
+function CameraRig({camera, ...props}) {
     const cam_ref = useRef<CameraControls>(null);
 
     useEffect(() => {
@@ -48,10 +47,11 @@ function CameraRig({ camera, ...props }) {
                 cam_ref.current.dollyInFixed(5, true)
                 ENOUGH = true;
             }
-        } 
+        }
     })
-    return <CameraControls ref={cam_ref} camera={camera} />
+    return <CameraControls ref={cam_ref} camera={camera}/>
 }
+
 export default function ProjectNavPage(props) {
     const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
     return (
@@ -68,11 +68,11 @@ export default function ProjectNavPage(props) {
                 position={new THREE.Vector3().fromArray(CAMERA_START_POSITION)}
                 fov={12}
             />
-            <CameraRig camera={mycam} />
-            <ambientLight intensity={0.1} />
+            <CameraRig camera={mycam}/>
+            <ambientLight intensity={0.1}/>
             <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
-                <planeGeometry args={[20, 100]} />
-                <meshPhongMaterial color="#202020" />
+                <planeGeometry args={[20, 100]}/>
+                <meshPhongMaterial color="#202020"/>
             </mesh>
             <EffectComposer multisampling={8} autoClear={false}>
                 <Autofocus
@@ -85,7 +85,7 @@ export default function ProjectNavPage(props) {
                     resolutionY={2048}
                 />
             </EffectComposer>
-            <fog attach="fog" args={['#202020', 5, 20]} />
+            <fog attach="fog" args={['#202020', 5, 20]}/>
             <SpotLight
                 castShadow
                 shadow-bias={-0.000001}
@@ -101,11 +101,11 @@ export default function ProjectNavPage(props) {
                 intensity={300}
                 opacity={0.2}
             />
-            <OldTV rotation={[0, Math.PI, 0]} position={[0, 0, 0]} />
-            <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]} />
-            <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]} />
-            <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]} />
-            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]} />
+            <OldTV rotation={[0, Math.PI, 0]} position={[0, 0, 0]}/>
+            <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]}/>
+            <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]}/>
+            <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]}/>
+            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]}/>
         </group>
     )
 }

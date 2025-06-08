@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, type JSX } from 'react';
-import { useThree } from '@react-three/fiber';
+import React, {useRef, useEffect, type JSX} from 'react';
 import * as THREE from 'three';
 import URDFLoader from 'urdf-loader';
 import robot from '/models/robots/abb_irb1300/robot.urdf?url';
@@ -15,7 +14,7 @@ const ROBOT_MATERIAL = new THREE.MeshPhysicalMaterial({
     clearcoatRoughness: 0.25,
 });
 
-function URDFRobot({ url }: { url: string }) {
+function URDFRobot({url}: { url: string }) {
     const groupRef = useRef<THREE.Group>(null);
 
     useEffect(() => {
@@ -53,13 +52,13 @@ function URDFRobot({ url }: { url: string }) {
         };
     }, [url]);
 
-    return <group ref={groupRef} />;
+    return <group ref={groupRef}/>;
 }
 
 export function ABB1300(props: JSX.IntrinsicElements['group']) {
     return (
         <group {...props} dispose={null}>
-            <URDFRobot url={robot} />
+            <URDFRobot url={robot}/>
         </group>
     );
 }
