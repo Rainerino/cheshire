@@ -23,6 +23,7 @@ import { Canvas } from '@react-three/fiber'
 import { Stats } from '@react-three/drei'
 import { Perf } from "r3f-perf"
 import React from 'react'
+import { useTranslation } from "react-i18next";
 
 
 function useHover() {
@@ -53,9 +54,6 @@ function Soda(props: any) {
     </group>
   )
 }
-
-
-
 const debug = true
 function LandingPage() {
   const [, params] = useRoute('/home')
@@ -63,7 +61,8 @@ function LandingPage() {
   const router = useRouter()
   return (
     <React.StrictMode>
-      <Redirect to="/projects/next" />
+      <Redirect to="/home" />
+      {/* <Redirect to="/projects/next" /> */}
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas shadows gl={{ antialias: true, autoClear: true }} >
           <color attach="background" args={['black']} />
@@ -82,9 +81,7 @@ function LandingPage() {
             <Soda scale={6} position={[0, -1.6, 0]} />
           </PivotControls>
         </Route>
-
         <RoomScene />
-
         <Preload all />
       </Suspense>
       {debug && <Stats />}

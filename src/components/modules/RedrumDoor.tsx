@@ -9,6 +9,8 @@ import { type GLTF } from 'three-stdlib'
 import model from '/models/room/door.glb?url'
 import handwritten_font from '/fonts/handwritten.ttf?url'
 import engineer_font from '/fonts/engineer.ttf?url'
+import lang_toggle from '../../lib/glb_const'
+import { useTranslation } from "react-i18next"
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -25,6 +27,7 @@ const SCALE = 50
 
 export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
     const { nodes, materials } = useGLTF(model) as GLTFResult
+    const { t, i18n } = useTranslation();
     return (
         <group {...props} dispose={null}>
             <group position={[1.65, 1.02, -2.63]} rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
@@ -51,7 +54,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     E
                                 </Text>
                                 <Text font={engineer_font} position={[0, -0.1, 0]} fontSize={0.1} color="red">
-                                    I am Yiyi, AAAAAA
+                                    {t("lang")}
                                 </Text>
                                 <Text font={engineer_font} position={[0, -0.2, 0]} fontSize={0.1} color="red">
                                     I am Yiyi, AAAAAA

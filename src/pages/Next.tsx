@@ -24,17 +24,6 @@ const BOTTOM_LENGTH = 0.38 / 2;
 const WALL_THICKNESS = 0.02;
 const EPS = 0.001
 const HEIGHT_OFFSET = 0.3
-function Plane(props: PlaneProps) {
-    const [ref] = usePlane(() =>
-        ({ type: 'Static', ...props }), useRef<THREE.Mesh>(null))
-    return (
-        <mesh ref={ref} receiveShadow>
-            <planeGeometry args={[BOTTOM_WIDTH, BOTTOM_LENGTH]} />
-            <shadowMaterial color="#171717" />
-            <meshStandardMaterial />
-        </mesh>
-    )
-}
 
 function VerticalWall(props: PlaneProps) {
     const [ref] = usePlane(() =>
@@ -79,7 +68,7 @@ export default function NextPage(props) {
                     { Component: InkBox, key: 'inkbox' },
                     { Component: Lotion, key: 'lotion' },
                     { Component: Mustard, key: 'mustard' },
-                    { Component: CapBottle, key: 'capbottle' },
+                    { Component: PaperBox, key: 'capbottle' },
                     { Component: MultuCapBottle, key: 'multucapbottle' },
                     { Component: PencilCase, key: 'pencilcase' },
                 ].map(({ Component, key }) => {
