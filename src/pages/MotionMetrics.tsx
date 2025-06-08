@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 import {
   CameraControls, Environment,
@@ -22,31 +22,26 @@ const PART = 4;
 
 function CameraRig(controls) {
   const scroll = useScroll()
-
-  useEffect(() => {
-    if (!controls.controls.current) return
-    controls.controls.current.smoothTime = 0.5
-    controls.controls.current.disconnect();
-    // controls.controls.current.mouseButtons.wheel = 0
-    // controls.controls.current.dollySpeed = 0;
-    const t = 0;
-    controls.controls.current.setLookAt(
-      CAMERA_POSITION[t][0],
-      CAMERA_POSITION[t][1],
-      CAMERA_POSITION[t][2],
-      CAMERA_LOOK_AT[t][0],
-      CAMERA_LOOK_AT[t][1],
-      CAMERA_LOOK_AT[t][2],
-      false
-    )
-  }, [controls])
+  const [init, setInit] = useState(false)
 
   useFrame((state, delta) => {
-    if (!controls.controls.current) {
-      console.log('no camera')
-      return
-    }
+
+    controls.controls.current.smoothTime = 0.5
     controls.controls.current.disconnect();
+
+    if (!init) {
+      controls.controls.current.setLookAt(
+        CAMERA_POSITION[0][0],
+        CAMERA_POSITION[0][1],
+        CAMERA_POSITION[0][2],
+        CAMERA_LOOK_AT[0][0],
+        CAMERA_LOOK_AT[0][1],
+        CAMERA_LOOK_AT[0][2],
+        false
+      )
+      setInit(true)
+    }
+    
     if (scroll.visible(0, 1 / PART, 0.01)) {
       // First scene
       controls.controls.current.setLookAt(

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import {
     PerspectiveCamera,
@@ -62,28 +62,23 @@ const PART = 5;
 function CameraRig(controls) {
 
   const scroll = useScroll()
-
-  useEffect(() => {
-    if (!controls.controls.current) return
+  const [init, setInit] = useState(false)
+  useFrame((state, delta) => {
+    controls.controls.current.disconnect();
     controls.controls.current.smoothTime = 0.5
 
-    // controls.controls.current.mouseButtons.wheel = CameraControls.ACTION.NONE
-    controls.controls.current.setLookAt(
-      CAMERA_POSITION[0][0],
-      CAMERA_POSITION[0][1],
-      CAMERA_POSITION[0][2],
-      CAMERA_LOOK_AT[0][0],
-      CAMERA_LOOK_AT[0][1],
-      CAMERA_LOOK_AT[0][2],
-      false
-    )
-  }, [controls])
-  useFrame((state, delta) => {
-    if (!controls.controls.current) {
-      console.log('no camera')
-      return
+    if (!init) {
+      controls.controls.current.setLookAt(
+        CAMERA_POSITION[0][0],
+        CAMERA_POSITION[0][1],
+        CAMERA_POSITION[0][2],
+        CAMERA_LOOK_AT[0][0],
+        CAMERA_LOOK_AT[0][1],
+        CAMERA_LOOK_AT[0][2],
+        false
+      )
+      setInit(true)
     }
-    controls.controls.current.disconnect();
 
     if (scroll.visible(0, 1 / PART, 0.01)) {
       // First scene
