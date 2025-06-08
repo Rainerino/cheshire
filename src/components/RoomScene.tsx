@@ -26,6 +26,8 @@ export default function RoomScene(props) {
   const [location, setLocation] = useLocation();
   const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
   const [hovered, setHovered] = useState(false)
+  const [enableMouse, setEnableMouse] = useState(false)
+  const [initialize, setInitialize] = useState(false)
   useCursor(hovered)
 
   const ref = useRef<CameraControls>(null);
@@ -50,14 +52,24 @@ export default function RoomScene(props) {
     // console.log(ref.current.camera.position)
 
     // console.log(homeClickedRef.current)
+
+
+    ref.current.smoothTime = 0.5;
+    if (location === "/home") {
+      ref.current.zoomTo(1, false);
+    } else {
+      setEnableMouse(false)
+    }
+
     if (shift) {
-      if (location === "/home") {
-        ref.current.zoomTo(1, false);
+      ref.current.disconnect();
+
+      // Make sure the first frame is not transitioned.
+      if (!initialize) {
+        setInitialize(true)
+        setEnableMouse(false)
       }
 
-      ref.current.smoothTime = 0.25;
-      // ref.current.enabled = false;
-      ref.current.disconnect();
       ref.current.setLookAt(
         HOME_POSITION[0],
         HOME_POSITION[1],
@@ -65,39 +77,50 @@ export default function RoomScene(props) {
         HOME_LOOK_AT[0],
         HOME_LOOK_AT[1],
         HOME_LOOK_AT[2],
-        true
+        initialize
       )
+
     } else {
-      if (location === "/home") {
-        ref.current.zoomTo(1, false);
+      const eps = 0.1;
+      const dist = ref.current.camera.position.distanceTo(
+        new THREE.Vector3(CAMERA_POSITION[0]
+          , CAMERA_POSITION[1]
+          , CAMERA_POSITION[2]))
+      console.log(dist)
+
+
+      if (!enableMouse) {
+        if (dist > eps) {
+      // Arrived at target position
+      // You can trigger any logic here if needed
+          ref.current.setLookAt(
+            CAMERA_POSITION[0],
+            CAMERA_POSITION[1],
+            CAMERA_POSITION[2],
+            CAMERA_LOOK_AT[0],
+            CAMERA_LOOK_AT[1],
+            CAMERA_LOOK_AT[2],
+            true
+          )
+          console.log("?????????")
+        } else {
+          setEnableMouse(true);
+          ref.current.connect(state.gl.domElement);
+        }
+      } else {
+        console.log("???ASD")
+
+        ref.current.dollySpeed = 0;
+        ref.current.truckSpeed = 0;
+        ref.current.azimuthRotateSpeed = 1;
+        ref.current.polarRotateSpeed = 0.5;
+
+        ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
+        ref.current.maxPolarAngle = -0.01 + Math.PI / 2
+        ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
+        ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
       }
-      ref.current.connect(state.gl.domElement);
-      // ref.current.disconnect();
-      ref.current.smoothTime = 1.0;
-      ref.current.azimuthRotateSpeed = 3;
-      ref.current.polarRotateSpeed = 1;
-      ref.current.boundaryFriction = 1
 
-      ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-      ref.current.maxPolarAngle = -Math.PI / 10 + Math.PI / 2
-      ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
-      ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
-      ref.current.maxZoom = 1.2;
-      // ref.current.minZoom = 0.3;
-      ref.current.dollySpeed = 0.5;
-      ref.current.minDistance = 1;
-      ref.current.maxDistance = 2.5;
-      ref.current.infinityDolly = false;
-
-      ref.current.setLookAt(
-        CAMERA_POSITION[0],
-        CAMERA_POSITION[1],
-        CAMERA_POSITION[2],
-        CAMERA_LOOK_AT[0],
-        CAMERA_LOOK_AT[1],
-        CAMERA_LOOK_AT[2],
-        true
-      )
     }
 
   })
@@ -133,11 +156,7 @@ export default function RoomScene(props) {
           <ambientLight intensity={0.05} />
           <Room2 position={[-1.5, 0, 0]} rotation={[0, Math.PI, 0]} />
           <RedrumDoor />
-          <Desktop2
-            // onPointerOver={() => setHovered(true)}
-            // onPointerOut={() => setHovered(false)}
-            // onDoubleClick={(e) => setShift(!shift)}
-            position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
+          <Desktop2 position={[-0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
           <Curtain
             position={new THREE.Vector3(-2.45, 1.7, -0.6)}
             rotation={new THREE.Euler(0, -Math.PI / 2, 0)}
@@ -153,15 +172,12 @@ export default function RoomScene(props) {
             castShadow
             decay={2}
             shadow-bias={-0.00001}
-            shadow-mapSize={[512, 512]}
+            shadow-mapSize={[1024, 1024]}
             shadow-camera-fov={120}
             // shadow-camera-far={100}
             // shadow-camera-near={0.1}
             position={[-2.25, 1, -2.245]}
             intensity={0.8}>
-            {/* <orthographicCamera attach='shadow-camera'>
-        <Helper type={THREE.CameraHelper} />
-      </orthographicCamera> */}
           </pointLight>
           <pointLight
             color={'#f7e7ba'}
@@ -173,9 +189,6 @@ export default function RoomScene(props) {
             // shadow-camera-near={0.1}
             position={[0.775, 1.1, -2.245]}
             intensity={2}>
-            {/* <orthographicCamera attach='shadow-camera'>
-        <Helper type={THREE.CameraHelper} />
-      </orthographicCamera> */}
           </pointLight>
           <OverheadLamp position={[-1, 2.5, -0.4]} />
 

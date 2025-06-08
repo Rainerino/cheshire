@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import * as THREE from 'three'
-
 import { SpotLight } from '@react-three/drei'
 
 export function OverheadLamp(props) {

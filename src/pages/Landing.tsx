@@ -1,5 +1,5 @@
 import { Suspense, useReducer, useRef, useState } from 'react'
-import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader } from '@react-three/drei'
+import { useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader, PerformanceMonitor } from '@react-three/drei'
 import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 
@@ -58,33 +58,47 @@ function LandingPage() {
   const [, params] = useRoute('/home')
   const [location, setLocation] = useLocation()
   const router = useRouter()
+  const [dpr, setDpr] = useState(1)
   return (
     <React.StrictMode>
       <Redirect to="/home" />
       {/* <Redirect to="/projects/next" /> */}
       <div style={{ width: '100%', height: '100%' }}>
-        <Canvas shadows gl={{ antialias: true, autoClear: true }} >
+        <Canvas
+          dpr={dpr}
+          frameloop="demand"
+          performance={{ min: 0.5 }}
+          shadows gl={{
+            powerPreference: "high-performance",
+            antialias: false,
+            autoClear: true,
+            preserveDrawingBuffer: false
+          }} >
           <color attach="background" args={['black']} />
-      <Suspense fallback={null}>
-        <Router base="/projects">
-          <Route path="/" component={() => <ProjectNavPage />} />
-          <Route path="/covariant" component={() => <CovariantPage />} />
-          <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
-          <Route path="/next" component={() => <NextPage />} />
-        </Router>
-        <Route path="/credit" >
-          <PerspectiveCamera makeDefault fov={75} />
-          <ambientLight intensity={1} />
-          <OrbitControls makeDefaults />
-          <PivotControls lineWidth={3} depthTest={false} scale={2}>
-            <Soda scale={6} position={[0, -1.6, 0]} />
-          </PivotControls>
-        </Route>
-        <RoomScene />
-        <Preload all />
-      </Suspense>
-      {debug && <Stats />}
-      {debug && <Perf position="bottom-left" />}
+
+          {debug && <Stats />}
+          {debug && <Perf position="bottom-left" />}
+
+          <PerformanceMonitor onIncline={() => setDpr(1.3)} onDecline={() => setDpr(0.7)} >
+            <Suspense fallback={null}>
+              <Router base="/projects">
+                <Route path="/" component={() => <ProjectNavPage />} />
+                <Route path="/covariant" component={() => <CovariantPage />} />
+                <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
+                <Route path="/next" component={() => <NextPage />} />
+              </Router>
+              <Route path="/credit" >
+                <PerspectiveCamera makeDefault fov={75} />
+                <ambientLight intensity={1} />
+                <OrbitControls makeDefaults />
+                <PivotControls lineWidth={3} depthTest={false} scale={2}>
+                  <Soda scale={6} position={[0, -1.6, 0]} />
+                </PivotControls>
+              </Route>
+              <RoomScene />
+              <Preload all />
+            </Suspense>
+          </PerformanceMonitor>
 
     </Canvas>
     {/* <Loader /> */}
