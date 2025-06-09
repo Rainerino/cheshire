@@ -1,5 +1,5 @@
 import { Suspense, useReducer, useRef, useState } from 'react'
-import { CameraControls, useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader, PerformanceMonitor } from '@react-three/drei'
+import { CameraControls, useGLTF, Environment, PerspectiveCamera, OrbitControls, PivotControls, SpotLight, Preload, MeshReflectorMaterial, Helper, AccumulativeShadows, RandomizedLight, Grid, Loader, PerformanceMonitor, useEnvironment } from '@react-three/drei'
 import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 import * as React from 'react';
@@ -46,7 +46,7 @@ theme = createTheme(theme, {
     }),
   },
 });
-const debug = true
+const debug = false
 function LandingPage() {
   const [location, setLocation] = useLocation()
   const [dpr, setDpr] = useState(1)
@@ -58,7 +58,7 @@ function LandingPage() {
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           dpr={dpr}
-          // frameloop="demand"
+          frameloop="demand"
           performance={{ min: 0.1 }}
           shadows gl={{
             powerPreference: "high-performance",
@@ -67,8 +67,8 @@ function LandingPage() {
           }} >
           <color attach="background" args={['black']} />
           <PerformanceMonitor onIncline={() => setDpr(1.3)} onDecline={() => setDpr(0.7)} >
-            {/* {debug && <Stats />} */}
-            {/* {debug && <Perf position="bottom-left" />} */}
+            {debug && <Stats />}
+            {debug && <Perf position="bottom-left" />}
 
             <Suspense fallback={null}>
               <Router base="/cheshire/projects">
@@ -89,12 +89,11 @@ function LandingPage() {
                 {/* <Grid infiniteGrid={true} /> */}
               </Route>
               <RoomScene />
-              <Preload all />
+              {/* <Preload all /> */}
             </Suspense>
           </PerformanceMonitor>
-
         </Canvas>
-        {/* <Loader /> */}
+        <Loader />
         <div
           style={{
             position: 'absolute',
@@ -134,16 +133,24 @@ function LandingPage() {
   )
 }
 
+function preloadEnvFiles() {
+  [
+    "/cheshire/textures/minedump_flats_1k.hdr",
+    "/cheshire/textures/satara_night_no_lamps_1k.hdr"
+  ].forEach((url) => useEnvironment.preload({ files: url }));
+}
+preloadEnvFiles();
+
 function preloadGLTFFiles() {
   [
-    '/models/es/CAT_6080_S.glb?url',
-    '/models/room/Desktop2.glb?url',
-    '/models/room/Room2.glb?url',
-    "/models/room/door.glb?url",
-    '/models/tv_room/TVRoom.glb?url',
-    '/models/stations/pick_tote.glb?url',
-    '/models/stations/redcare_one_piece.glb?url',
-    '/models/stations/robot_base.glb?url',
+    '/cheshire/models/es/CAT_6080_S.glb?url',
+    '/cheshire/models/room/Desktop2.glb?url',
+    '/cheshire/models/room/Room2.glb?url',
+    '/cheshire/models/room/door.glb?url',
+    '/cheshire/models/tv_room/TVRoom.glb?url',
+    '/cheshire/models/stations/pick_tote.glb?url',
+    '/cheshire/models/stations/redcare_one_piece.glb?url',
+    '/cheshire/models/stations/robot_base.glb?url',
   ].forEach((url) => useGLTF.preload(url))
 }
 
@@ -151,8 +158,8 @@ preloadGLTFFiles()
 
 function preloadTexturefiles() {
   [
-    '/assets/textures/curtain.png',
-    '/assets/textures/paper_light.jpg'
+    '/cheshire/assets/textures/curtain.png',
+    '/cheshire/assets/textures/paper_light.jpg'
   ].forEach((url) => {
     useLoader.preload(THREE.TextureLoader, url)
   })
