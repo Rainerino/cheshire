@@ -96,11 +96,6 @@ export default function ProjectNavPage(props) {
                 opacity={0.2}
             />
             <TVRoom rotation={[0, Math.PI, 0]} position={[0, 0, 0]} />
-            {/* <OldTV />
-            <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]}/>
-            <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]}/>
-            <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]}/>
-            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]}/> */}
         </group>
     )
 }

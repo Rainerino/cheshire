@@ -16,10 +16,7 @@ const STARTING_HEIGHT = 0.3
 const LINE_HEIGHT = 0.1;
 const LIST_FONT_SIZE = 0.05;
 export default function HomeNavPage({
-                                        shift,
-                                        setShift,
-                                        ...props
-                                    }) {
+    shift, setShift, ...props }) {
     const [location, setLocation] = useLocation()
     const [hovered, setHovered] = useState(false)
     const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')

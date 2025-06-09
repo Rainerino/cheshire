@@ -60,11 +60,11 @@ function Display({position, rotation, w, h, ...props}) {
     }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
-    const co_texture = useVideoTexture("/images/covariant.mp4", {start: false})
+    const co_texture = useVideoTexture("/videos/covariant.mp4", { start: false })
     const co_video = co_texture.image as HTMLVideoElement;
-    const mm_texture = useVideoTexture("/images/mm.mp4", {start: false})
+    const mm_texture = useVideoTexture("/videos/mm.mp4", { start: false })
     const mm_video = mm_texture.image as HTMLVideoElement;
-    const nt_texture = useVideoTexture("/images/covariant2.mp4", {start: false})
+    const nt_texture = useVideoTexture("/videos/covariant2.mp4", { start: false })
     const nt_video = nt_texture.image as HTMLVideoElement;
     useCursor(hovered)
 
