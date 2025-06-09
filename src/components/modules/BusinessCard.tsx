@@ -55,7 +55,7 @@ export default function BusinessCard({...props}) {
                                 {t("name")}
                             </Text>
                             <Text
-                                // font={handwritten_cn_font}
+
                                 position={[0, 0.05, 0]}
                                 fontSize={FONT_SIZE}
                                 color="black"

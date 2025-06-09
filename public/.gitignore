@@ -1,4 +1,36 @@
-fonts/
-models/
-textures/
-images/
+# Ignore everything
+*
+
+# GLB files
+!/models/room/Desktop2.glb
+!/models/room/Room2.glb
+!/models/tv_room/TVRoom.glb
+!/models/stations/pick_tote.glb
+!/models/stations/redcare_one_piece.glb
+!/models/stations/robot_base.glb
+!/models/es/CAT_6080_S.glb
+
+# Trans
+!/locales
+
+# Robot
+!/models/robots/abb_irb1300
+
+# Texture
+!/textures/satara_night_1k.hdr
+!/textures/curtain.png
+
+# Images
+!/videos/covariant.mp4
+!/videos/covariant2.mp4
+!/videos/mm.mp4
+
+# Fonts
+!/fonts/NotoSansSC-Regular.ttf
+!/fonts/HanyiSentyTang.ttf
+!/fonts/Huiwenmincho-improved.ttf
+!/fonts/elegant_typewriter/ELEGANT TYPEWRITER Regular.ttf
+!/fonts/handwritten.ttf
+!/fonts/engineer.ttf
+
+!*/
