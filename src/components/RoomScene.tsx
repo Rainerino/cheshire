@@ -11,7 +11,9 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import {extend, useFrame, useThree} from "@react-three/fiber";
 import {Route, useLocation} from "wouter";
 import AboutScene from "./AboutScene";
+import ViewScene from "./ViewScene";
 import BusinessCard from "./modules/BusinessCard";
+
 
 const CAMERA_POSITION = [1.8, 2., 0]
 const CAMERA_LOOK_AT = [0, 1.1, 0]
@@ -26,7 +28,6 @@ export default function RoomScene(props) {
     const [shift, setShift] = useState(true);
     const [location, setLocation] = useLocation();
     const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
-    const [enableMouse, setEnableMouse] = useState(false)
     const [initialize, setInitialize] = useState(false)
 
     const ref = useRef<CameraControls>(null);
@@ -46,22 +47,14 @@ export default function RoomScene(props) {
     }, [ref]);
     useFrame((state, delta) => {
         if (!ref.current) return;
-
         ref.current.smoothTime = 0.5;
         if (location === "/home") {
             ref.current.zoomTo(1, false);
-        } else {
-            setEnableMouse(false)
-        }
-
-        if (shift) {
             ref.current.disconnect();
-            setEnableMouse(false)
             // Make sure the first frame is not transitioned.
             if (!initialize) {
                 setInitialize(true)
             }
-
             ref.current.setLookAt(
                 HOME_POSITION[0],
                 HOME_POSITION[1],
@@ -71,48 +64,6 @@ export default function RoomScene(props) {
                 HOME_LOOK_AT[2],
                 initialize
             )
-
-        } else {
-            const eps = 0.1;
-            const dist = ref.current.camera.position.distanceTo(
-                new THREE.Vector3(CAMERA_POSITION[0]
-                    , CAMERA_POSITION[1]
-                    , CAMERA_POSITION[2]))
-
-            if (!enableMouse) {
-                if (dist > eps) {
-                    // Arrived at target position
-                    // You can trigger any logic here if needed
-                    ref.current.setLookAt(
-                        CAMERA_POSITION[0],
-                        CAMERA_POSITION[1],
-                        CAMERA_POSITION[2],
-                        CAMERA_LOOK_AT[0],
-                        CAMERA_LOOK_AT[1],
-                        CAMERA_LOOK_AT[2],
-                        true
-                    )
-                } else {
-                    setEnableMouse(true);
-                    ref.current.connect(state.gl.domElement);
-                }
-            } else {
-                ref.current.dollySpeed = 1;
-                ref.current.truckSpeed = 0;
-                ref.current.azimuthRotateSpeed = 1;
-                ref.current.polarRotateSpeed = 0.5;
-                ref.current.boundaryFriction = 1;
-
-                ref.current.smoothTime = 1.0;
-                ref.current.draggingSmoothTime = 0.5;
-                ref.current.maxDistance = 2.5;
-                ref.current.minDistance = 1.5;
-                ref.current.minPolarAngle = -Math.PI / 5 + Math.PI / 2
-                ref.current.maxPolarAngle = -0.01 + Math.PI / 2
-                ref.current.minAzimuthAngle = -Math.PI / 6 + Math.PI / 2
-                ref.current.maxAzimuthAngle = Math.PI / 6 + Math.PI / 2
-            }
-
         }
 
     })
@@ -122,7 +73,9 @@ export default function RoomScene(props) {
                 <Route path="/about">
                     <AboutScene controls={ref}/>
                 </Route>
-
+                <Route path="/view">
+                    <ViewScene controls={ref} />
+                </Route>
                 <HomeNavPage
                     position={[0.11, 0.87, 0.2]}
                     rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 6.5]}

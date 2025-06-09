@@ -88,7 +88,7 @@ export default function HomeNavPage({
                                 anchorX="right"
                                 onPointerOver={() => setHovered(true)}
                                 onPointerOut={() => setHovered(false)}
-                                onClick={() => setShift(!shift)}>
+                                onClick={() => setLocation("/view")}>
                                 {t("switch")}
                             </Text>
                             <Text
