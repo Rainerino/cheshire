@@ -10,13 +10,13 @@ import {useLoader} from '@react-three/fiber'
 import {useTranslation} from "react-i18next"
 
 import handwritten_cn_font from '/fonts/HanyiSentyTang.ttf?url'
-
+import texture_path from '/textures/paper_light.jpg'
 
 const GOLDEN = 1.618033988
 const SIZE = 0.08;
 const FONT_SIZE = 0.1
 export default function BusinessCard({...props}) {
-    const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')
+    const texture = useLoader(THREE.TextureLoader, texture_path)
     const {t, i18n} = useTranslation();
     return (
         <group {...props}>

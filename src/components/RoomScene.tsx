@@ -13,7 +13,7 @@ import {Route, useLocation} from "wouter";
 import AboutScene from "./AboutScene";
 import ViewScene from "./ViewScene";
 import BusinessCard from "./modules/BusinessCard";
-
+import env_file from "/textures/satara_night_no_lamps_1k.hdr"
 
 const PAGE_ANGLE = Math.PI / 6.5;
 const LOOKAT_EPS = 0.00001;
@@ -43,7 +43,7 @@ export default function RoomScene(props) {
     useFrame((state, delta) => {
         if (!ref.current) return;
         ref.current.smoothTime = 0.5;
-        if (location === "/home") {
+        if (location === "/cheshire/home") {
             ref.current.zoomTo(1, false);
             ref.current.disconnect();
             // Make sure the first frame is not transitioned.
@@ -64,7 +64,7 @@ export default function RoomScene(props) {
     })
     return (
         <group {...props}>
-            <Route path="/home" nest>
+            <Route path="/cheshire/home" nest>
                 <Route path="/about">
                     <AboutScene controls={ref}/>
                 </Route>
@@ -81,7 +81,7 @@ export default function RoomScene(props) {
                     rotation={[-Math.PI / 2, 0, Math.PI / 2 - Math.PI / 13]}
                 />
                 <Environment
-                    files="/textures/satara_night_no_lamps_1k.hdr"
+                    files={env_file}
                     background
                     backgroundBlurriness={0.1}
                     backgroundIntensity={0.5}

@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next"
 import handwritten_font from '/fonts/elegant_typewriter/ELEGANT TYPEWRITER Regular.ttf?url'
 import handwritten_cn_font from '/fonts/Huiwenmincho-improved.ttf?url'
 import lang_toggle from '../../lib/glb_const'
-
+import texture_path from '/textures/paper_light.jpg'
 
 const GOLDEN = 1.618033988
 const SIZE = 0.3;
@@ -18,7 +18,7 @@ const LIST_FONT_SIZE = 0.05;
 export default function HomeNavPage({ ...props }) {
     const [location, setLocation] = useLocation()
     const [hovered, setHovered] = useState(false)
-    const texture = useLoader(THREE.TextureLoader, '/textures/paper_light.jpg')
+    const texture = useLoader(THREE.TextureLoader, texture_path)
     const {t, i18n} = useTranslation();
     const [fontFamily, setFontFamily] = useState(handwritten_font);
     const [langFontFamily, setLangFontFamily] = useState(handwritten_cn_font);
@@ -120,7 +120,7 @@ export default function HomeNavPage({ ...props }) {
                                 color="black"
                                 onPointerOver={() => setHovered(true)}
                                 onPointerOut={() => setHovered(false)}
-                                onClick={() => setLocation("~/projects")}>
+                                onClick={() => setLocation("~/cheshire/projects")}>
                                 {t("projects")}
                             </Text>
 
@@ -134,7 +134,7 @@ export default function HomeNavPage({ ...props }) {
                                 onPointerOver={() => setHovered(true)}
                                 onPointerOut={() => setHovered(false)}
                                 onClick={() => window.open(lang_toggle.is_en ?
-                                    '/files/cv_2025__Robotic.pdf' : '/files/cv_2025__Robotic_CN.pdf', '_blank')}>
+                                    '/cheshire/files/cv_2025__Robotic.pdf' : '/cheshire/files/cv_2025__Robotic_CN.pdf', '_blank')}>
                                 {t("resume")}
                             </Text>
 
@@ -146,7 +146,7 @@ export default function HomeNavPage({ ...props }) {
                                 color="black"
                                 onPointerOver={() => setHovered(true)}
                                 onPointerOut={() => setHovered(false)}
-                                onClick={() => setLocation("~/projects")}>
+                                onClick={() => setLocation("~/cheshire/projects")}>
                                 {t("playground")}
                             </Text>
 
@@ -158,7 +158,7 @@ export default function HomeNavPage({ ...props }) {
                                 color="black"
                                 onPointerOver={() => setHovered(true)}
                                 onPointerOut={() => setHovered(false)}
-                                onClick={() => setLocation("~/credit")}>
+                                onClick={() => setLocation("~/cheshire/credit")}>
                                 {t("credit")}
                             </Text>
 

@@ -13,6 +13,9 @@ import {useFrame} from '@react-three/fiber'
 import {proxy, useSnapshot} from 'valtio'
 import CurvedPlane from '../common/CurvedPlane'
 import gsap from 'gsap'
+import co_vid_file from "/videos/covariant.mp4"
+import mm_vid_file from "/videos/mm.mp4"
+import nt_vid_file from "/videos/covariant2.mp4"
 
 
 const screen_state = proxy({key: ""})
@@ -60,11 +63,11 @@ function Display({position, rotation, w, h, ...props}) {
     }
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
-    const co_texture = useVideoTexture("/videos/covariant.mp4", { start: false })
+    const co_texture = useVideoTexture(co_vid_file, { start: false })
     const co_video = co_texture.image;
-    const mm_texture = useVideoTexture("/videos/mm.mp4", { start: false })
+    const mm_texture = useVideoTexture(mm_vid_file, { start: false })
     const mm_video = mm_texture.image;
-    const nt_texture = useVideoTexture("/videos/covariant2.mp4", { start: false })
+    const nt_texture = useVideoTexture(nt_vid_file, { start: false })
     const nt_video = nt_texture.image;
     useCursor(hovered)
 

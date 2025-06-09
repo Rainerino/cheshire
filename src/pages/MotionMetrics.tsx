@@ -5,6 +5,8 @@ import {
     Grid, PerspectiveCamera, Scroll, ScrollControls, useScroll
 } from '@react-three/drei';
 import {CAT6080} from '../components/models/CAT_6080';
+import env_file from "/textures/minedump_flats_1k.hdr"
+
 
 const CAMERA_POSITION = [
     [1, 9.5, -3.5],
@@ -113,7 +115,7 @@ export default function MotionMetricsPage(props) {
 
 
             <Environment
-                files="/textures/minedump_flats_1k.hdr"
+                files={env_file}
                 background
                 backgroundBlurriness={0.1}
                 backgroundIntensity={0.5}

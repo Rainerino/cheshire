@@ -48,15 +48,13 @@ theme = createTheme(theme, {
 });
 const debug = true
 function LandingPage() {
-  const [, params] = useRoute('/home')
   const [location, setLocation] = useLocation()
   const [dpr, setDpr] = useState(1)
   const { t, i18n } = useTranslation();
 
   return (
-    <React.StrictMode>
-      <Redirect to="/home" />
-      {/* <Redirect to="/projects/next" /> */}
+    <>
+      <Redirect to="/cheshire/home" />
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           dpr={dpr}
@@ -73,13 +71,13 @@ function LandingPage() {
             {/* {debug && <Perf position="bottom-left" />} */}
 
             <Suspense fallback={null}>
-              <Router base="/projects">
+              <Router base="/cheshire/projects">
                 <Route path="/" component={() => <ProjectNavPage />} />
                 <Route path="/covariant" component={() => <CovariantPage />} />
                 <Route path="/motion_metrics" component={() => <MotionMetricsPage />} />
                 <Route path="/next" component={() => <NextPage />} />
               </Router>
-              <Route path="/credit" >
+              <Route path="/cheshire/credit" >
                 <PerspectiveCamera makeDefault fov={75} />
                 <ambientLight intensity={1} />
                 <CameraControls enabled dollySpeed={1} />
@@ -114,14 +112,14 @@ function LandingPage() {
               <IconButton
                 onClick={() => {
                   if (location.includes('projects')) {
-                    if (location === '/projects') {
+                    if (location === '/cheshire/projects') {
                       window.location.reload();
-                      setLocation('/home#');
+                      // setLocation('/home');
                     } else {
-                      setLocation('/projects');
+                      setLocation('/cheshire/projects');
                     }
                   } else {
-                    setLocation('/home#');
+                    setLocation('/cheshire/home');
                   }
                 }}
                 style={{
@@ -133,7 +131,7 @@ function LandingPage() {
           </ThemeProvider>
         </div>
       </div>
-    </React.StrictMode>
+    </>
   )
 }
 
@@ -154,8 +152,8 @@ preloadGLTFFiles()
 
 function preloadTexturefiles() {
   [
-    '/textures/curtain.png',
-    '/textures/paper_light.jpg'
+    '/assets/textures/curtain.png',
+    '/assets/textures/paper_light.jpg'
   ].forEach((url) => {
     useLoader.preload(THREE.TextureLoader, url)
   })

@@ -1,2 +1,15 @@
-fonts/
-models/
+# Ignore everything
+*
+
+# Texture
+!/textures/satara_night_no_lamps_1k.hdr
+!/textures/curtain.png
+!/textures/paper_light.jpg
+!textures/minedump_flats_1k.hdr
+
+# Videos
+!/videos/covariant.mp4
+!/videos/covariant2.mp4
+!/videos/mm.mp4
+
+!*/
