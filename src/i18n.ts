@@ -10,16 +10,16 @@ i18n
   .use(LanguageDetector) // detects the current language
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    debug: true,
+    // debug: true,
     lng: 'en',
     supportedLngs: ['en', 'ch'], // Array of supported languages
     // fallbackLng: 'en', // Fallback language
-    detection: {
-      order: ['localStorage', 'navigator'], //  Order of language detection
-      lookupLocalStorage: 'i18nextLng', // Key for local storage
-    },
+    // detection: {
+    //   order: ['localStorage', 'navigator'], //  Order of language detection
+    //   lookupLocalStorage: 'i18nextLng', // Key for local storage
+    // },
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json?url',
+      loadPath: '/cheshire/locales/{{lng}}/translation.json',
     },
   });
 

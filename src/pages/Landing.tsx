@@ -103,8 +103,8 @@ function LandingPage() {
             right: '5%',
             // transform: 'translateX(-50%)',
             transition: 'opacity 1s',
-            opacity: location !== '/home' ? 1 : 0,
-            pointerEvents: location !== '/home' ? 'auto' : 'none'
+            opacity: location !== '/cheshire/home' ? 1 : 0,
+            pointerEvents: location !== '/cheshire/home' ? 'auto' : 'none'
           }}
         >
           <ThemeProvider theme={darkTheme}>
@@ -114,7 +114,6 @@ function LandingPage() {
                   if (location.includes('projects')) {
                     if (location === '/cheshire/projects') {
                       window.location.reload();
-                      // setLocation('/home');
                     } else {
                       setLocation('/cheshire/projects');
                     }
