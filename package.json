@@ -3,13 +3,20 @@
   "version": "0.0.1",
   "description": "Just another personal website",
   "type": "module",
-  "main": "main.js",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "rollup -c -w",
-    "start": "serve .",
+    "build": "rollup -c",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "@babel/preset-react": "^7.27.1",
@@ -29,7 +36,7 @@
     "i18next-http-backend": "^3.0.2",
     "leva": "^0.10.0",
     "r3f-perf": "^7.2.3",
-    "react": "^19.1.0",
+    "react": ">=16.8.0",
     "react-i18next": "^15.5.2",
     "serve": "^14.2.4",
     "suspend-react": "^0.1.3",
@@ -43,6 +50,7 @@
     "@eslint/js": "^9.25.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
@@ -55,9 +63,13 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^16.0.0",
+    "node-sass": "^9.0.0",
     "parcel": "^2.15.2",
     "rollup": "^4.42.0",
     "rollup-plugin-import-css": "^4.0.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
