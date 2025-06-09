@@ -135,8 +135,8 @@ function LandingPage() {
 
 function preloadEnvFiles() {
   [
-    "/cheshire/textures/mines.hdr",
-    "/cheshire/textures/night.hdr"
+    "/cheshire/textures/mines.hdr?url",
+    "/cheshire/textures/night.hdr?url"
   ].forEach((url) => useEnvironment.preload({ files: url }));
 }
 preloadEnvFiles();

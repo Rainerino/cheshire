@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next"
 import handwritten_font from '/fonts/elegant_typewriter/ELEGANT TYPEWRITER Regular.ttf?url'
 import handwritten_cn_font from '/fonts/Huiwenmincho-improved.ttf?url'
 import lang_toggle from '../../lib/glb_const'
-import texture_path from '/cheshire/textures/paper_light.jpg'
+import texture_path from '/textures/paper_light.jpg'
 
 const GOLDEN = 1.618033988
 const SIZE = 0.3;
