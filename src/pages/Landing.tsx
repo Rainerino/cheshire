@@ -145,7 +145,7 @@ function preloadGLTFFiles() {
   [
     '/cheshire/models/es/CAT_6080_S.glb?url',
     '/cheshire/models/room/Desktop2.glb?url',
-    '/cheshire/models/room/Room2.glb?url',
+    '/cheshire/models/room/Env2.glb?url',
     '/cheshire/models/room/door.glb?url',
     '/cheshire/models/tv_room/TVRoom.glb?url',
     '/cheshire/models/stations/pick_tote.glb?url',
@@ -156,14 +156,4 @@ function preloadGLTFFiles() {
 
 preloadGLTFFiles()
 
-function preloadTexturefiles() {
-  [
-    '/cheshire/assets/textures/curtain.png',
-    '/cheshire/assets/textures/paper_light.jpg'
-  ].forEach((url) => {
-    useLoader.preload(THREE.TextureLoader, url)
-  })
-}
-
-preloadTexturefiles()
 export default LandingPage
