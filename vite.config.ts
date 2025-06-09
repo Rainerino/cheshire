@@ -6,7 +6,7 @@ import { join } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const root = join(__dirname, 'src')
+import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '/@/': root,
+      "@/": resolve(__dirname, "./src"),
     }
   },
 })
