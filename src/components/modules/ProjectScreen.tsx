@@ -61,11 +61,11 @@ function Display({position, rotation, w, h, ...props}) {
     const snap = useSnapshot(screen_state)
     const [location, setLocation] = useLocation();
     const co_texture = useVideoTexture("/videos/covariant.mp4", { start: false })
-    const co_video = co_texture.image as HTMLVideoElement;
+    const co_video = co_texture.image;
     const mm_texture = useVideoTexture("/videos/mm.mp4", { start: false })
-    const mm_video = mm_texture.image as HTMLVideoElement;
+    const mm_video = mm_texture.image;
     const nt_texture = useVideoTexture("/videos/covariant2.mp4", { start: false })
-    const nt_video = nt_texture.image as HTMLVideoElement;
+    const nt_video = nt_texture.image;
     useCursor(hovered)
 
     const handleClick = () => {
@@ -92,7 +92,7 @@ function Display({position, rotation, w, h, ...props}) {
             })
         }
 
-        (co_ref.current.material as THREE.Material).transparent = true;
+        co_ref.current.material.transparent = true;
         // co_ref.current.material.opacity = 0;
 
         if (scroll.visible(0, 1 / PART, 0.01)) {

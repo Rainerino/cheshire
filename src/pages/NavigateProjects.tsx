@@ -12,7 +12,7 @@ const CAMERA_LOOK_AT = [0.1, -0.2, -6]
 const EPS = 0.01
 
 let ENOUGH = false;
-const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
+const isCameraAtPosition = (pos, target) =>
     Math.abs(pos.x - target[0]) < EPS &&
     Math.abs(pos.y - target[1]) < EPS &&
     Math.abs(pos.z - target[2]) < EPS
@@ -47,7 +47,7 @@ function CameraRig({camera, ...props}) {
 }
 
 export default function ProjectNavPage(props) {
-    const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
+    const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>(null);
     return (
         <group {...props}>
             <ProjectScreen

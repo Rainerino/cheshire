@@ -1,6 +1,6 @@
-import { createRoot } from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 import './index.css'
-import LandingPage from './pages/Landing'
+import LandingPage from './pages/Landing.js'
 import './i18n.js';
 
-createRoot(document.getElementById('root')).render(<LandingPage />)
+ReactDOM.createRoot(document.getElementById('root')).render(<LandingPage/>);

@@ -23,7 +23,7 @@ const HOME_LOOK_AT = [0.077 - LOOKAT_EPS * Math.cos(PAGE_ANGLE), 0, 0.218 + LOOK
 export default function RoomScene(props) {
     // Upon enter, fix the camera
     const [location, setLocation] = useLocation();
-    const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
+    const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>(null);
     const [initialize, setInitialize] = useState(false)
 
     const ref = useRef<CameraControls>(null);
