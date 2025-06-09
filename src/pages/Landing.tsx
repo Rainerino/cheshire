@@ -68,7 +68,7 @@ function LandingPage() {
             preserveDrawingBuffer: false
           }} >
           <color attach="background" args={['black']} />
-          <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(0.5)} >
+          <PerformanceMonitor onIncline={() => setDpr(1.3)} onDecline={() => setDpr(0.7)} >
             {/* {debug && <Stats />} */}
             {/* {debug && <Perf position="bottom-left" />} */}
 

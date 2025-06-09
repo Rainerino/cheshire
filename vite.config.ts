@@ -8,6 +8,6 @@ const __dirname = path.dirname(__filename)
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/cheshire/home",
+  base: "/cheshire/",
   plugins: [react()],
 })
