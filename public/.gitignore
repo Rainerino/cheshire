@@ -22,7 +22,8 @@
 !/models/robots/abb_irb1300/**
 
 # Texture
-!/textures/satara_night_no_lamps_1k.hdr
+!/textures/night.hdr
+!/textures/mines.hdr
 !/textures/curtain.png
 !/textures/paper_light.jpg
 
@@ -30,7 +31,6 @@
 !/videos/covariant.mp4
 !/videos/covariant2.mp4
 !/videos/mm.mp4
-
 
 !/images/wechat.png
 !/images/instagram.png

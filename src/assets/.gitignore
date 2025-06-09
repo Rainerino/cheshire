@@ -1,12 +1,5 @@
 # Ignore everything
 *
-
-# Texture
-!/textures/night.hdr
-!/textures/curtain.png
-!/textures/paper_light.jpg
-!/textures/mines.hdr
-
 # Videos
 !/videos/covariant.mp4
 !/videos/covariant2.mp4
