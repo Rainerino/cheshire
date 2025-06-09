@@ -15,7 +15,6 @@ export default function ViewScene(controls, props) {
         new THREE.Vector3(CAMERA_POSITION[0]
             , CAMERA_POSITION[1]
             , CAMERA_POSITION[2]))
-        console.log(dist)
         if (dist > eps && !initialize) {
             // Arrived at target position
             // You can trigger any logic here if needed

@@ -75,15 +75,15 @@ export default function ProjectNavPage(props) {
                     focusRange={0.00025}
                     bokehScale={4}
                     resolutionScale={0.5}
-                    resolutionX={2048}
-                    resolutionY={2048}
+                    resolutionX={1024}
+                    resolutionY={1024}
                 />
             </EffectComposer>
             <fog attach="fog" args={['#202020', 5, 20]}/>
             <SpotLight
                 castShadow
                 shadow-bias={-0.0001}
-                shadow-mapSize={[2048, 2048]}
+                shadow-mapSize={[1024, 1024]}
                 position={[0, 5, -5]}
                 distance={70}
                 penumbra={0.4}
