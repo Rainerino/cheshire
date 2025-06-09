@@ -8,11 +8,12 @@ import {DoubleCouch} from '../components/models/DoubleCouch'
 import {SingleCouch} from '../components/models/SingleCouch'
 import ProjectScreen from '../components/modules/ProjectScreen'
 import {useEffect, useRef, useState} from 'react'
+import { TVRoom } from '../components/models/TVRoom'
 
 
 const CAMERA_START_POSITION = [0, 2.3, 8]
 const CAMERA_LOOK_AT = [0.1, -0.2, -6]
-const EPS = 0.1
+const EPS = 0.01
 
 let ENOUGH = false;
 const isCameraAtPosition = (pos: THREE.Vector3, target: number[]) =>
@@ -24,7 +25,6 @@ function CameraRig({camera, ...props}) {
     const cam_ref = useRef<CameraControls>(null);
 
     useEffect(() => {
-        if (!cam_ref.current) return;
         cam_ref.current.setLookAt(
             CAMERA_START_POSITION[0],
             CAMERA_START_POSITION[1],
@@ -33,8 +33,6 @@ function CameraRig({camera, ...props}) {
             CAMERA_LOOK_AT[1],
             CAMERA_LOOK_AT[2],
             false);
-
-        // cam_ref.current.maxZoom = Infinity
     }, [camera])
 
     useFrame((state, delta) => {
@@ -42,7 +40,7 @@ function CameraRig({camera, ...props}) {
         cam_ref.current.disconnect();
         if (isCameraAtPosition(cam_ref.current.camera.position, CAMERA_START_POSITION)) {
             if (!ENOUGH) {
-                cam_ref.current.smoothTime = 2;
+                cam_ref.current.smoothTime = 1;
                 cam_ref.current.zoomTo(1 / 2.5, true)
                 cam_ref.current.dollyInFixed(5, true)
                 ENOUGH = true;
@@ -88,8 +86,8 @@ export default function ProjectNavPage(props) {
             <fog attach="fog" args={['#202020', 5, 20]}/>
             <SpotLight
                 castShadow
-                shadow-bias={-0.000001}
-                shadow-mapSize={[1024, 1024]}
+                shadow-bias={-0.0001}
+                shadow-mapSize={[2048, 2048]}
                 position={[0, 5, -5]}
                 distance={70}
                 penumbra={0.4}
@@ -101,11 +99,12 @@ export default function ProjectNavPage(props) {
                 intensity={300}
                 opacity={0.2}
             />
-            <OldTV rotation={[0, Math.PI, 0]} position={[0, 0, 0]}/>
+            <TVRoom rotation={[0, Math.PI, 0]} position={[0, 0, 0]} />
+            {/* <OldTV />
             <DoubleCouch position={[-1.4, 0, 2]} rotation={[0, 0, 0]}/>
             <SingleCouch position={[0.5, 0, 1.6]} rotation={[0, -Math.PI / 2, 0]}/>
             <SingleCouch position={[0.5, 0, 0.1]} rotation={[0, -Math.PI / 2, 0]}/>
-            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]}/>
+            <CouchTable position={[0.75, 0, 1.3]} rotation={[0, -Math.PI / 2, 0]}/> */}
         </group>
     )
 }
