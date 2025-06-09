@@ -2,10 +2,10 @@
 *
 
 # Texture
-!/textures/satara_night_no_lamps_1k.hdr
+!/textures/night.hdr
 !/textures/curtain.png
 !/textures/paper_light.jpg
-!/textures/minedump_flats_1k.hdr
+!/textures/mines.hdr
 
 # Videos
 !/videos/covariant.mp4

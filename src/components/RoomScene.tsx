@@ -13,7 +13,7 @@ import {Route, useLocation} from "wouter";
 import AboutScene from "./AboutScene";
 import ViewScene from "./ViewScene";
 import BusinessCard from "./modules/BusinessCard";
-import env_file from "/textures/satara_night_no_lamps_1k.hdr"
+import env_file from "/textures/night.hdr"
 
 const PAGE_ANGLE = Math.PI / 6.5;
 const LOOKAT_EPS = 0.00001;
