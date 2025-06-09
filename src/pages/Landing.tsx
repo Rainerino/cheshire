@@ -3,9 +3,17 @@ import { CameraControls, useGLTF, Environment, PerspectiveCamera, OrbitControls,
 import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from "react-i18next"
+import { Canvas, useLoader } from '@react-three/fiber'
+import { Stats } from '@react-three/drei'
+import { Perf } from "r3f-perf"
+
 
 import ProjectNavPage from './NavigateProjects'
 import "./Landing.css"
@@ -13,18 +21,38 @@ import CovariantPage from './Covariant'
 import MotionMetricsPage from './MotionMetrics'
 import NextPage from './Next'
 import RoomScene from '../components/RoomScene'
-import { Canvas, useLoader } from '@react-three/fiber'
-import { Stats } from '@react-three/drei'
-import { Perf } from "r3f-perf"
 
 THREE.ColorManagement.enabled = true
 
+let theme = createTheme({
+  // Theme customization goes here as usual, including tonalOffset and/or
+  // contrastThreshold as the augmentColor() function relies on these
+});
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
+theme = createTheme(theme, {
+  // Custom colors created with augmentColor go here
+  palette: {
+    salmon: theme.palette.augmentColor({
+      color: {
+        main: '#FF5733',
+      },
+      name: 'salmon',
+    }),
+  },
+});
 const debug = true
 function LandingPage() {
   const [, params] = useRoute('/home')
   const [location, setLocation] = useLocation()
-  const router = useRouter()
   const [dpr, setDpr] = useState(1)
+  const { t, i18n } = useTranslation();
+
   return (
     <React.StrictMode>
       <Redirect to="/home" />
@@ -41,7 +69,7 @@ function LandingPage() {
           }} >
           <color attach="background" args={['black']} />
           <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(0.5)} >
-            {debug && <Stats />}
+            {/* {debug && <Stats />} */}
             {/* {debug && <Perf position="bottom-left" />} */}
 
             <Suspense fallback={null}>
@@ -69,44 +97,70 @@ function LandingPage() {
 
         </Canvas>
         {/* <Loader /> */}
-        <Button
-          variant="contained"
-          endIcon={<SendIcon />}
+        <div
           style={{
             position: 'absolute',
             zIndex: 10,
-            top: 40,
-            left: 100,
-            transform: 'translateX(-50%)'
+            top: '5%',
+            right: '5%',
+            // transform: 'translateX(-50%)',
+            transition: 'opacity 1s',
+            opacity: location !== '/home' ? 1 : 0,
+            pointerEvents: location !== '/home' ? 'auto' : 'none'
           }}
-          onClick={() => {
-            if (location.includes('projects')) {
-              if (location === '/projects') {
-                // TODO: fix the actual problems. I guess this works for now.
+        >
+          <ThemeProvider theme={darkTheme}>
+            <Tooltip title={t("back_tooltip")}>
+              <IconButton
+                onClick={() => {
+                  if (location.includes('projects')) {
+                    if (location === '/projects') {
+                      window.location.reload();
+                      setLocation('/home#');
+                    } else {
+                      setLocation('/projects');
+                    }
+                  } else {
+                    setLocation('/home#');
+                  }
+                }}
+                style={{
+                  color: "white"
+                }}>
+                <ArrowForwardIosIcon sx={{ fontSize: 42 }} color="inherit" />
+              </IconButton>
+            </Tooltip>
+          </ThemeProvider>
+
+        </div>
+
+        {/* <div
+          style={{
+            position: 'absolute',
+            zIndex: 10,
+            top: '5%',
+            left: '10%',
+            transform: 'translateX(-50%)',
+            transition: 'opacity 0.5s',
+            opacity: (location === '/home' || location === '/projects') ? 0 : 1,
+            pointerEvents: location !== '/home' ? 'auto' : 'none'
+          }}
+        >
+          <Tooltip title={t("home_tooltip")}>
+            <IconButton
+              onClick={() => {
                 window.location.reload();
-                setLocation('/home#');
-              } else {
-                setLocation('/projects');
-              }
-            } else {
-              setLocation('/home#');
-            }
-          }}
-        >
-          {params ? `` : `Back`}
-        </Button>
+                setLocation('/home');
+              }}
+              style={{
+                color: "white"
+              }}>
+              <HomeIcon sx={{ fontSize: 48 }} color="inherit" />
+            </IconButton>
+          </Tooltip>
 
+        </div> */}
 
-        <a
-          style={{ position: 'absolute', top: 50, right: 50, fontSize: '13px' }}
-          href="#"
-          onClick={() => {
-            window.location.reload();
-            setLocation('/home');
-          }}
-        >
-          {`Home ${router.base} ${location}`}
-        </a>
       </div>
     </React.StrictMode>
   )

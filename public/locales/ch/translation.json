@@ -8,5 +8,7 @@
     "lang": "Lang: En",
     "name": "严一熠",
     "title": "机器人工程师",
-    "switch": "切换视图"
+    "switch": "切换视图",
+    "home_tooltip": "返回主页",
+    "back_tooltip": "返回上一页"
 }

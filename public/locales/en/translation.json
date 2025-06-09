@@ -8,5 +8,7 @@
     "lang": "语言:中",
     "name": "Yiyi Yan",
     "title": "Robotic Engineer",
-    "switch": "Change View"
+    "switch": "Change View",
+    "home_tooltip": "Go to the homepage",
+    "back_tooltip": "Go back"
 }
