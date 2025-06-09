@@ -4,6 +4,7 @@
 # GLB files
 !/models/room/Desktop2.glb
 !/models/room/Room2.glb
+!/models/room/Env2.glb
 !/models/room/door.glb
 !/models/tv_room/TVRoom.glb
 !/models/stations/pick_tote.glb
