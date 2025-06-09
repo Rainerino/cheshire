@@ -3,13 +3,13 @@ import {useFrame} from '@react-three/fiber';
 import {Environment, Grid, CameraControls} from '@react-three/drei';
 import {Physics, RigidBody, CuboidCollider} from "@react-three/rapier";
 import {RedcareTote} from '../components/models/RedcareTote';
-import {Coffee} from '../components/sku/Coffee';
-import {InkBox} from '../components/sku/InkBox';
-import {Lotion} from '../components/sku/Lotion';
-import {PaperBox} from '../components/sku/PaperBox';
-import {Mustard} from '../components/sku/Mustard';
-import {MultuCapBottle} from '../components/sku/MutliCapBottle';
-import {PencilCase} from '../components/sku/PencilCase';
+// import {Coffee} from '../components/sku/Coffee';
+// import {InkBox} from '../components/sku/InkBox';
+// import {Lotion} from '../components/sku/Lotion';
+// import {PaperBox} from '../components/sku/PaperBox';
+// import {Mustard} from '../components/sku/Mustard';
+// import {MultuCapBottle} from '../components/sku/MutliCapBottle';
+// import {PencilCase} from '../components/sku/PencilCase';
 
 
 const WALL_HEIGHT = 2 / 2;
@@ -44,7 +44,7 @@ export default function NextPage(props) {
                                 rotation={[0, Math.PI / 2, 0]} args={[BOTTOM_LENGTH, WALL_HEIGHT, WALL_THICKNESS,]}/>
                 <CuboidCollider position={[BOTTOM_WIDTH + WALL_THICKNESS, WALL_HEIGHT, 0]}
                                 rotation={[0, -Math.PI / 2, 0]} args={[BOTTOM_LENGTH, WALL_HEIGHT, WALL_THICKNESS,]}/>
-                {[
+                {/* {[
                     {Component: Coffee, key: 'coffee'},
                     {Component: InkBox, key: 'inkbox'},
                     {Component: Lotion, key: 'lotion'},
@@ -67,7 +67,7 @@ export default function NextPage(props) {
                             <Component/>
                         </RigidBody>
                     );
-                })}
+                })} */}
             </Physics>
             <Environment preset={"forest"}/>
 
