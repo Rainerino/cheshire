@@ -1,15 +1,8 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import type {InstancedMesh, BufferGeometry} from 'three'
-import {Physics, RigidBody, CuboidCollider} from "@react-three/rapier";
-import {Geometry} from 'three-stdlib'
+import { useRef, useState } from 'react';
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import {RedcareTote} from '../models/RedcareTote';
-import {Coffee} from '../sku/Coffee';
-import {InkBox} from '../sku/InkBox';
-import {Lotion} from '../sku/Lotion';
-import {PaperBox} from '../sku/PaperBox';
-import {CapBottle} from '../sku/CapBottle';
-import {Mustard} from '../sku/Mustard';
-import {TonerBox} from '../sku/TonerBox';
+import { Coffee } from '../sku/Coffee';
+import { PaperBox } from '../sku/PaperBox';
 import {MultuCapBottle} from '../sku/MutliCapBottle';
 
 
