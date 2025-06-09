@@ -14,7 +14,7 @@
 !/locales
 
 # Robot
-!/models/robots/abb_irb1300
+!/models/robots/abb_irb1300/**
 
 # Texture
 !/textures/satara_night_no_lamps_1k.hdr
