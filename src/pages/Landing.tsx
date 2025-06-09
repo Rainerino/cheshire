@@ -142,6 +142,7 @@ function preloadGLTFFiles() {
     '/models/es/CAT_6080_S.glb?url',
     '/models/room/Desktop2.glb?url',
     '/models/room/Room2.glb?url',
+    "/models/room/door.glb?url",
     '/models/tv_room/TVRoom.glb?url',
     '/models/stations/pick_tote.glb?url',
     '/models/stations/redcare_one_piece.glb?url',

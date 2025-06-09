@@ -4,11 +4,15 @@
 # GLB files
 !/models/room/Desktop2.glb
 !/models/room/Room2.glb
+!/models/room/door.glb
 !/models/tv_room/TVRoom.glb
 !/models/stations/pick_tote.glb
 !/models/stations/redcare_one_piece.glb
 !/models/stations/robot_base.glb
 !/models/es/CAT_6080_S.glb
+!/models/sku/multi_cap_bottle.glb
+!/models/sku/paper_box.glb
+!/models/sku/coffee.glb
 
 # Trans
 !/locales
