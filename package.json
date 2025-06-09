@@ -3,11 +3,6 @@
   "version": "0.0.1",
   "description": "Just another personal website",
   "type": "module",
-  "main": "build/index.js",
-  "module": "build/index.es.js",
-  "files": [
-    "build"
-  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -48,13 +43,6 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
     "@eslint/js": "^9.25.0",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^28.0.3",
-    "@rollup/plugin-image": "^3.0.3",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-replace": "^6.0.2",
-    "@rollup/plugin-typescript": "^12.1.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -65,11 +53,6 @@
     "globals": "^16.0.0",
     "node-sass": "^9.0.0",
     "parcel": "^2.15.2",
-    "rollup": "^4.42.0",
-    "rollup-plugin-import-css": "^4.0.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
