@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
-import curtain_texture from '../assets/textures/curtain.png';
+import curtain_texture from '/textures/curtain.png';
 import * as CANNON from 'cannon-es';
 
 const clothMass = 1;
