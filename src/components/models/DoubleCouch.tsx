@@ -15,7 +15,7 @@ type GLTFResult = GLTF & {
     Node1: THREE.Mesh
   }
   materials: {
-    couch_color: THREE.MeshStandardMaterial
+    couch_color: THREE.MeshLambertMaterial
   }
 }
 

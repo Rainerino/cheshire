@@ -33,10 +33,10 @@ type GLTFResult = GLTF & {
     NurbsPath_Mesh008: THREE.Mesh
   }
   materials: {
-    ['Material.001']: THREE.MeshStandardMaterial
-    ['Material.003']: THREE.MeshStandardMaterial
-    ['Material.002']: THREE.MeshStandardMaterial
-    ['Material.004']: THREE.MeshStandardMaterial
+    ['Material.001']: THREE.MeshLambertMaterial
+    ['Material.003']: THREE.MeshLambertMaterial
+    ['Material.002']: THREE.MeshLambertMaterial
+    ['Material.004']: THREE.MeshLambertMaterial
   }
 }
 

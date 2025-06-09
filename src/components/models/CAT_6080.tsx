@@ -42,32 +42,32 @@ type GLTFResult = GLTF & {
         Node9: THREE.Mesh
     }
     materials: {
-        ['#333333FF.005']: THREE.MeshStandardMaterial
-        ['#336633FF.005']: THREE.MeshStandardMaterial
-        ['#9B7428FF.005']: THREE.MeshStandardMaterial
-        ['#990000FF.005']: THREE.MeshStandardMaterial
-        ['#00956EFF.005']: THREE.MeshStandardMaterial
-        ['#3333FFFF.005']: THREE.MeshStandardMaterial
-        ['#993333FF.005']: THREE.MeshStandardMaterial
-        ['#7FA1B4FF.005']: THREE.MeshStandardMaterial
-        ['#CC9933FF.005']: THREE.MeshStandardMaterial
-        ['#D16A37FF.005']: THREE.MeshStandardMaterial
-        ['#FFFF00FF.005']: THREE.MeshStandardMaterial
-        ['#F6AE83FF.005']: THREE.MeshStandardMaterial
-        ['#00FF00FF.005']: THREE.MeshStandardMaterial
-        ['#6633CCFF.005']: THREE.MeshStandardMaterial
-        ['#FF3AE0FF.005']: THREE.MeshStandardMaterial
-        ['#FF9900FF.005']: THREE.MeshStandardMaterial
-        ['#FF5050FF.005']: THREE.MeshStandardMaterial
-        ['#FFBF4BFF.005']: THREE.MeshStandardMaterial
-        ['#7D7D7DFF.005']: THREE.MeshStandardMaterial
-        ['#CCFF33FF.005']: THREE.MeshStandardMaterial
-        ['#0099FFFF.005']: THREE.MeshStandardMaterial
-        ['#FF0000FF.005']: THREE.MeshStandardMaterial
-        ['#97AAAEFF.005']: THREE.MeshStandardMaterial
-        ['#66CCFFFF.005']: THREE.MeshStandardMaterial
-        ['#006666FF.005']: THREE.MeshStandardMaterial
-        ['#999999FF.005']: THREE.MeshStandardMaterial
+        ['#333333FF.005']: THREE.MeshLambertMaterial
+        ['#336633FF.005']: THREE.MeshLambertMaterial
+        ['#9B7428FF.005']: THREE.MeshLambertMaterial
+        ['#990000FF.005']: THREE.MeshLambertMaterial
+        ['#00956EFF.005']: THREE.MeshLambertMaterial
+        ['#3333FFFF.005']: THREE.MeshLambertMaterial
+        ['#993333FF.005']: THREE.MeshLambertMaterial
+        ['#7FA1B4FF.005']: THREE.MeshLambertMaterial
+        ['#CC9933FF.005']: THREE.MeshLambertMaterial
+        ['#D16A37FF.005']: THREE.MeshLambertMaterial
+        ['#FFFF00FF.005']: THREE.MeshLambertMaterial
+        ['#F6AE83FF.005']: THREE.MeshLambertMaterial
+        ['#00FF00FF.005']: THREE.MeshLambertMaterial
+        ['#6633CCFF.005']: THREE.MeshLambertMaterial
+        ['#FF3AE0FF.005']: THREE.MeshLambertMaterial
+        ['#FF9900FF.005']: THREE.MeshLambertMaterial
+        ['#FF5050FF.005']: THREE.MeshLambertMaterial
+        ['#FFBF4BFF.005']: THREE.MeshLambertMaterial
+        ['#7D7D7DFF.005']: THREE.MeshLambertMaterial
+        ['#CCFF33FF.005']: THREE.MeshLambertMaterial
+        ['#0099FFFF.005']: THREE.MeshLambertMaterial
+        ['#FF0000FF.005']: THREE.MeshLambertMaterial
+        ['#97AAAEFF.005']: THREE.MeshLambertMaterial
+        ['#66CCFFFF.005']: THREE.MeshLambertMaterial
+        ['#006666FF.005']: THREE.MeshLambertMaterial
+        ['#999999FF.005']: THREE.MeshLambertMaterial
     }
 }
 

@@ -15,9 +15,9 @@ type GLTFResult = GLTF & {
     Node3: THREE.Mesh
   }
   materials: {
-    ['#292929FF']: THREE.MeshStandardMaterial
+    ['#292929FF']: THREE.MeshLambertMaterial
     ['#0EAA49FF']: THREE.MeshPhysicalMaterial
-    ['#C6901CFF']: THREE.MeshStandardMaterial
+    ['#C6901CFF']: THREE.MeshLambertMaterial
   }
 }
 

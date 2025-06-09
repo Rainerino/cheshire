@@ -4,7 +4,9 @@ import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Tooltip from '@mui/material/Tooltip';
@@ -101,7 +103,7 @@ function LandingPage() {
             position: 'absolute',
             zIndex: 10,
             top: '5%',
-            left: '5%',
+            right: '5%',
             // transform: 'translateX(-50%)',
             transition: 'opacity 1s',
             opacity: location !== '/home' ? 1 : 0,
@@ -124,42 +126,13 @@ function LandingPage() {
                   }
                 }}
                 style={{
-                  color: "white"
+                  color: "#d1d1d1"
                 }}>
-                <ArrowBackIosIcon sx={{ fontSize: 42 }} color="inherit" />
+                <ArrowForwardIosRoundedIcon sx={{ fontSize: 48 }} color="inherit" />
               </IconButton>
             </Tooltip>
           </ThemeProvider>
-
         </div>
-
-        {/* <div
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            top: '5%',
-            left: '10%',
-            transform: 'translateX(-50%)',
-            transition: 'opacity 0.5s',
-            opacity: (location === '/home' || location === '/projects') ? 0 : 1,
-            pointerEvents: location !== '/home' ? 'auto' : 'none'
-          }}
-        >
-          <Tooltip title={t("home_tooltip")}>
-            <IconButton
-              onClick={() => {
-                window.location.reload();
-                setLocation('/home');
-              }}
-              style={{
-                color: "white"
-              }}>
-              <HomeIcon sx={{ fontSize: 48 }} color="inherit" />
-            </IconButton>
-          </Tooltip>
-
-        </div> */}
-
       </div>
     </React.StrictMode>
   )

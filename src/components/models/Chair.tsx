@@ -13,7 +13,7 @@ type GLTFResult = GLTF & {
         Chair: THREE.Mesh
     }
     materials: {
-        ['Material.001']: THREE.MeshStandardMaterial
+        ['Material.001']: THREE.MeshLambertMaterial
     }
 }
 

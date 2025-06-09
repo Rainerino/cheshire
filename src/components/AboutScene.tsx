@@ -2,8 +2,8 @@ import {useFrame} from "@react-three/fiber";
 import * as THREE from 'three'
 
 export default function AboutPage(controls, props) {
-    const tgt_look = new THREE.Vector3(1.15, 1.1, 1.6)
-    const tgt_pos = new THREE.Vector3(-0.5, 1.4, -1.2);
+    const tgt_look = new THREE.Vector3(1.16, 0.93, 1.6)
+    const tgt_pos = new THREE.Vector3(-0.5, 1.3, -1.2);
     const cur_look = new THREE.Vector3()
 
     useFrame((state, delta) => {
@@ -32,9 +32,9 @@ export default function AboutPage(controls, props) {
 
         const arrived = state.camera.position.distanceTo(tgt_pos) < eps;
         if (arrived) {
-            controls.controls.current.maxZoom = 4.5;
+            controls.controls.current.maxZoom = 10;
             controls.controls.current.smoothTime = 0.01;
-            controls.controls.current.zoomTo(4.5, true)
+            controls.controls.current.zoomTo(5.4, true)
             controls.controls.current.smoothTime = 0.25;
             // Arrived at target position
             // You can trigger any logic here if needed

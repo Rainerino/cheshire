@@ -48,8 +48,8 @@ type GLTFResult = GLTF & {
         sofa005_3: THREE.Mesh
     }
     materials: {
-        ['#59411CFF.004']: THREE.MeshStandardMaterial
-        ['wire_177028149.003']: THREE.MeshStandardMaterial
+        ['#59411CFF.004']: THREE.MeshLambertMaterial
+        ['wire_177028149.003']: THREE.MeshLambertMaterial
         ['wire_225088199.002']: THREE.MeshPhysicalMaterial
         ['wire_224086086.002']: THREE.MeshPhysicalMaterial
         ['wire_008110135.002']: THREE.MeshPhysicalMaterial
@@ -67,7 +67,7 @@ type GLTFResult = GLTF & {
         ['METAL__Smooth__Brass_Antique.002']: THREE.MeshPhysicalMaterial
         ['wire_143225087.002']: THREE.MeshPhysicalMaterial
         ['wire_067067067.001']: THREE.MeshPhysicalMaterial
-        ['wire_177028149.006']: THREE.MeshStandardMaterial
+        ['wire_177028149.006']: THREE.MeshLambertMaterial
         ['wire_225088199.005']: THREE.MeshPhysicalMaterial
         ['wire_224086086.005']: THREE.MeshPhysicalMaterial
         ['wire_008110135.005']: THREE.MeshPhysicalMaterial

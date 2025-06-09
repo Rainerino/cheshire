@@ -22,7 +22,6 @@ const HOME_LOOK_AT = [0.077 - LOOKAT_EPS * Math.cos(PAGE_ANGLE), 0, 0.218 + LOOK
 
 export default function RoomScene(props) {
     // Upon enter, fix the camera
-    const [shift, setShift] = useState(true);
     const [location, setLocation] = useLocation();
     const [mycam, setMycam] = useState<THREE.PerspectiveCamera | null>();
     const [initialize, setInitialize] = useState(false)
@@ -30,7 +29,6 @@ export default function RoomScene(props) {
     const ref = useRef<CameraControls>(null);
     useEffect(() => {
         if (!ref.current) return;
-        setShift(true)
         ref.current.setLookAt(
             HOME_POSITION[0],
             HOME_POSITION[1],
@@ -77,8 +75,6 @@ export default function RoomScene(props) {
                     position={[0.11, 0.87, 0.2]}
                     rotation={[-Math.PI / 2, 0, Math.PI / 2 + Math.PI / 6.5]}
                     scale={[1, 1, 1]}
-                    shift={shift}
-                    setShift={setShift}
                 />
                 <BusinessCard
                     position={[0., 0.87, -0.43]}
@@ -117,7 +113,7 @@ export default function RoomScene(props) {
                     decay={2}
                     shadow-bias={-0.00001}
                     shadow-mapSize={[1024, 1024]}
-                    shadow-camera-fov={120}
+                    // shadow-camera-fov={120}
                     // shadow-camera-far={100}
                     // shadow-camera-near={0.1}
                     position={[-2.25, 1, -2.245]}
@@ -132,7 +128,7 @@ export default function RoomScene(props) {
                     // shadow-camera-far={100}
                     // shadow-camera-near={0.1}
                     position={[0.775, 1.1, -2.245]}
-                    intensity={2}>
+                    intensity={0.5}>
                 </pointLight>
                 <OverheadLamp position={[-1, 2.5, -0.4]}/>
 

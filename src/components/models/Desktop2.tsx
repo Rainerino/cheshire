@@ -69,22 +69,22 @@ type GLTFResult = GLTF & {
     ['Mat_16.003']: THREE.MeshPhysicalMaterial
     ['Mat_17.003']: THREE.MeshPhysicalMaterial
     ['Mat_18.003']: THREE.MeshPhysicalMaterial
-    ['Loader.001']: THREE.MeshStandardMaterial
-    Loader: THREE.MeshStandardMaterial
-    Key: THREE.MeshStandardMaterial
-    Cap: THREE.MeshStandardMaterial
-    Frame: THREE.MeshStandardMaterial
-    ['Frame.001']: THREE.MeshStandardMaterial
-    Poles: THREE.MeshStandardMaterial
-    ['#292929FF']: THREE.MeshStandardMaterial
+    ['Loader.001']: THREE.MeshLambertMaterial
+    Loader: THREE.MeshLambertMaterial
+    Key: THREE.MeshLambertMaterial
+    Cap: THREE.MeshLambertMaterial
+    Frame: THREE.MeshLambertMaterial
+    ['Frame.001']: THREE.MeshLambertMaterial
+    Poles: THREE.MeshLambertMaterial
+    ['#292929FF']: THREE.MeshLambertMaterial
     ['#0EAA49FF']: THREE.MeshPhysicalMaterial
-    ['#C6901CFF']: THREE.MeshStandardMaterial
-    ['#D3D6D3FF.001']: THREE.MeshStandardMaterial
-    ['#0A7DB5FF.001']: THREE.MeshStandardMaterial
-    ['#4C4C4CFF.001']: THREE.MeshStandardMaterial
-    ['#895956FF']: THREE.MeshStandardMaterial
-    ['#CAD1EEFF']: THREE.MeshStandardMaterial
-    ['#FFFFFFFF.001']: THREE.MeshStandardMaterial
+    ['#C6901CFF']: THREE.MeshLambertMaterial
+    ['#D3D6D3FF.001']: THREE.MeshLambertMaterial
+    ['#0A7DB5FF.001']: THREE.MeshLambertMaterial
+    ['#4C4C4CFF.001']: THREE.MeshLambertMaterial
+    ['#895956FF']: THREE.MeshLambertMaterial
+    ['#CAD1EEFF']: THREE.MeshLambertMaterial
+    ['#FFFFFFFF.001']: THREE.MeshLambertMaterial
     material_0: THREE.MeshPhysicalMaterial
     ['material_0.001']: THREE.MeshPhysicalMaterial
   }

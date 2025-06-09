@@ -22,16 +22,16 @@ type GLTFResult = GLTF & {
     Node9: THREE.Mesh
   }
   materials: {
-    ['#D3D6D3FF']: THREE.MeshStandardMaterial
-    ['#999999FF']: THREE.MeshStandardMaterial
-    ['#808080FF']: THREE.MeshStandardMaterial
-    ['#A58300FF']: THREE.MeshStandardMaterial
-    ['#0A7DB5FF']: THREE.MeshStandardMaterial
-    ['#4C4C4CFF']: THREE.MeshStandardMaterial
-    ['#895956FF']: THREE.MeshStandardMaterial
-    ['#CAD1EEFF']: THREE.MeshStandardMaterial
-    ['#EFEFEFFF']: THREE.MeshStandardMaterial
-    ['#FFFFFFFF']: THREE.MeshStandardMaterial
+    ['#D3D6D3FF']: THREE.MeshLambertMaterial
+    ['#999999FF']: THREE.MeshLambertMaterial
+    ['#808080FF']: THREE.MeshLambertMaterial
+    ['#A58300FF']: THREE.MeshLambertMaterial
+    ['#0A7DB5FF']: THREE.MeshLambertMaterial
+    ['#4C4C4CFF']: THREE.MeshLambertMaterial
+    ['#895956FF']: THREE.MeshLambertMaterial
+    ['#CAD1EEFF']: THREE.MeshLambertMaterial
+    ['#EFEFEFFF']: THREE.MeshLambertMaterial
+    ['#FFFFFFFF']: THREE.MeshLambertMaterial
   }
 }
 

@@ -70,51 +70,51 @@ type GLTFResult = GLTF & {
     Node1010: THREE.Mesh
   }
   materials: {
-    ['#BB935CFF.003']: THREE.MeshStandardMaterial
-    ['#000000FF.003']: THREE.MeshStandardMaterial
-    ['x1.002']: THREE.MeshStandardMaterial
-    ['Material.007']: THREE.MeshStandardMaterial
-    ['#D7D0C0FF']: THREE.MeshStandardMaterial
-    ['#F7E099FF']: THREE.MeshStandardMaterial
-    ['#E5E5E5FF']: THREE.MeshStandardMaterial
-    ['#57D669FF']: THREE.MeshStandardMaterial
-    ['#CAD1EEFF']: THREE.MeshStandardMaterial
-    ['#DBDBDBFF']: THREE.MeshStandardMaterial
-    ['#C2662EFF']: THREE.MeshStandardMaterial
-    ['#FFFFFFFF.003']: THREE.MeshStandardMaterial
-    ['#A58300FF']: THREE.MeshStandardMaterial
-    ['#1A1A1AFF']: THREE.MeshStandardMaterial
-    ['#49A954FF']: THREE.MeshStandardMaterial
+    ['#BB935CFF.003']: THREE.MeshLambertMaterial
+    ['#000000FF.003']: THREE.MeshLambertMaterial
+    ['x1.002']: THREE.MeshLambertMaterial
+    ['Material.007']: THREE.MeshLambertMaterial
+    ['#D7D0C0FF']: THREE.MeshLambertMaterial
+    ['#F7E099FF']: THREE.MeshLambertMaterial
+    ['#E5E5E5FF']: THREE.MeshLambertMaterial
+    ['#57D669FF']: THREE.MeshLambertMaterial
+    ['#CAD1EEFF']: THREE.MeshLambertMaterial
+    ['#DBDBDBFF']: THREE.MeshLambertMaterial
+    ['#C2662EFF']: THREE.MeshLambertMaterial
+    ['#FFFFFFFF.003']: THREE.MeshLambertMaterial
+    ['#A58300FF']: THREE.MeshLambertMaterial
+    ['#1A1A1AFF']: THREE.MeshLambertMaterial
+    ['#49A954FF']: THREE.MeshLambertMaterial
     ['Aluminum_-_Polished']: THREE.MeshPhysicalMaterial
     ['Fabric_(Generic)']: THREE.MeshPhysicalMaterial
     ['Paint_-_Enamel_Glossy_(Black)']: THREE.MeshPhysicalMaterial
     ['Paint_-_Metallic_(Blue)']: THREE.MeshPhysicalMaterial
     ['Paint_-_Enamel_Glossy_(Yellow)']: THREE.MeshPhysicalMaterial
     ['Paint_-_Metallic_(Dark_Grey)']: THREE.MeshPhysicalMaterial
-    ['#181818FF.002']: THREE.MeshStandardMaterial
+    ['#181818FF.002']: THREE.MeshLambertMaterial
     ['#F5F5F2FF.001']: THREE.MeshPhysicalMaterial
-    ['#F4F4F5FF.001']: THREE.MeshStandardMaterial
-    ['#181818FF.003']: THREE.MeshStandardMaterial
+    ['#F4F4F5FF.001']: THREE.MeshLambertMaterial
+    ['#181818FF.003']: THREE.MeshLambertMaterial
     ['#F5F5F2FF.002']: THREE.MeshPhysicalMaterial
-    ['#F4F4F5FF.002']: THREE.MeshStandardMaterial
-    ['Material.008']: THREE.MeshStandardMaterial
+    ['#F4F4F5FF.002']: THREE.MeshLambertMaterial
+    ['Material.008']: THREE.MeshLambertMaterial
     ['Aluminum_-_Polished.001']: THREE.MeshPhysicalMaterial
     ['Fabric_(Generic).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Enamel_Glossy_(Black).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Metallic_(Blue).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Enamel_Glossy_(Yellow).001']: THREE.MeshPhysicalMaterial
     ['Paint_-_Metallic_(Dark_Grey).001']: THREE.MeshPhysicalMaterial
-    ['#000000FF']: THREE.MeshStandardMaterial
-    ['#FFFFFFFF']: THREE.MeshStandardMaterial
-    ['#4C4C4CFF']: THREE.MeshStandardMaterial
-    ['#E0DFDBFF.001']: THREE.MeshStandardMaterial
-    ['Material.003']: THREE.MeshStandardMaterial
-    ['Material.009']: THREE.MeshStandardMaterial
-    ['Material.001']: THREE.MeshStandardMaterial
-    ['Material.004']: THREE.MeshStandardMaterial
-    ['Material.011']: THREE.MeshStandardMaterial
-    ['Material.012']: THREE.MeshStandardMaterial
-    ['#CAD1EEFF.001']: THREE.MeshStandardMaterial
+    ['#000000FF']: THREE.MeshLambertMaterial
+    ['#FFFFFFFF']: THREE.MeshLambertMaterial
+    ['#4C4C4CFF']: THREE.MeshLambertMaterial
+    ['#E0DFDBFF.001']: THREE.MeshLambertMaterial
+    ['Material.003']: THREE.MeshLambertMaterial
+    ['Material.009']: THREE.MeshLambertMaterial
+    ['Material.001']: THREE.MeshLambertMaterial
+    ['Material.004']: THREE.MeshLambertMaterial
+    ['Material.011']: THREE.MeshLambertMaterial
+    ['Material.012']: THREE.MeshLambertMaterial
+    ['#CAD1EEFF.001']: THREE.MeshLambertMaterial
   }
 }
 

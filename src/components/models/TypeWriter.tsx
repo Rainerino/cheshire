@@ -20,13 +20,13 @@ type GLTFResult = GLTF & {
     Node8: THREE.Mesh
   }
   materials: {
-    ['Loader.001']: THREE.MeshStandardMaterial
-    Loader: THREE.MeshStandardMaterial
-    Key: THREE.MeshStandardMaterial
-    Cap: THREE.MeshStandardMaterial
-    Frame: THREE.MeshStandardMaterial
-    ['Frame.001']: THREE.MeshStandardMaterial
-    Poles: THREE.MeshStandardMaterial
+    ['Loader.001']: THREE.MeshLambertMaterial
+    Loader: THREE.MeshLambertMaterial
+    Key: THREE.MeshLambertMaterial
+    Cap: THREE.MeshLambertMaterial
+    Frame: THREE.MeshLambertMaterial
+    ['Frame.001']: THREE.MeshLambertMaterial
+    Poles: THREE.MeshLambertMaterial
   }
 }
 
