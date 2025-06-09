@@ -7,8 +7,8 @@ import { useGLTF, Decal, RenderTexture, Text, PerspectiveCamera, useCursor, Box 
 import {type GLTF} from 'three-stdlib'
 import model from '/models/room/door.glb?url'
 import handwritten_font from '/fonts/handwritten.ttf?url'
-import engineer_font from '/fonts/Noto_Sans,Noto_Sans_SC/Noto_Sans_SC/static/NotoSansSC-Regular.ttf?url'
-import bold_engineer_font from '/fonts/Noto_Sans,Noto_Sans_SC/Noto_Sans_SC/static/NotoSansSC-Bold.ttf?url'
+import formal_font from '/fonts/Noto_Sans,Noto_Sans_SC/Noto_Sans_SC/static/NotoSansSC-Regular.ttf?url'
+import bold_formal_font from '/fonts/Noto_Sans,Noto_Sans_SC/Noto_Sans_SC/static/NotoSansSC-Bold.ttf?url'
 import {useTranslation} from "react-i18next"
 import { useState } from 'react'
 import lang_toggle from '../../lib/glb_const'
@@ -93,7 +93,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     fontSize={0.15} >
                                     E
                                 </Text>
-                                <Text font={bold_engineer_font}
+                                <Text font={bold_formal_font}
                                     anchorX="left" anchorY="middle"
                                     color={new THREE.Color(TITLE_BRIGHTNESS, TITLE_BRIGHTNESS, TITLE_BRIGHTNESS)}
                                     position={[-0.28, 0.09, 0]} rotation={[0, 0, 0]}
@@ -101,7 +101,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                 >
                                     {t("about")}
                                 </Text>
-                                <Text font={engineer_font}
+                                <Text font={formal_font}
                                     anchorX="left" anchorY="top"
                                     lineHeight={1.5}
                                     color={new THREE.Color(BODY_BRIGHTNESS, BODY_BRIGHTNESS, BODY_BRIGHTNESS)}
@@ -109,7 +109,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     fontSize={0.03} >
                                     {t("about_intro")}
                                 </Text>
-                                <Text font={bold_engineer_font}
+                                <Text font={bold_formal_font}
                                     anchorX="left" anchorY="middle"
                                     color={new THREE.Color(TITLE_BRIGHTNESS, TITLE_BRIGHTNESS, TITLE_BRIGHTNESS)}
                                     position={[-0.28, -0.3, 0]} rotation={[0, 0, 0]}
@@ -119,7 +119,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                 </Text>
 
                                 <Text
-                                    font={engineer_font}
+                                    font={formal_font}
                                     anchorX="left"
                                     anchorY="middle"
                                     color={new THREE.Color(BODY_BRIGHTNESS, BODY_BRIGHTNESS, BODY_BRIGHTNESS)}
@@ -130,7 +130,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     {t("linkedln")}
                                 </Text>
 
-                                <Text font={engineer_font}
+                                <Text font={formal_font}
                                     anchorX="left" anchorY="middle"
                                     color={new THREE.Color(BODY_BRIGHTNESS, BODY_BRIGHTNESS, BODY_BRIGHTNESS)}
                                     position={[-0.1, -0.37, 0]} rotation={[0, 0, 0]}
@@ -139,7 +139,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     {t("sm")}
                                 </Text>
 
-                                <Text font={engineer_font}
+                                <Text font={formal_font}
                                     anchorX="left" anchorY="middle"
                                     color={new THREE.Color(BODY_BRIGHTNESS, BODY_BRIGHTNESS, BODY_BRIGHTNESS)}
                                     position={[0.1, -0.37, 0]} rotation={[0, 0, 0]}
@@ -148,7 +148,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     {t("github")}
                                 </Text>
 
-                                <Text font={bold_engineer_font}
+                                <Text font={bold_formal_font}
                                     anchorX="left" anchorY="middle"
                                     color={new THREE.Color(TITLE_BRIGHTNESS, TITLE_BRIGHTNESS, TITLE_BRIGHTNESS)}
                                     position={[-0.28, -0.5, 0]} rotation={[0, 0, 0]}
@@ -157,7 +157,7 @@ export function RedrumDoor(props: JSX.IntrinsicElements['group']) {
                                     {t("contact")}
                                 </Text>
 
-                                <Text font={engineer_font}
+                                <Text font={formal_font}
                                     anchorX="left" anchorY="top"
                                     color={new THREE.Color(BODY_BRIGHTNESS, BODY_BRIGHTNESS, BODY_BRIGHTNESS)}
                                     position={[-0.28, -0.55, 0]} rotation={[0, 0, 0]}
