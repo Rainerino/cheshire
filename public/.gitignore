@@ -17,7 +17,7 @@
 !/models/robots/abb_irb1300
 
 # Texture
-!/textures/satara_night_1k.hdr
+!/textures/satara_night_no_lamps_1k.hdr
 !/textures/curtain.png
 !/textures/paper_light.jpg
 

@@ -4,9 +4,8 @@ import * as THREE from 'three'
 import { Redirect, Route, Router, useLocation, useRoute, useRouter } from "wouter"
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslation } from "react-i18next"
@@ -102,7 +101,7 @@ function LandingPage() {
             position: 'absolute',
             zIndex: 10,
             top: '5%',
-            right: '5%',
+            left: '5%',
             // transform: 'translateX(-50%)',
             transition: 'opacity 1s',
             opacity: location !== '/home' ? 1 : 0,
@@ -127,7 +126,7 @@ function LandingPage() {
                 style={{
                   color: "white"
                 }}>
-                <ArrowForwardIosIcon sx={{ fontSize: 42 }} color="inherit" />
+                <ArrowBackIosIcon sx={{ fontSize: 42 }} color="inherit" />
               </IconButton>
             </Tooltip>
           </ThemeProvider>

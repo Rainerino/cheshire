@@ -15,9 +15,6 @@ import ViewScene from "./ViewScene";
 import BusinessCard from "./modules/BusinessCard";
 
 
-const CAMERA_POSITION = [1.8, 2., 0]
-const CAMERA_LOOK_AT = [0, 1.1, 0]
-
 const PAGE_ANGLE = Math.PI / 6.5;
 const LOOKAT_EPS = 0.00001;
 const HOME_POSITION = [0.077, 1.5, 0.218]
