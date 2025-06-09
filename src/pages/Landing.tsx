@@ -17,7 +17,6 @@ import { Perf } from "r3f-perf"
 
 
 import ProjectNavPage from './NavigateProjects'
-import "./Landing.css"
 import CovariantPage from './Covariant'
 import MotionMetricsPage from './MotionMetrics'
 import NextPage from './Next'
